@@ -1,0 +1,76 @@
+React Native Development (With Expo)
+
+Requirements:-
+
+1)	node installed hona chahiye
+2)	npm installed hona chahiye
+3)	expo platform pe account hona chahiye
+4)	
+
+Setup App-
+
+1)	run "npm i -g expo-cli"
+2) 	run "expo whoami" , 
+	- agar logged in hai, to continue
+	- nahi to run "expo login" and login with expo id-password
+3) 	go to required parent folder
+4)	run "expo init <app_name>"
+5)	choose "blank" template under managed workflow
+6)  go to app folder
+7)  app.js me se code hata do by default wala
+8)  create a folder src within which you can create other folders like context, comps, pages, etc
+
+
+App Recommendations :-
+
+1)	<SafeAreaView> so that App doesnt go into status bar (refer orn-android)
+2)	You can create theme for app using react-native-paper, so that it is easy to store colors, etc.
+3)	Different Fonts using Google Fonts
+	- run "expo install @expo-google-fonts/<font-name> expo-font"
+	- in App.js use "useFonts"
+	- check if fonts loaded in app
+4)	Use <SvgXml /> or <SvgUri /> from "react-native-svg" for SVG
+5)	kabhi jab tumhe kuch calculation lagakar return lagana hai, agar directly return statement me calculation lagaoge to android par error aa sakta hai, isiliye variable me store karwake variable return karwana 
+6)  <FlatList /> for displaying list of items (like Cards) 
+7)  Add Routes to App 
+	- run "expo install @react-navigation/native"
+	- install its dependencies by running "expo install react-native-screens react-native-safe-area-context"
+	- depending on usage install sub packages like "expo install @react-navigation/bottom-tabs" or "expo install @react-navigation/stack"
+	- Use Tab Navigation (refer orn-android App.js or documentation)
+	- Use Stack Navigation (refer orn-android ProductNavigation.js or documentation)
+8) To add icons use @expo/vector-icons (installed by default) (refer orn-android App.js)
+9) <ActivityIndicator /> from 'react-native-paper' for Loading
+10) <Pressable /> jab koi onClick behaviour lagana ho, lekin usme koi feedback nahi milega (lekin vo time decide kar sakti hai ki kitni der dabaya tha)
+	<TouchableOpacity /> itna flexible nahi hai lekin usme ek animation type dikhti hai dabane par
+
+11) AsyncStorage for cache
+12) install firebase for user authentication
+	- app.js me firebase ko import karo
+	- ek firbaseConfig naamak object ki requirement padegi 
+	- if(!firebase.apps.length) ke andar initalizeApp() ko call karna padega
+	- go to project settings vaha se firebase web app chalu karo
+	- jab setup ka option aayega to vo ek lambi si object dega vohi tumhari firebaseConfig banegi
+	- /*doubtful*/ uske baad normal ek useState variable lo
+	- /*doubtful*/ useEffect laga do
+
+13) Lottie se tum animations laga sakte ho bani banai
+	- LottieFiles naamak website se mil jayengi animations
+	- <LottieView /> for rendering
+	- ek parent component bana dena size adjust karne ke liye
+
+14) Layout Animation banane ke liye ract-native ka animated component 
+15) Expo Camera library for camera 
+
+Libraries/Packages :-
+
+1)  react-native-paper                        : ReadyMade Components
+2)	react-native-elements                     : ReadyMade Components
+3)  styled-components                         : Custom CSS Components
+4)	react-native-svg                          : To display SVG
+5)  react-navigation                          : to navigate (like react-router)
+6)  @expo/vector-icons	                      : for icons like FontAwesome (installed by default)
+7)  @react-native-async-storage/async-storage : Cache Storing
+8)  firebase 								  : User Authentication
+9)  lottie-react-native						  : Animation Library
+10) expo-camera
+11) 
