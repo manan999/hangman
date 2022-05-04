@@ -1,0 +1,4 @@
++ Loss screen pe lottie ka container sahi karna hai
++ Win Screen pe lagana hai lottie animation impressed wala
++ countdown timer lagana hai
++ movies ka json data dhundna hai

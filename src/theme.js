@@ -1,11 +1,9 @@
 export const theme = {
 	colors : {
-		mainBg: "#e66910",
-		lightBg: "#ffdead",
-		whiteBg: "#f5f5f5",
-		dark: "#401d04",
-		test1: "#ff0000",
-		test2: "#000000",
+		main: "#1d2951",
+		white: "#f5f5f5",
+		red: "#ff8c69",
+		green: "#05f545",
 	},
 	fonts : {
 		main : "Lexend_400Regular" ,
