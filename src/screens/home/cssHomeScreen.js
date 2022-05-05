@@ -32,6 +32,8 @@ const HomeButton = styled(Button).attrs({
     },
     uppercase: false
 })`
+  margin: 10px 0 ;
+  min-width: 153px ;
  ` ;
 
 export {MainView, HomeButton} ;

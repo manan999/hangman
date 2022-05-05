@@ -35,7 +35,11 @@ const AlphaText = styled.Text`
   text-transform: uppercase ;
 ` ;
 
-  // background-color: ${ ({theme}) => theme.colors.white } ;
+const GuesserView = styled.View`
+  flex: .5 ;
+  margin-bottom: 50px ;
+` ;
+
 const LetterView = styled.View` 
   margin: 2px ;
   padding: 2px ;
@@ -59,6 +63,7 @@ const WordView = styled.View`
 
 const CrossView = styled.View` 
   flex-direction: row ;  
+  height: 21px ;
 ` ;
 
 const CrossCon = styled.View` 
@@ -71,5 +76,11 @@ const GameText = styled.Text`
   font-family: ${ ({theme}) => theme.fonts.third } ;
 ` ;
 
+const TimerText = styled.Text`
+  color: ${ ({theme}) => theme.colors.white } ;
+  font-size: 26px ;
+  font-family: ${ ({theme}) => theme.fonts.main } ;
+` ;
+
 export {MainView, AlphaRow, AlphaView, AlphaText, LetterView, LetterText, WordView, 
-  CrossView, CrossCon, GameText} ;
+  CrossView, CrossCon, GameText, GuesserView, TimerText} ;

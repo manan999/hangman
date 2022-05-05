@@ -10,4 +10,9 @@ const MainView = styled.View`
   background-color: ${ ({theme}) => theme.colors.main } ;
 ` ;
 
-export {MainView} ;
+const WowView = styled.View`
+  width: 100% ;
+  height: 40% ;
+` ;
+
+export {MainView, WowView} ;

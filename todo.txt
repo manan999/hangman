@@ -1,4 +1,5 @@
-+ Loss screen pe lottie ka container sahi karna hai
-+ Win Screen pe lagana hai lottie animation impressed wala
-+ countdown timer lagana hai
++ wrong ke attempts 5 kar sakte ho
++ movie change hone pe pata ni chal raha
++ warning aa rahi hai usestate wali
++ win aur loss ko combine karke result page banana hai
 + movies ka json data dhundna hai
