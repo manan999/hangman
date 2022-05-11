@@ -24,4 +24,10 @@ const KufamText = styled.Text`
   margin: 15px 0 10px ;
 ` ;
 
-export {WhiteButton, KufamText} ;
+const Row = styled.View`
+  flex-direction: row ; 
+  justify-content: space-evenly ;
+  align-self: stretch ;
+` ;
+
+export {WhiteButton, KufamText, Row} ;

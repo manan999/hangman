@@ -5,6 +5,7 @@ export const theme = {
 		white: "#f5f5f5",
 		red: "#ff8c69",
 		green: "#05f545",
+		darkGreen: '#13542f',
 	},
 	fonts : {
 		main : "Lexend_400Regular" ,

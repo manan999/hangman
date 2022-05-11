@@ -13,13 +13,13 @@ import {Alpha, Letter} from './AlphaLetter.js' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
-const Game = ({movie, round, next, hint, score}) => {
-	const [guessed, setGuessed] = useState([]) ;
+const Game = ({movie, round, next, hint, config}) => {
+	const [guessed, setGuessed] = useState(config.initGuess) ;
 	const [details, setDetails] = useState({}) ;
 	const [wrong, setWrong] = useState(0) ;
 	const [hintCount, setHintCount] = useState(1) ;
 	const [correct, setCorrect] = useState(0) ;
-	const [time, setTime] = useState(30) ;
+	const [time, setTime] = useState(config.startTime) ;
 	const [wait, setWait] = useState(true) ;
 
 	useEffect(() => {
@@ -36,32 +36,34 @@ const Game = ({movie, round, next, hint, score}) => {
 				obj[l] = 1 ;
 		})
 		setDetails(obj) ;
-		setTime(30) ;
+		setTime(config.startTime) ;
 		setWrong(0) ;
 		setCorrect(0) ;
 		setWait(true) ;
 		setHintCount(1) ;
-		setGuessed([]) ;
+		setGuessed(config.initGuess) ;
 	}, [movie])
 
 	useEffect( () => {
-		if(movie.length>0 && movie.split('').filter(c=>(c.toLowerCase()>='a'&&c.toLowerCase()<='z')).length === correct) {
+		if(movie.length>0 && movie.toLowerCase().split('').filter(c=>(c.toLowerCase()>='a'&&c.toLowerCase()<='z')).every(v => guessed.includes(v))) {
 			next('Win', wrong, hintCount) ;
 		}
 	}, [correct])
 
 	useEffect( () => {
-		let l = guessed.slice(-1)[0] ;
-		if(l) {
-			if(details[l]) 
-				setCorrect(correct+details[l]) ;
-			else
-				if(wrong < 5)
-					setWrong(wrong+1) ;
-				else {
-					Vibration.vibrate(200) ;
-					next('Loss') ;
-				}
+		if(guessed !== config.initGuess) {
+			let l = guessed.slice(-1)[0] ;
+			if(l) {
+				if(details[l]) 
+					setCorrect(correct+details[l]) ;
+				else
+					if(wrong < 5)
+						setWrong(wrong+1) ;
+					else {
+						Vibration.vibrate(200) ;
+						next('Loss') ;
+					}
+			}
 		}
 	}, [guessed])
 
@@ -95,7 +97,7 @@ const Game = ({movie, round, next, hint, score}) => {
 	return (
     <MainView>
 		<GameHeader>
-			<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{score}</ScoreText></ScoreView>
+			<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
     		<AnimateView>
     			{returnHintButton()}
     		</AnimateView>
@@ -184,8 +186,36 @@ const GameScreen = ({navigation, route}) => {
 		} 
 	}
 
-	if(movies.length > 0)
-	  return <Game key={currentRound} round={currentRound} movie={movie} next={next} hint={movies[currentRound].hints} score={winCount}/> ;
+	const returnTimeGuess = () => {
+		if(rounds < 100)
+			return {startTime : 30, initGuess : []} ;
+		else {
+			if(currentRound < 5)
+				return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
+			else if(currentRound < 10)
+				return {startTime : 60, initGuess : ['a','e','i']} ;
+			else if(currentRound < 15)
+				return {startTime : 50, initGuess : ['a','e','i']} ;
+			else if(currentRound < 20)
+				return {startTime : 50, initGuess : ['a']} ;
+			else if(currentRound < 25)
+				return {startTime : 40, initGuess : ['a']} ;
+			else
+				return {startTime : 30, initGuess : []} ;
+		}
+	}
+
+	if(movies.length > 0) {
+		const gameProps = {
+			movie, next,
+			hint: movies[currentRound].hints,
+			config: {
+				score: winCount,
+				...returnTimeGuess()
+			}
+		}
+	  	return <Game key={currentRound} round={currentRound} {...gameProps}/> ;
+	}
 	else
 		return <MainView><ActivityIndicator color="#ffffff" size="large" /></MainView> ;
 }

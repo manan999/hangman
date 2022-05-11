@@ -1,5 +1,5 @@
 import styled from 'styled-components/native' ;
-import { Dimensions, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;
@@ -9,6 +9,14 @@ const MainView = styled.View`
   justify-content: space-evenly ;
   align-items: center ;
   background-color: ${ ({theme}) => theme.colors.mainLight} ;
+` ;
+
+const SubText = styled.Text`
+  color: ${ ({theme}) => theme.colors.main } ;
+  font-size: 20px ;
+  font-family: ${ ({theme}) => theme.fonts.main } ;
+  text-align: center;
+  margin-top: 15px ;
 ` ;
 
 // export const SearchBarCon = styled.View`
@@ -23,18 +31,16 @@ const MainView = styled.View`
 //  ` ;
 
 const HomeButton = styled(Button).attrs({
-    color : theme.colors.main,
     labelStyle : {
       fontSize: 16,
       fontFamily: theme.fonts.main,
-    },
-    style: {
-      justifyContent: "center",
     },
     uppercase: false
 })`
   margin: 10px 0 ;
   min-width: 153px ;
+  flex-direction: row ;
+  justify-content: center ;
  ` ;
 
 const HomeImage = styled.Image`
@@ -42,4 +48,4 @@ const HomeImage = styled.Image`
   height: 180px ; 
 ` ;
 
-export {MainView, HomeButton, HomeImage} ;
+export {MainView, SubText, HomeButton, HomeImage} ;
