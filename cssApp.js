@@ -21,6 +21,7 @@ const KufamText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 24px ;
   font-family: ${ ({theme}) => theme.fonts.third } ;
+  margin: 15px 0 10px ;
 ` ;
 
 export {WhiteButton, KufamText} ;

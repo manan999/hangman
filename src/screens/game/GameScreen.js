@@ -1,43 +1,31 @@
-import {useState, useEffect} from 'react' ;
+import { useState, useEffect } from 'react' ;
 import { Text, View, Pressable, Vibration } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper' ;
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
+import { MaterialIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 import Cross from '../../comps/icons/Cross.js' ;
-import {MainView, AlphaRow, AlphaView, AlphaText, LetterView, LetterText, WordView, 
-				CrossView, CrossCon, GameText, GuesserView, TimerText} from './cssGameScreen.js' ;
+import AnimateView from '../../comps/animateview/AnimateView.js' ;
+import {MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, 
+		TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView} from './cssGameScreen.js' ;
+import {Alpha, Letter} from './AlphaLetter.js' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
-const movies = ['3 Idiots', 'Kabhi Khushi Kabhi Gham', 'Heropanti', 'Mujhse Shaadi Karogi ?', 'Once Upon A Time in Mumbai Dobaara', 'Matru ki Bijlee ka Mandola', 'Mere Brother ki Dulhan', 'Mughal-e-Azam', 'Love Story 1950', 'Lagaan']
-
-const Alpha = ({text, guess, guessed}) => {
-	const onAlphaPress = () => {
-		if(!guessed) {
-			guess(text)
-			Vibration.vibrate(25) ;
-		}
-	}
-
-	return (
-		<Pressable onPress={onAlphaPress}>
-			<AlphaView guessed={guessed}><AlphaText>{text}</AlphaText></AlphaView>
-		</Pressable>
-	) ;
-}
-
-const Letter = ({text}) => {
-	return (
-		<LetterView><LetterText>{text}</LetterText></LetterView>
-	) ;
-}
-
-const Game = ({movie, round, next}) => {
+const Game = ({movie, round, next, hint, score}) => {
 	const [guessed, setGuessed] = useState([]) ;
 	const [details, setDetails] = useState({}) ;
 	const [wrong, setWrong] = useState(0) ;
+	const [hintCount, setHintCount] = useState(1) ;
 	const [correct, setCorrect] = useState(0) ;
 	const [time, setTime] = useState(30) ;
+	const [wait, setWait] = useState(true) ;
+
+	useEffect(() => {
+	  const timer = setTimeout(() => setWait(false), 2000);
+	  return () => clearTimeout(timer);
+	}, [wait]);
 
 	useEffect( () => {
 		let obj = {} ;
@@ -51,17 +39,15 @@ const Game = ({movie, round, next}) => {
 		setTime(30) ;
 		setWrong(0) ;
 		setCorrect(0) ;
+		setWait(true) ;
+		setHintCount(1) ;
 		setGuessed([]) ;
 	}, [movie])
 
 	useEffect( () => {
-		if(wrong === 5) 
-			next('Loss') ;
-	}, [wrong])
-
-	useEffect( () => {
-		if(movie.length>0 && movie.split('').filter(c=>(c.toLowerCase()>='a'&&c.toLowerCase()<='z')).length === correct) 
-			next('Win') ;
+		if(movie.length>0 && movie.split('').filter(c=>(c.toLowerCase()>='a'&&c.toLowerCase()<='z')).length === correct) {
+			next('Win', wrong, hintCount) ;
+		}
 	}, [correct])
 
 	useEffect( () => {
@@ -70,7 +56,12 @@ const Game = ({movie, round, next}) => {
 			if(details[l]) 
 				setCorrect(correct+details[l]) ;
 			else
-				setWrong(wrong+1) ;
+				if(wrong < 5)
+					setWrong(wrong+1) ;
+				else {
+					Vibration.vibrate(200) ;
+					next('Loss') ;
+				}
 		}
 	}, [guessed])
 
@@ -94,55 +85,109 @@ const Game = ({movie, round, next}) => {
 		}) ;
 	}
 
+	const returnHintButton = () => {
+		if(hintCount && hintCount < 3)
+			return <Pressable onPress={() => setHintCount(hintCount+1)}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
+		else
+			return <MaterialIcons name="lightbulb" size={36} color="grey" /> ;
+	}
+
 	return (
     <MainView>
+		<GameHeader>
+			<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{score}</ScoreText></ScoreView>
+    		<AnimateView>
+    			{returnHintButton()}
+    		</AnimateView>
+		</GameHeader>
     	<CrossView>
     		{Array.from(new Array(wrong)).map((one, i)=><CrossCon key={i}><Cross/></CrossCon>)}
     	</CrossView>
-    	<CountdownCircleTimer isPlaying duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss')} size={100} strokeWidth={8}>
-		    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
-		  </CountdownCircleTimer>
-    	<GameText> Round {round+1} : Guess the Movie </GameText>
-    	<GuesserView><AlphaRow>{returnGuesser()}</AlphaRow></GuesserView>
-      <View> 
+    	<AnimateView>
+	    	<CountdownCircleTimer isPlaying={!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss')} size={90} strokeWidth={8}>
+			    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
+			  </CountdownCircleTimer>
+			</AnimateView>
+    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
+    		<GameText> Round {round+1} </GameText>
+    	</Animatable.View>
+    	<GuesserView>
+		  	<AnimateView> 
+		  		<AlphaRow>{returnGuesser()}</AlphaRow>
+		    </AnimateView>
+		  	<AnimateView> 
+		  		<HintView>
+			  		<HintHead> Hints : </HintHead>
+			  		<HintText>{hint.slice(0, hintCount).join(', ')}</HintText>
+			  	</HintView>
+		    </AnimateView>
+      </GuesserView>
+      <AnimateView> 
       	{	alphas.map( (one,i) => <AlphaRow key={i}>
-      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => setGuessed([...guessed, str])} guessed={guessed.includes(two)}/>)}
+      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => {
+      				if(!wait) setGuessed([...guessed, str]) ;
+      			}} guessed={guessed.includes(two)}/>)}
       		</AlphaRow>)
       	} 
-      </View>
+      </AnimateView>
     </MainView>
   ) ;
 }
 
 const GameScreen = ({navigation, route}) => {
 	const [currentRound, setCurrentRound] = useState(0) ;
+	const [movies, setMovies] = useState([]) ;
 	const [movie, setMovie] = useState('') ;
 	const [winCount, setWinCount] = useState(0) ;
 
 	const {rounds} = route.params ;
 
-	useEffect( () => {
-		if(currentRound < rounds)
-			setMovie(movies[currentRound]) ;
+	useEffect( ()=> {
+		if(currentRound % 10 === 8 || movies.length === 0) {
+			fetch(`https://web.myarthhardware.com/movie`)
+			.then(res => {
+				if(res.ok)
+					return res.json() ;
+				throw Error(res.statusText) ;
+			})
+			.then( data => setMovies([...movies, ...data]) ) 
+			.catch( err  => console.log(err) ) ;
+		}
 	}, [currentRound])
 
-	const next = (str) => {
-		console.log(str, 'str', currentRound, 'currentRound', rounds, 'rounds') ;
-		if(currentRound+1 !== rounds) {
-			console.log('if true') ;
-			if(str === 'Win')
-				setWinCount(winCount+1) ;
-			setCurrentRound(currentRound+1)
+	useEffect( () => {
+		if(movies.length > 0 && currentRound < rounds) {
+			setMovie(movies[currentRound].name) ;
+		}
+	}, [currentRound, movies])
+
+	const next = (str, num = 0, hintCount) => {
+		if(rounds !== 100) {
+			if(currentRound+1 !== rounds) {
+				if(str === 'Win') 
+						setWinCount(winCount+1) ;
+				setCurrentRound(currentRound+1) ;
+			}
+			else 
+				navigation.replace('Result', {
+					rounds, winCount: (str==='Win')?winCount+1:winCount
+				}) ; 
 		}
 		else {
-			console.log('if false') ;
-			navigation.navigate('Loss') ; 
-		}
+			if(str === 'Win') {
+				hintCount -= 1 ;
+				setWinCount(winCount+(20-(2*num)-(3*hintCount))) ;	
+				setCurrentRound(currentRound+1) ;
+			}		
+			else
+				navigation.replace('Score', {rounds: currentRound+1, score: winCount })
+		} 
 	}
 
-  return (
-    <Game key={currentRound} round={currentRound} movie={movie} next={next}/>
-  ) ;
+	if(movies.length > 0)
+	  return <Game key={currentRound} round={currentRound} movie={movie} next={next} hint={movies[currentRound].hints} score={winCount}/> ;
+	else
+		return <MainView><ActivityIndicator color="#ffffff" size="large" /></MainView> ;
 }
 
 export default GameScreen ;

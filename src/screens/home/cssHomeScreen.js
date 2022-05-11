@@ -1,13 +1,14 @@
 import styled from 'styled-components/native' ;
-import { View } from 'react-native';
+import { Dimensions, View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;
 
 const MainView = styled.View`
   flex: 1 ;
-  justify-content: center ;
+  justify-content: space-evenly ;
   align-items: center ;
+  background-color: ${ ({theme}) => theme.colors.mainLight} ;
 ` ;
 
 // export const SearchBarCon = styled.View`
@@ -36,4 +37,9 @@ const HomeButton = styled(Button).attrs({
   min-width: 153px ;
  ` ;
 
-export {MainView, HomeButton} ;
+const HomeImage = styled.Image`
+  width: 360px ;
+  height: 180px ; 
+` ;
+
+export {MainView, HomeButton, HomeImage} ;

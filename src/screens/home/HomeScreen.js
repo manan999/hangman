@@ -1,14 +1,19 @@
-import {MainView, HomeButton} from './cssHomeScreen.js' ;
+import {View} from 'react-native' ;
+
+import {MainView, HomeButton, HomeImage} from './cssHomeScreen.js' ;
 
 const HomeScreen = ({navigation}) => {
     return (
       <MainView>
-        <HomeButton dark={true} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {rounds: 1})}>
-          Play Single
-        </HomeButton>
-        <HomeButton dark={true} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {rounds: 10})}>
-          Play Tens
-        </HomeButton>
+        <HomeImage source={require('../../../assets/AurBatao.png')} />
+        <View>
+          <HomeButton dark={true} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {rounds: 100})}>
+            Challenge
+          </HomeButton>
+          <HomeButton dark={true} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {rounds: 10})}>
+            Practice
+          </HomeButton>
+        </View>
       </MainView>
     ) ;
 }

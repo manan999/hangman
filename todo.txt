@@ -1,5 +1,2 @@
-+ wrong ke attempts 5 kar sakte ho
-+ movie change hone pe pata ni chal raha
 + warning aa rahi hai usestate wali
-+ win aur loss ko combine karke result page banana hai
 + movies ka json data dhundna hai
