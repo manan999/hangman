@@ -8,7 +8,6 @@ const MainView = styled.View`
   flex: 1 ;
   justify-content: space-evenly ;
   align-items: center ;
-  background-color: ${ ({theme}) => theme.colors.mainLight} ;
 ` ;
 
 const SubText = styled.Text`

@@ -8,7 +8,7 @@ const CircleOpacity = styled.TouchableOpacity`
 	height: ${({size}) => size}px ; 
 	border-radius: ${({size}) => size/2}px ;
 	
-	background-color: ${({theme}) => theme.colors.main} ;
+	background-color: ${({theme}) => theme.colors.mainLight} ;
 	align-items: center ;
 	justify-content: center ;
 ` ;

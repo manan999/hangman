@@ -190,15 +190,15 @@ const GameScreen = ({navigation, route}) => {
 		if(rounds < 100)
 			return {startTime : 30, initGuess : []} ;
 		else {
-			if(currentRound < 5)
+			if(currentRound < 10)
 				return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
-			else if(currentRound < 10)
-				return {startTime : 60, initGuess : ['a','e','i']} ;
 			else if(currentRound < 15)
-				return {startTime : 50, initGuess : ['a','e','i']} ;
+				return {startTime : 60, initGuess : ['a','e','i','o']} ;
 			else if(currentRound < 20)
-				return {startTime : 50, initGuess : ['a']} ;
+				return {startTime : 50, initGuess : ['a','e','i']} ;
 			else if(currentRound < 25)
+				return {startTime : 50, initGuess : ['a','e']} ;
+			else if(currentRound < 30)
 				return {startTime : 40, initGuess : ['a']} ;
 			else
 				return {startTime : 30, initGuess : []} ;

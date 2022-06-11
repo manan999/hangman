@@ -1,2 +1,0 @@
-+ warning aa rahi hai usestate wali
-+ movies ka json data dhundna hai

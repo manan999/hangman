@@ -30,4 +30,11 @@ const Row = styled.View`
   align-self: stretch ;
 ` ;
 
-export {WhiteButton, KufamText, Row} ;
+const MainView = styled.View`
+  flex: 1 ;
+  justify-content: center ;
+  align-items: center ;
+  background-color: ${ ({theme}) => theme.colors.main } ;
+` ;
+
+export {WhiteButton, KufamText, Row, MainView} ;

@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native' ;
 
-const HighScoreScreen = ({navigation, route}) => {
+import {MainView, KufamText} from '../../../cssApp.js' ;
 
+const HighScoreScreen = ({navigation, route}) => {
     return (
-      <View>
-        <Text>This is HighScoreScreen </Text>
-      </View>
+        <MainView>
+            <KufamText>Coming Soon!</KufamText>
+        </MainView>
     ) ;
 }
 

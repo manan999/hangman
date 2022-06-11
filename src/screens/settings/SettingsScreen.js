@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native' ;
 
-const SettingsScreen = ({navigation, route}) => {
+import {MainView, KufamText} from '../../../cssApp.js' ;
 
+const SettingsScreen = ({navigation, route}) => {
     return (
-      <View>
-        <Text>This is SettingsScreen </Text>
-      </View>
+        <MainView>
+            <KufamText>Coming Soon!</KufamText>
+        </MainView>
     ) ;
 }
 
