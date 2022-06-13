@@ -13,7 +13,7 @@ import {Alpha, Letter} from './AlphaLetter.js' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
-const Game = ({movie, round, next, hint, config}) => {
+const Game = ({movie, round, next, hint, config, mode}) => {
 	const [guessed, setGuessed] = useState(config.initGuess) ;
 	const [details, setDetails] = useState({}) ;
 	const [wrong, setWrong] = useState(0) ;
@@ -94,46 +94,53 @@ const Game = ({movie, round, next, hint, config}) => {
 			return <MaterialIcons name="lightbulb" size={36} color="grey" /> ;
 	}
 
+	const returnCountDown = () => {
+		if(mode !== 'practice')
+			return (
+				<AnimateView>
+			    	<CountdownCircleTimer isPlaying={!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss')} size={90} strokeWidth={8}>
+					    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
+					</CountdownCircleTimer>
+				</AnimateView>
+			) ;
+	}
+
 	return (
-    <MainView>
-		<GameHeader>
-			<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
-    		<AnimateView>
-    			{returnHintButton()}
-    		</AnimateView>
-		</GameHeader>
-    	<CrossView>
-    		{Array.from(new Array(wrong)).map((one, i)=><CrossCon key={i}><Cross/></CrossCon>)}
-    	</CrossView>
-    	<AnimateView>
-	    	<CountdownCircleTimer isPlaying={!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss')} size={90} strokeWidth={8}>
-			    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
-			  </CountdownCircleTimer>
-			</AnimateView>
-    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
-    		<GameText> Round {round+1} </GameText>
-    	</Animatable.View>
-    	<GuesserView>
-		  	<AnimateView> 
-		  		<AlphaRow>{returnGuesser()}</AlphaRow>
-		    </AnimateView>
-		  	<AnimateView> 
-		  		<HintView>
-			  		<HintHead> Hints : </HintHead>
-			  		<HintText>{hint.slice(0, hintCount).join(', ')}</HintText>
-			  	</HintView>
-		    </AnimateView>
-      </GuesserView>
-      <AnimateView> 
-      	{	alphas.map( (one,i) => <AlphaRow key={i}>
-      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => {
-      				if(!wait) setGuessed([...guessed, str]) ;
-      			}} guessed={guessed.includes(two)}/>)}
-      		</AlphaRow>)
-      	} 
-      </AnimateView>
-    </MainView>
-  ) ;
+	    <MainView>
+			<GameHeader>
+				<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
+	    		<AnimateView>
+	    			{returnHintButton()}
+	    		</AnimateView>
+			</GameHeader>
+	    	<CrossView>
+	    		{Array.from(new Array(wrong)).map((one, i)=><CrossCon key={i}><Cross/></CrossCon>)}
+	    	</CrossView>
+	    	{returnCountDown()}
+	    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
+	    		<GameText> Movies : Round {round+1} </GameText>
+	    	</Animatable.View>
+	    	<GuesserView>
+			  	<AnimateView> 
+			  		<AlphaRow>{returnGuesser()}</AlphaRow>
+			    </AnimateView>
+			  	<AnimateView> 
+			  		<HintView>
+				  		<HintHead> Hints : </HintHead>
+				  		<HintText>{hint.slice(0, hintCount).join(', ')}</HintText>
+				  	</HintView>
+			    </AnimateView>
+	      </GuesserView>
+	      <AnimateView> 
+	      	{	alphas.map( (one,i) => <AlphaRow key={i}>
+	      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => {
+	      				if(!wait) setGuessed([...guessed, str]) ;
+	      			}} guessed={guessed.includes(two)}/>)}
+	      		</AlphaRow>)
+	      	} 
+	      </AnimateView>
+	    </MainView>
+  	) ;
 }
 
 const GameScreen = ({navigation, route}) => {
@@ -142,7 +149,7 @@ const GameScreen = ({navigation, route}) => {
 	const [movie, setMovie] = useState('') ;
 	const [winCount, setWinCount] = useState(0) ;
 
-	const {rounds} = route.params ;
+	const {mode} = route.params ;
 
 	useEffect( ()=> {
 		if(currentRound % 10 === 8 || movies.length === 0) {
@@ -158,22 +165,19 @@ const GameScreen = ({navigation, route}) => {
 	}, [currentRound])
 
 	useEffect( () => {
-		if(movies.length > 0 && currentRound < rounds) {
+		if(movies.length > 0 ) {
 			setMovie(movies[currentRound].name) ;
 		}
 	}, [currentRound, movies])
 
 	const next = (str, num = 0, hintCount) => {
-		if(rounds !== 100) {
-			if(currentRound+1 !== rounds) {
-				if(str === 'Win') 
-						setWinCount(winCount+1) ;
+		if(mode === 'practice') {
+			if(str === 'Win') { 
+				setWinCount(winCount+1) ;
 				setCurrentRound(currentRound+1) ;
 			}
 			else 
-				navigation.replace('Result', {
-					rounds, winCount: (str==='Win')?winCount+1:winCount
-				}) ; 
+				navigation.replace('Result', {rounds: 20*(1+(winCount/20)), winCount }) ; 
 		}
 		else {
 			if(str === 'Win') {
@@ -187,27 +191,23 @@ const GameScreen = ({navigation, route}) => {
 	}
 
 	const returnTimeGuess = () => {
-		if(rounds < 100)
+		if(currentRound < 10)
+			return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
+		else if(currentRound < 15)
+			return {startTime : 60, initGuess : ['a','e','i','o']} ;
+		else if(currentRound < 20)
+			return {startTime : 50, initGuess : ['a','e','i']} ;
+		else if(currentRound < 25)
+			return {startTime : 50, initGuess : ['a','e']} ;
+		else if(currentRound < 30)
+			return {startTime : 40, initGuess : ['a']} ;
+		else
 			return {startTime : 30, initGuess : []} ;
-		else {
-			if(currentRound < 10)
-				return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
-			else if(currentRound < 15)
-				return {startTime : 60, initGuess : ['a','e','i','o']} ;
-			else if(currentRound < 20)
-				return {startTime : 50, initGuess : ['a','e','i']} ;
-			else if(currentRound < 25)
-				return {startTime : 50, initGuess : ['a','e']} ;
-			else if(currentRound < 30)
-				return {startTime : 40, initGuess : ['a']} ;
-			else
-				return {startTime : 30, initGuess : []} ;
-		}
 	}
 
 	if(movies.length > 0) {
 		const gameProps = {
-			movie, next,
+			movie, next, mode,
 			hint: movies[currentRound].hints,
 			config: {
 				score: winCount,

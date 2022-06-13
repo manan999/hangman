@@ -19,10 +19,10 @@ const HomeScreen = ({navigation}) => {
             <SubText> A WORD GUESSING GAME </SubText>
         </View>
         <View>
-            <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Game', {rounds: 100})}>
+            <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Game', {mode: 'challenge'})}>
                 Challenge
             </HomeButton>
-            <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {rounds: 10})}>
+            <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {mode: 'practice'})}>
                 Practice
             </HomeButton>
             <HomeButton dark={true} color={theme.colors.darkGreen} icon="notebook" mode="contained" onPress={() => navigation.navigate('Tutorial')}>

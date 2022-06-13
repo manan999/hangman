@@ -18,7 +18,6 @@ const ResultScreen = ({navigation, route}) => {
         <CountdownCircleTimer duration={rounds} initialRemainingTime={winCount} colors={obj.color} trailColor="#ffffff" trailStrokeWidth={24}>
           {({ remainingTime }) => <TimerText>{remainingTime}</TimerText>}
         </CountdownCircleTimer>
-        <KufamText> out of {rounds} rounds </KufamText>
         <LaughView>
           <LottieView source={obj.link} autoPlay loop />
         </LaughView>
