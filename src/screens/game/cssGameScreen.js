@@ -37,6 +37,7 @@ const CrossView = styled.View`
 
 const CrossCon = styled.View` 
   margin: auto 5px ;  
+  
 ` ;
 
 const GameText = styled.Text`

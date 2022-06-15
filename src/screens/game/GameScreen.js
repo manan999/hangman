@@ -109,21 +109,15 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	    <MainView>
 			<GameHeader>
 				<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
-	    		<AnimateView>
-	    			{returnHintButton()}
-	    		</AnimateView>
+	    		<AnimateView>{returnHintButton()}</AnimateView>
 			</GameHeader>
-	    	<CrossView>
-	    		{Array.from(new Array(wrong)).map((one, i)=><CrossCon key={i}><Cross/></CrossCon>)}
-	    	</CrossView>
+	    	<CrossView>{[4,3,2,1,0].map(one =><CrossCon key={one}><Cross color={one>=wrong}/></CrossCon>)}</CrossView>
 	    	{returnCountDown()}
 	    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
 	    		<GameText> Movies : Round {round+1} </GameText>
 	    	</Animatable.View>
 	    	<GuesserView>
-			  	<AnimateView> 
-			  		<AlphaRow>{returnGuesser()}</AlphaRow>
-			    </AnimateView>
+			  	<AnimateView><AlphaRow>{returnGuesser()}</AlphaRow></AnimateView>
 			  	<AnimateView> 
 			  		<HintView>
 				  		<HintHead> Hints : </HintHead>

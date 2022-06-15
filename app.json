@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "hangman",
-    "slug": "hangman",
+    "name": "aurbatao",
+    "slug": "aurbatao",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,14 +17,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.myarth.aurbatao"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.manan999.hangman"
+      "package": "com.myarth.aurbatao"
     },
     "web": {
       "favicon": "./assets/favicon.png"
