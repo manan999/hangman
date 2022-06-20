@@ -1,0 +1,7 @@
+1 register form banana hai
+2 login register ko working karna hai
+3 profile page banana hai
+4 game store ho ye feature dena hai
+5 backend se email ko non compulsory karna hai
+6 highscore ka system lagana hai
+7 about page banana hai

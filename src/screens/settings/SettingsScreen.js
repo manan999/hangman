@@ -1,19 +1,40 @@
-import { useState } from 'react' ;
+import { useState, useEffect } from 'react' ;
 import { View, Text } from 'react-native' ;
-import DropDown from "react-native-paper-dropdown";
+import DropDownPicker from 'react-native-dropdown-picker' ;
+import AsyncStorage from '@react-native-async-storage/async-storage' ;
 
 import {MainView, KufamText} from '../../../cssApp.js' ;
-
-const list = ['english', 'hinglish'] ;
+import {SettingsView} from './cssSettings.js' ;
 
 const SettingsScreen = ({navigation, route}) => {
-    const [showSelectDropDown, setShowSelectDropDown] = useState(false) ;
-    const [lang, setLang] = useState('english') ;
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'English', value: 'english'},
+        {label: 'Hindi', value: 'hindi'}
+    ]);
+
+    useEffect( () => {
+        AsyncStorage.getItem('@abLanguage')
+        .then( data => setValue(data))
+        .catch( err => console.log(err)) ;
+    }, [])
+
+    useEffect( () => {
+        if(value) {
+            AsyncStorage.setItem('@abLanguage', value)
+            .then( data => console.log('language changed successfully'))
+            .catch(err => console.log(err)) ;
+        }
+    }, [value] )
 
     return (
         <MainView>
-            <KufamText>Select Tutorial Language</KufamText>
-            <DropDown label="Language" mode="outlined" visible={showSelectDropDown} showDropDown={() => setShowSelectDropDown(true)} onDismiss={() => setShowSelectDropDown(false)} value={lang} setValue={setLang} list={list} />
+            <KufamText>Settings</KufamText>
+            <SettingsView>
+                <KufamText size={18}>Select Language:</KufamText>
+                <DropDownPicker open={open} value={value} items={items} setOpen={setOpen} setValue={setValue} setItems={setItems} />
+            </SettingsView>
         </MainView>
     ) ;
 }

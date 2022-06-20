@@ -3,10 +3,10 @@ import { Button } from 'react-native-paper';
 
 import {theme} from './src/theme.js' ;
 
-const WhiteButton = styled(Button).attrs({
+const WhiteButton = styled(Button).attrs(({size}) => ({
     color : theme.colors.white,
     labelStyle : {
-      fontSize: 16,
+      fontSize: size?size:16,
       fontFamily: theme.fonts.main,
       color: theme.colors.main
     },
@@ -14,12 +14,11 @@ const WhiteButton = styled(Button).attrs({
       justifyContent: "center",
     },
     uppercase: false
-})`
- ` ;
+}))`` ;
 
 const KufamText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
-  font-size: 24px ;
+  font-size: ${ ({size}) => size?size:24 }px ;
   font-family: ${ ({theme}) => theme.fonts.third } ;
   margin: 15px 0 10px ;
 ` ;
@@ -27,6 +26,7 @@ const KufamText = styled.Text`
 const Row = styled.View`
   flex-direction: row ; 
   justify-content: space-evenly ;
+  align-items: center ;
   align-self: stretch ;
 ` ;
 
@@ -37,4 +37,8 @@ const MainView = styled.View`
   background-color: ${ ({theme}) => theme.colors.main } ;
 ` ;
 
-export {WhiteButton, KufamText, Row, MainView} ;
+const Shrink = styled.View`
+  align-items: center ;  
+` ;
+
+export {WhiteButton, KufamText, Row, MainView, Shrink} ;
