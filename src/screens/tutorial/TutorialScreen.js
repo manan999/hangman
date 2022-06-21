@@ -5,13 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage' ;
 import {theme} from '../../theme.js' ;
 import {MainView, DemoImage, DemoText, WhiteButton} from './cssTutorial.js' ;
 import {Row} from '../../../cssApp.js' ;
-import t1 from '../../../assets/tutorial/t1.png' ;
-import t2 from '../../../assets/tutorial/t2.png' ;
-import t3 from '../../../assets/tutorial/t3.png' ;
-import t4 from '../../../assets/tutorial/t4.png' ;
-import t5 from '../../../assets/tutorial/t5.png' ;
-import t6 from '../../../assets/tutorial/t6.png' ;
-import t7 from '../../../assets/tutorial/t7.png' ;
+import t1 from '../../../assets/tutorial/t1.webp' ;
+import t2 from '../../../assets/tutorial/t2.webp' ;
+import t3 from '../../../assets/tutorial/t3.webp' ;
+import t4 from '../../../assets/tutorial/t4.webp' ;
+import t5 from '../../../assets/tutorial/t5.webp' ;
+import t6 from '../../../assets/tutorial/t6.webp' ;
+import t7 from '../../../assets/tutorial/t7.webp' ;
 
 const tutorialData = [{
         img: t1,

@@ -47,7 +47,8 @@ export default function App() {
   else
     return (
       <>
-        <ThemeProvider theme={theme}>
+        <PaperProvider>
+          <ThemeProvider theme={theme}>
           <SafeArea>
             <NavigationContainer>
               <Stack.Navigator screenOptions={screenOptions}>
@@ -63,7 +64,8 @@ export default function App() {
               </Stack.Navigator>
             </NavigationContainer> 
           </SafeArea>
-        </ThemeProvider>
+          </ThemeProvider>
+        </PaperProvider>
         <StatusBar style="auto" />
       </>
     );

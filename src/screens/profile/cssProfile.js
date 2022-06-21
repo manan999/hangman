@@ -19,6 +19,7 @@ const ProfileView = styled.View`
 
 const ProfileText = styled(KufamText)`
   margin: 0 ;
+  text-align: center ;
 ` ;
 
 const MarginRow = styled(Row)`
