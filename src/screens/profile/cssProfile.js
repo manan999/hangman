@@ -9,9 +9,9 @@ const MainView2 = styled(MainView)`
 ` ;
 
 const ProfileView = styled.View`
-  flex: .9 ;
+  flex: ${({fl}) => fl?fl:0.9} ;
   padding: 10px 20px ;
-  margin: 20px 0 ;
+  margin: 0 ;
   justify-content: space-evenly ;
   background-color: ${ ({theme}) => theme.colors.halfMain } ;
   width: 100% ;

@@ -1,6 +1,6 @@
-import { useState, useEffect, Fragment } from 'react' ;
+import { useState, useEffect } from 'react' ;
 import { View, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
-import { TextInput } from 'react-native-paper' ;
+import { Snackbar, TextInput } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
@@ -11,8 +11,8 @@ import {theme} from '../../theme.js' ;
 import sky from '../../../assets/sky.json' ;
 
 const initObj = {
-    login: { username: '', password: '' },
-    register: { username: '', email : '', password: '', repass: '', avatar: `https://raw.githubusercontent.com/manan999/images/master/hangman/avatar/1.webp` }, 
+    login: { name: '', password: '' },
+    register: { name: '', email : '', password: '', repass: '', image: `https://raw.githubusercontent.com/manan999/images/master/hangman/avatar/1.webp` }, 
 };
 
 const ProfileScreen = ({navigation, route}) => {
@@ -20,6 +20,7 @@ const ProfileScreen = ({navigation, route}) => {
     const [data, setData] = useState(initObj.login) ;
     const [logo, setLogo] = useState(true) ;
     const [hidePass, setHidePass] = useState(true) ;
+    const [error, setError] = useState([]) ;
     const windowHeight = Dimensions.get('window').height;
     
     useEffect(() => {
@@ -36,11 +37,11 @@ const ProfileScreen = ({navigation, route}) => {
 
     const formData = {
         login: [
-            {name: 'username', type:'text', label: 'Enter your Username'},
+            {name: 'name', type:'text', label: 'Enter your Username'},
             {name: 'password', type:'password', label: 'Enter your Password'}
         ],
         register: [
-            {name: 'username', type:'text', label: 'Choose a Username'},
+            {name: 'name', type:'text', label: 'Choose a Username'},
             {name: 'email', type:'text', label: 'Enter Email (Optional)'},
             {name: 'password', type:'password', label: 'Enter a Password'},
             {name: 'repass', type:'password', label: 'Re-Enter Password'},
@@ -65,6 +66,12 @@ const ProfileScreen = ({navigation, route}) => {
         console.log(data) ;
     }
 
+    const onRegisterPress = () => {
+        const errorArr = [] ;
+
+        setError(errorArr) ;
+    }
+
     const returnLogo = () => {
         if(logo)
             return (
@@ -73,13 +80,17 @@ const ProfileScreen = ({navigation, route}) => {
                     <SubText> A WORD GUESSING GAME </SubText>
                 </View>
             ) ;
-        else return null ;
+    }
+
+    const returnAvatarChoice = () => {
+        if(logo)
+            return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})}/> ;
     }
 
     const checkMode = () => {
         if(mode === 'login') {
             return ( 
-                <Fragment>
+                <>
                     { returnLogo() }
                     <ProfileView>
                         <ProfileText size={20}> Sign In </ProfileText>
@@ -95,23 +106,24 @@ const ProfileScreen = ({navigation, route}) => {
                             <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('register')} size={13}> Sign Up </WhiteButton>
                         </Row>
                     </ProfileView>   
-                </Fragment>
+                </>
             ) ;
         }
         else if (mode === "register") {
+            console.log(error.length>0, error[0]) ;
             return (
-                <Fragment>
-                    <ProfileView>
+                <>
+                    <ProfileView fl={logo?0.9:1}>
                         <ProfileText size={16}> Sign Up </ProfileText>
-                        <AvatarChoice url={data.avatar} setUrl={ url => setData({...data, avatar: url})}/>
+                        { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onLoginPress}> Register </WhiteButton></Shrink>
+                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Register </WhiteButton></Shrink>
                         <Row>
                             <ProfileText size={14}> Already have an Account? </ProfileText>
                             <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
                         </Row>
                     </ProfileView>
-                </Fragment>
+                </>
             ) ;
         }
     }
@@ -120,6 +132,7 @@ const ProfileScreen = ({navigation, route}) => {
         <MainView2>
             <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
             {checkMode()}
+            <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>
         </MainView2>
     ) ;
 }

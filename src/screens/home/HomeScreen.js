@@ -30,16 +30,16 @@ const HomeScreen = ({navigation}) => {
             </HomeButton>
         </View>
         <Row>
-            <CircleButton onButtonPress={()=>navigation.navigate('About')}>
+            <CircleButton onButtonPress={()=>navigation.navigate('About')} size={45}>
                 <FontAwesome5 name="info" size={25} color={theme.colors.main} />
             </CircleButton>
-            <CircleButton onButtonPress={()=>navigation.navigate('Profile')}>
+            <CircleButton onButtonPress={()=>navigation.navigate('Profile')} size={45}>
                 <FontAwesome name="user" size={25} color={theme.colors.main} />
             </CircleButton>
-            <CircleButton onButtonPress={()=>navigation.navigate('HighScore')}>
+            <CircleButton onButtonPress={()=>navigation.navigate('HighScore')} size={45}>
                 <MaterialCommunityIcons name="podium" size={25} color={theme.colors.main} />
             </CircleButton>
-            <CircleButton onButtonPress={()=>navigation.navigate('Settings')}>
+            <CircleButton onButtonPress={()=>navigation.navigate('Settings')} size={45}>
                 <FontAwesome name="gear" size={25} color={theme.colors.main} />
             </CircleButton>
         </Row>
