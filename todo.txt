@@ -1,6 +1,5 @@
-1 register form ko responsive banana hai
-2 login register ko working karna hai
-3 profile page banana hai
-4 game store ho ye feature dena hai
-5 highscore ka system lagana hai
-6 about page banana hai
+1 profile page banana hai
+2 error handling sahi karni hai like password incorrect, user already exists etc
+3 game store ho ye feature dena hai
+4 highscore ka system lagana hai
+5 about page banana hai

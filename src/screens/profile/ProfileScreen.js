@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react' ;
-import { View, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
+import { useState, useEffect, useContext } from 'react' ;
+import { View, Text, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
@@ -7,7 +7,9 @@ import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
 import { Row, WhiteButton, Shrink } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
 import { MainView2, ProfileView, ProfileText, MarginRow } from './cssProfile.js' ;
-import {theme} from '../../theme.js' ;
+import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
+import { theme } from '../../theme.js' ;
+import { UserContext } from '../../context/UserContext.js' ;
 import sky from '../../../assets/sky.json' ;
 
 const initObj = {
@@ -19,8 +21,11 @@ const ProfileScreen = ({navigation, route}) => {
     const [mode, setMode] = useState('login') ;
     const [data, setData] = useState(initObj.login) ;
     const [logo, setLogo] = useState(true) ;
-    const [hidePass, setHidePass] = useState(true) ;
+    const [hidePass, setHidePass] = useState({password: true, repass: true}) ;
     const [error, setError] = useState([]) ;
+    const [errorCount, setErrorCount] = useState(null) ;
+
+    const {user, loadUser} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
     
     useEffect(() => {
@@ -35,6 +40,15 @@ const ProfileScreen = ({navigation, route}) => {
 
     useEffect(() => setData(initObj[mode]), [mode])
 
+    useEffect(() => {
+        if(errorCount === 0 && data !== initObj[mode]) {
+            if(mode === 'register') 
+                sendRegisterReq() ;
+            else if(mode === 'login')
+                sendLoginReq() ;
+        }
+    }, [errorCount])
+
     const formData = {
         login: [
             {name: 'name', type:'text', label: 'Enter your Username'},
@@ -48,6 +62,66 @@ const ProfileScreen = ({navigation, route}) => {
         ],
     } ;
 
+    const sendLoginReq = () => {
+        ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
+        const {name, password} = data ;
+
+        // console.log(JSON.stringify({name, password}))
+
+        // fetch('https://web.myarthhardware.com/myarth/login' ,{
+        fetch('http://192.168.1.8:8000/myarth/login' ,{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json'},
+            body : JSON.stringify({name, password}),
+        })
+        .then(res => {
+            if(res.ok)
+                return res.json() ;
+            else
+                throw Error(res.statusText) ;
+        })
+        .then(resp => { 
+            // console.log(resp) ;      
+            loadUser(resp) ;      
+            ToastAndroid.show("Logged In Successfully", ToastAndroid.LONG)
+            navigation.replace('Home') ;
+        })
+        .catch( err  => {
+            console.log(err) ;
+            ToastAndroid.show(err, ToastAndroid.SHORT)
+        }) ;
+    }
+
+    const sendRegisterReq = () => {
+        ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
+        const {name, email, image, password} = data ;
+
+        // console.log(JSON.stringify({name, email, image, password}))
+
+        // fetch('https://web.myarthhardware.com/myarth/users' ,{
+        fetch('http://192.168.1.8:8000/myarth/users' ,{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json'},
+            body : JSON.stringify({name, email, image, password}),
+        })
+        .then(res => {
+            if(res.ok)
+                return res.json() ;
+            else
+                throw Error(res.statusText) ;
+        })
+        .then(resp => { 
+            console.log(resp) ;      
+            loadUser(resp) ;      
+            ToastAndroid.show("Registered Successfully", ToastAndroid.LONG)
+            navigation.replace('Home') ;
+        })
+        .catch( err  => {
+            console.log(err) ;
+            ToastAndroid.show(err, ToastAndroid.SHORT)
+        }) ;
+    }
+
     const returnForm = () => {
         return formData[mode].map( one => {
             const {main, mainLight} = theme.colors ;
@@ -55,7 +129,7 @@ const ProfileScreen = ({navigation, route}) => {
             
             let obj = {
                 text : <TextInput key={name} label={label} value={data[name]} activeUnderlineColor={main} onChangeText={text => setData({...data, [name]: text })} selectionColor={mainLight} />,
-                password : <TextInput key={name} label={label} value={data[name]} activeUnderlineColor={main} onChangeText={text => setData({...data, [name]: text })} selectionColor={mainLight} secureTextEntry={hidePass} right={<TextInput.Icon name={hidePass?"eye":"eye-off"} onPress={() => setHidePass(!hidePass)} />}/>,
+                password : <TextInput key={name} label={label} value={data[name]} activeUnderlineColor={main} onChangeText={text => setData({...data, [name]: text })} selectionColor={mainLight} secureTextEntry={hidePass[name]} right={<TextInput.Icon name={hidePass[name]?"eye":"eye-off"} onPress={() => setHidePass({...hidePass, [name]: !hidePass[name]})} />}/>,
             }
 
             return obj[type] ;
@@ -63,13 +137,19 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const onLoginPress = () => {
-        console.log(data) ;
+        const {name, password} = data;
+        const errorArr = [isBlank(name, 'Username'), isBlank(password, 'password')].filter(one => one) ;
+
+        setError(errorArr) ;
+        setErrorCount(errorArr.length) ;
     }
 
     const onRegisterPress = () => {
-        const errorArr = [] ;
+        const {name, email, password, repass} = data;
+        const errorArr = [invalidName(name), invalidEmail(email), invalidPass(password, repass)].filter(one => one) ;
 
         setError(errorArr) ;
+        setErrorCount(errorArr.length) ;
     }
 
     const returnLogo = () => {
@@ -85,6 +165,16 @@ const ProfileScreen = ({navigation, route}) => {
     const returnAvatarChoice = () => {
         if(logo)
             return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})}/> ;
+    }
+
+    const returnSignInText = () => {
+        if(logo)
+            return (
+                <Row>
+                    <ProfileText size={14}> Already have an Account? </ProfileText>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
+                </Row>
+            ) ;
     }
 
     const checkMode = () => {
@@ -110,7 +200,6 @@ const ProfileScreen = ({navigation, route}) => {
             ) ;
         }
         else if (mode === "register") {
-            console.log(error.length>0, error[0]) ;
             return (
                 <>
                     <ProfileView fl={logo?0.9:1}>
@@ -118,23 +207,29 @@ const ProfileScreen = ({navigation, route}) => {
                         { returnAvatarChoice() }
                         { returnForm() }
                         <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Register </WhiteButton></Shrink>
-                        <Row>
-                            <ProfileText size={14}> Already have an Account? </ProfileText>
-                            <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
-                        </Row>
+                        { returnSignInText() }
                     </ProfileView>
                 </>
             ) ;
         }
     }
 
-    return (
-        <MainView2>
-            <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
-            {checkMode()}
-            <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>
-        </MainView2>
-    ) ;
+    if(user.name)
+        return (
+            <MainView2>
+                <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
+                <Text> {user.name} </Text>
+                <TouchableOpacity onPress={()=>loadUser({})}><Text>Logout</Text></TouchableOpacity>
+            </MainView2>
+        ) ;
+    else
+        return (
+            <MainView2>
+                <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
+                {checkMode()}
+                <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>
+            </MainView2>
+        ) ;
 }
 
 export default ProfileScreen ;

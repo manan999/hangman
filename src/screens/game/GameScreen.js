@@ -148,6 +148,7 @@ const GameScreen = ({navigation, route}) => {
 	useEffect( ()=> {
 		if(currentRound % 10 === 8 || movies.length === 0) {
 			fetch(`https://web.myarthhardware.com/movie`)
+			// fetch(`http://192.168.1.8:8000/movie`)
 			.then(res => {
 				if(res.ok)
 					return res.json() ;
