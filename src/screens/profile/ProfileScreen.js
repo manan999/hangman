@@ -47,7 +47,7 @@ const ProfileScreen = ({navigation, route}) => {
             else if(mode === 'login')
                 sendLoginReq() ;
         }
-    }, [errorCount])
+    }, [errorCount, error])
 
     const formData = {
         login: [
@@ -66,29 +66,28 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, password} = data ;
 
-        // console.log(JSON.stringify({name, password}))
-
         // fetch('https://web.myarthhardware.com/myarth/login' ,{
         fetch('http://192.168.1.8:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
         })
-        .then(res => {
-            if(res.ok)
-                return res.json() ;
-            else
-                throw Error(res.statusText) ;
-        })
+        .then(res =>  res.json())
         .then(resp => { 
-            // console.log(resp) ;      
-            loadUser(resp) ;      
-            ToastAndroid.show("Logged In Successfully", ToastAndroid.LONG)
-            navigation.replace('Home') ;
+            // console.log(resp) ;  
+            if(resp.user) {
+                loadUser(resp) ;      
+                ToastAndroid.show("Logged In Successfully", ToastAndroid.LONG)
+                navigation.replace('Home') ;
+            }
+            else {
+                setError([resp]) ;
+                setErrorCount(1) ;
+            }
         })
         .catch( err  => {
-            console.log(err) ;
-            ToastAndroid.show(err, ToastAndroid.SHORT)
+            console.log(JSON.stringify(err)) ;
+            // ToastAndroid.show(JSON.stringify(err), ToastAndroid.SHORT)
         }) ;
     }
 
@@ -96,25 +95,24 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, email, image, password} = data ;
 
-        // console.log(JSON.stringify({name, email, image, password}))
-
         // fetch('https://web.myarthhardware.com/myarth/users' ,{
         fetch('http://192.168.1.8:8000/myarth/users' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, email, image, password}),
         })
-        .then(res => {
-            if(res.ok)
-                return res.json() ;
-            else
-                throw Error(res.statusText) ;
-        })
+        .then(res =>  res.json())
         .then(resp => { 
-            console.log(resp) ;      
-            loadUser(resp) ;      
-            ToastAndroid.show("Registered Successfully", ToastAndroid.LONG)
-            navigation.replace('Home') ;
+            // console.log(resp) ;  
+            if(resp.user) {
+                loadUser(resp) ;      
+                ToastAndroid.show("Registered Successfully", ToastAndroid.LONG)
+                navigation.replace('Home') ;
+            }
+            else {
+                setError([resp]) ;
+                setErrorCount(1) ;
+            }
         })
         .catch( err  => {
             console.log(err) ;
@@ -139,6 +137,8 @@ const ProfileScreen = ({navigation, route}) => {
     const onLoginPress = () => {
         const {name, password} = data;
         const errorArr = [isBlank(name, 'Username'), isBlank(password, 'password')].filter(one => one) ;
+
+        console.log(errorArr, data) ; 
 
         setError(errorArr) ;
         setErrorCount(errorArr.length) ;
