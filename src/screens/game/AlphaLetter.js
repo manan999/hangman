@@ -1,13 +1,11 @@
-import { Pressable, Vibration } from 'react-native';
+import { Pressable } from 'react-native';
 
 import {AlphaView, AlphaText, LetterView, LetterText} from './cssAlpha.js' ;
 
 const Alpha = ({text, guess, guessed}) => {
 	const onAlphaPress = () => {
-		if(!guessed) {
+		if(!guessed) 
 			guess(text)
-			Vibration.vibrate(25) ;
-		}
 	}
 
 	return (

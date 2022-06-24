@@ -79,7 +79,7 @@ const GameHeader = styled.View`
   position: absolute ;
   top: 0 ;
   z-index: 10 ;
-  padding : 15px 20px ; 
+  padding : 15px ; 
 ` ;
 
 const ScoreView = styled.View`
