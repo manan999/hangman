@@ -37,8 +37,12 @@ const MainView = styled.View`
   background-color: ${ ({theme}) => theme.colors.main } ;
 ` ;
 
-const Shrink = styled.View`
-  align-items: center ;  
+const MainScrollView = styled.ScrollView`
+  background-color: ${ ({theme}) => theme.colors.main } ;
 ` ;
 
-export {WhiteButton, KufamText, Row, MainView, Shrink} ;
+const Shrink = styled.View`
+  align-items: center ; 
+` ;
+
+export {WhiteButton, KufamText, Row, MainView, Shrink, MainScrollView} ;

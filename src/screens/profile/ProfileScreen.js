@@ -66,8 +66,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, password} = data ;
 
-        // fetch('https://web.myarthhardware.com/myarth/login' ,{
-        fetch('http://192.168.1.8:8000/myarth/login' ,{
+        fetch('https://web.myarthhardware.com/myarth/login' ,{
+        // fetch('http://192.168.1.8:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
@@ -95,8 +95,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, email, image, password} = data ;
 
-        // fetch('https://web.myarthhardware.com/myarth/users' ,{
-        fetch('http://192.168.1.8:8000/myarth/users' ,{
+        fetch('https://web.myarthhardware.com/myarth/users' ,{
+        // fetch('http://192.168.1.8:8000/myarth/users' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, email, image, password}),
@@ -137,8 +137,6 @@ const ProfileScreen = ({navigation, route}) => {
     const onLoginPress = () => {
         const {name, password} = data;
         const errorArr = [isBlank(name, 'Username'), isBlank(password, 'password')].filter(one => one) ;
-
-        console.log(errorArr, data) ; 
 
         setError(errorArr) ;
         setErrorCount(errorArr.length) ;
