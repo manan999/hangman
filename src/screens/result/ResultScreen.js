@@ -35,36 +35,25 @@ const ResultScreen = ({navigation, route}) => {
         source : user.name?{uri: user.image}:require('../../../assets/user.png'),
     }
 
+    const returnRows = () => {
+        return scores.map((score, i) => {
+            return (
+                <DataTable.Row key={i}>
+                    <DataTable.Cell style={{flex:1}}><KufamText size={12}>{i+1}</KufamText></DataTable.Cell>
+                    <DataTable.Cell style={{flex:2}}><KufamText size={14}>{score.score}</KufamText></DataTable.Cell>
+                    <DataTable.Cell style={{flex:4}}><KufamText size={14}>{score.createdAt}</KufamText></DataTable.Cell>
+                </DataTable.Row>
+            ) ;
+        })
+    }
+
     const returnSignIn = () => {
         if(user.name)
             return (
                 <>
                     <CapitalKufam size={20}>Your High Scores</CapitalKufam>
                     <ScoreTable>
-                        <DataTable.Header>
-                            <DataTable.Title>Dessert</DataTable.Title>
-                            <DataTable.Title numeric>Calories</DataTable.Title>
-                            <DataTable.Title numeric>Fat</DataTable.Title>
-                        </DataTable.Header>
-
-                        <DataTable.Row>
-                            <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-                            <DataTable.Cell numeric>159</DataTable.Cell>
-                            <DataTable.Cell numeric>6.0</DataTable.Cell>
-                        </DataTable.Row>
-
-                        <DataTable.Row>
-                            <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                            <DataTable.Cell numeric>237</DataTable.Cell>
-                            <DataTable.Cell numeric>8.0</DataTable.Cell>
-                        </DataTable.Row>
-
-                        <DataTable.Row>
-                            <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                            <DataTable.Cell numeric>237</DataTable.Cell>
-                            <DataTable.Cell numeric>8.0</DataTable.Cell>
-                        </DataTable.Row>
-
+                        { returnRows() }   
                     </ScoreTable>
                     <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => navigation.replace('HighScore')}>See More</WhiteButton>
                 </>
@@ -86,7 +75,7 @@ const ResultScreen = ({navigation, route}) => {
             </CountdownCircleTimer>
             <Row>
                 <BoxNumber text="Your Score" num={wins} color={theme.colors.green}/>
-                <BoxNumber text="Lives Lost" num={wrongs} color={theme.colors.red}/>
+                <BoxNumber text="Hearts Lost" num={wrongs} color={theme.colors.red}/>
                 <BoxNumber text="Hints Used" num={hints} color={theme.colors.mainLight}/>
             </Row>
             <Avatar.Image {...avatarProps}/>

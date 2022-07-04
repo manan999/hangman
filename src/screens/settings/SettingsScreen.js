@@ -16,7 +16,12 @@ const SettingsScreen = ({navigation, route}) => {
 
     useEffect( () => {
         AsyncStorage.getItem('@abLanguage')
-        .then( data => setValue(data))
+        .then( data => {
+            if(data)
+                setValue(data) ;
+            else
+                setValue('english') ;
+        })
         .catch( err => console.log(err)) ;
     }, [])
 

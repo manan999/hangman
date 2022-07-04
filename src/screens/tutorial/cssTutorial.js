@@ -21,7 +21,7 @@ const DemoText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-family: ${ ({theme}) => theme.fonts.main } ;
   font-size: 18px ;
-  padding: 0 10px ;
+  max-width: 93% ;
   letter-spacing: .4px ;
   line-height: 25px ;
 ` ;
