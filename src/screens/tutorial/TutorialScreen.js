@@ -50,7 +50,12 @@ const TutorialScreen = ({navigation}) => {
 
     useEffect( () => {
         AsyncStorage.getItem('@abLanguage')
-        .then( data => setLang(data))
+        .then( data => {
+            if(data)
+                setLang(data) ;
+            else
+                setLang('english') ;
+        })
         .catch( err => console.log(err)) ;
     }, [])
 
@@ -65,7 +70,7 @@ const TutorialScreen = ({navigation}) => {
 
     return (
         <MainView>
-            <DemoImage source={tutorialData[page].img} />
+            <DemoImage source={tutorialData[page].img} resizeMode="contain" />
             <DemoText>{tutorialData[page][lang]}</DemoText>
             <Row>{returnBackButton()}{returnNextButton()}</Row>
         </MainView>
