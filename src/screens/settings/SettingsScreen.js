@@ -37,7 +37,7 @@ const SettingsScreen = ({navigation, route}) => {
         <MainView>
             <KufamText>Settings</KufamText>
             <SettingsView>
-                <KufamText size={18}>Select Language:</KufamText>
+                <KufamText size={18}>Tutorial Language:</KufamText>
                 <DropDownPicker open={open} value={value} items={items} setOpen={setOpen} setValue={setValue} setItems={setItems} />
             </SettingsView>
         </MainView>

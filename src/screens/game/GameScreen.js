@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react' ;
+import { useState, useEffect, useCallback } from 'react' ;
+import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper' ;
+import { ToastAndroid, BackHandler, Modal } from 'react-native' ;
 
-import {MainView} from './cssGameScreen.js' ;
+import { MainView, GreenButton } from './cssGameScreen.js' ;
+import { BlackKufam } from '../../../cssApp.js' ;
 import Game from './Game.js' ;
+import Popup from '../../comps/popup/Popup.js' ;
 
 const initGame = {
 	wins: 0,
@@ -15,13 +19,27 @@ const GameScreen = ({navigation, route}) => {
 	const [movies, setMovies] = useState([]) ;
 	const [movie, setMovie] = useState('') ;
 	const [gameData, setGameData] = useState(initGame) ;
+	const [popOpen, setPopOpen] = useState(false) ;
 
 	const {mode} = route.params ;
+
+	useFocusEffect(
+	    useCallback(() => {
+	    	const onBackPress = () => {
+	        	// ToastAndroid.show("Back Button is disabled on this screen", ToastAndroid.SHORT) ;
+	        	setPopOpen(true) ;
+	          	return true;
+	      	};
+
+	      	BackHandler.addEventListener('hardwareBackPress', onBackPress);
+	      	return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+	    }, [popOpen, setPopOpen])
+	);
 
 	useEffect( ()=> {
 		if(currentRound % 10 === 8 || movies.length === 0) {
 			fetch(`https://web.myarthhardware.com/movie`)
-			// fetch(`http://192.168.1.8:8000/movie`)
+			// fetch(`http://localhost:8000/movie`)
 			.then(res => {
 				if(res.ok)
 					return res.json() ;
@@ -46,7 +64,7 @@ const GameScreen = ({navigation, route}) => {
 				setCurrentRound(currentRound+1) ;
 			}
 			else 
-				navigation.replace('Result', {rounds: 10*(1+Math.floor(wins/10)), wins, hints, wrongs, topic: 'Movies', mode: 'Practice' }) ; 
+				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic: 'Movies', mode: 'practice' }) ; 
 		}
 		else {
 			if(str === 'Win') {
@@ -55,7 +73,7 @@ const GameScreen = ({navigation, route}) => {
 				setCurrentRound(currentRound+1) ;
 			}		
 			else
-				navigation.replace('Score', {rounds: currentRound+1, score: wins, hints, wrongs })
+				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic: 'Movies', mode: 'challenge' })
 		} 
 	}
 
@@ -64,17 +82,17 @@ const GameScreen = ({navigation, route}) => {
 			return {initGuess : ['a','e','i','o','u']} ;
 		else {
 			if(currentRound < 10)
-				return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
+				return {startTime : 45, initGuess : ['a','e','i','o','u']} ;
 			else if(currentRound < 15)
-				return {startTime : 60, initGuess : ['a','e','i','o']} ;
+				return {startTime : 45, initGuess : ['a','e','i','o']} ;
 			else if(currentRound < 20)
-				return {startTime : 50, initGuess : ['a','e','i']} ;
+				return {startTime : 30, initGuess : ['a','e','i']} ;
 			else if(currentRound < 25)
-				return {startTime : 50, initGuess : ['a','e']} ;
+				return {startTime : 30, initGuess : ['a','e']} ;
 			else if(currentRound < 30)
-				return {startTime : 40, initGuess : ['a']} ;
+				return {startTime : 20, initGuess : ['a']} ;
 			else
-				return {startTime : 30, initGuess : []} ;
+				return {startTime : 20, initGuess : []} ;
 		}
 	}
 
@@ -87,7 +105,15 @@ const GameScreen = ({navigation, route}) => {
 				...returnTimeGuess()
 			}
 		}
-	  	return <Game key={currentRound} round={currentRound} {...gameProps}/> ;
+	  	return (
+	  		<>
+	  			<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
+	  				<BlackKufam size={20}> Forfeit this Game ? </BlackKufam>
+	  				<GreenButton> Yes </GreenButton>
+	  			</Popup>
+	  			<Game key={currentRound} round={currentRound} {...gameProps}/> 
+	  		</>
+	  	) ;
 	}
 	else
 		return <MainView><ActivityIndicator color="#ffffff" size="large" /></MainView> ;

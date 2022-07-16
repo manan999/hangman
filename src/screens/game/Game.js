@@ -90,8 +90,15 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	}
 
 	const returnHintButton = () => {
-		if(hintCount && hintCount < 3)
-			return <Pressable onPress={() => setHintCount(hintCount+1)}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
+		if(hintCount && hintCount < 4)
+			return <Pressable onPress={() => {
+				let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => one !== ' ' && !guessed.includes(one)) ;
+				if(hints.length > 0) {
+					console.log(hints) ;
+					setGuessed([...guessed, hints[0]]) ;
+				}
+				setHintCount(hintCount+1) ;
+			}}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
 		else
 			return <MaterialIcons name="lightbulb" size={36} color="grey" /> ;
 	}
@@ -123,7 +130,7 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 			  	<AnimateView> 
 			  		<HintView>
 				  		<HintHead> Hints : </HintHead>
-				  		<HintText>{hint.slice(0, hintCount).join(', ')}</HintText>
+				  		<HintText>{hint.join(', ')}</HintText>
 				  	</HintView>
 			    </AnimateView>
 	      </GuesserView>

@@ -8,14 +8,14 @@ const CircleOpacity = styled.TouchableOpacity`
 	height: ${({size}) => size}px ; 
 	border-radius: ${({size}) => size/2}px ;
 	
-	background-color: ${({theme}) => theme.colors.mainLight} ;
+	background-color: ${({bgColor}) => bgColor} ;
 	align-items: center ;
 	justify-content: center ;
 ` ;
 
-const CircleButton = ({children, size=50, onButtonPress}) => {
+const CircleButton = ({children, size=50, bgColor=theme.colors.mainLight, onButtonPress}) => {
 	return (
-		<CircleOpacity size={size} onPress={onButtonPress}>
+		<CircleOpacity size={size} onPress={onButtonPress} bgColor={bgColor}>
 			{children}
 		</CircleOpacity>
 	) ;

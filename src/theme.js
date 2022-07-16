@@ -5,8 +5,11 @@ export const theme = {
 		mainLight: "#d4effd",
 		white: "#f5f5f5",
 		red: "#ff8c69",
+		darkRed: "#8b0000",
 		green: "#05f545",
 		darkGreen: '#13542f',
+		black: "#000000",
+		halfBlack: "rgba(0, 0, 0, 0.5)",
 	},
 	fonts : {
 		main : "Lexend_400Regular" ,

@@ -12,7 +12,6 @@ import {useFonts as useMont, Montserrat_400Regular} from '@expo-google-fonts/mon
 
 import GameScreen from './src/screens/game/GameScreen.js' ;
 import ResultScreen from './src/screens/result/ResultScreen.js' ;
-import ScoreScreen from './src/screens/score/ScoreScreen.js' ;
 import HomeScreen from './src/screens/home/HomeScreen.js' ;
 import AboutScreen from './src/screens/about/AboutScreen.js' ;
 import HighScoreScreen from './src/screens/highscore/HighScoreScreen.js' ;
@@ -37,7 +36,9 @@ export default function App() {
     presentation: 'modal',
   }
 
-  if( !kufamLoaded || !montLoaded || !lexendLoaded)
+  const fontsLoaded = [kufamLoaded, montLoaded, lexendLoaded].every(one => one) ;
+
+  if( !fontsLoaded )
     return (
       <>
         <Text> Loading... </Text>
@@ -55,7 +56,6 @@ export default function App() {
                   <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false }}/>
                   <Stack.Screen name="Game" component={GameScreen} options={{headerShown: false }}/>
                   <Stack.Screen name="Result" component={ResultScreen} options={{headerShown: false }}/>
-                  <Stack.Screen name="Score" component={ScoreScreen} options={{headerShown: false }}/>
                   <Stack.Screen name="Settings" component={SettingsScreen} options={{headerShown: false }}/>
                   <Stack.Screen name="HighScore" component={HighScoreScreen} options={{headerShown: false }}/>
                   <Stack.Screen name="About" component={AboutScreen} options={{headerShown: false }}/>

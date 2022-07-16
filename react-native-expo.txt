@@ -20,6 +20,10 @@ Setup App-
 7)  app.js me se code hata do by default wala
 8)  create a folder src within which you can create other folders like context, comps, pages, etc
 
+Buliding-
+
+1) run "eas build -p android --profile production" . (production naam ki profile banane ke baad)
+
 
 App Recommendations :-
 

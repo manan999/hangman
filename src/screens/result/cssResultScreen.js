@@ -17,7 +17,7 @@ const CapitalKufam = styled(KufamText)`
 ` ;
 
 const ButtonRow = styled(Row)`
-  margin: 15px 0 ;
+  margin: 15px 0 25px ;
 ` ; 
 
 const ScoreTable = styled(DataTable)` 

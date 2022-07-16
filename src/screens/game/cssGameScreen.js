@@ -100,5 +100,15 @@ const ScoreText = styled.Text`
   margin: 0 5px ;
 ` ;
 
+const GreenButton = styled(Button).attrs(({size}) => ({
+    color : theme.colors.green,
+    labelStyle : {
+      fontSize: size?size:16,
+      fontFamily: theme.fonts.main,
+      color: theme.colors.white
+    },
+    uppercase: false
+}))`` ;
+
 export {MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, 
-        HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText} ;
+        HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText, GreenButton} ;

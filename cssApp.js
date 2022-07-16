@@ -23,6 +23,12 @@ const KufamText = styled.Text`
   margin: 15px 0 10px ;
 ` ;
 
+const BlackKufam = styled.Text`
+  color: ${ ({theme}) => theme.colors.black } ;
+  font-size: ${ ({size}) => size?size:24 }px ;
+  font-family: ${ ({theme}) => theme.fonts.third } ;
+` ;
+
 const Row = styled.View`
   flex-direction: row ; 
   justify-content: space-evenly ;
@@ -45,4 +51,4 @@ const Shrink = styled.View`
   align-items: center ; 
 ` ;
 
-export {WhiteButton, KufamText, Row, MainView, Shrink, MainScrollView} ;
+export {WhiteButton, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView} ;
