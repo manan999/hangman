@@ -101,14 +101,16 @@ const ScoreText = styled.Text`
 ` ;
 
 const GreenButton = styled(Button).attrs(({size}) => ({
-    color : theme.colors.green,
+    color : theme.colors.darkGreen,
     labelStyle : {
       fontSize: size?size:16,
       fontFamily: theme.fonts.main,
       color: theme.colors.white
     },
     uppercase: false
-}))`` ;
+}))` 
+  margin: 20px 0 0 ;
+` ;
 
 export {MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, 
         HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText, GreenButton} ;

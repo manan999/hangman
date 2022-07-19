@@ -45,6 +45,7 @@ const MainView = styled.View`
 
 const MainScrollView = styled.ScrollView`
   background-color: ${ ({theme}) => theme.colors.main } ;
+  align-self: stretch ;
 ` ;
 
 const Shrink = styled.View`

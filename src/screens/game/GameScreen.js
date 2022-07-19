@@ -109,7 +109,7 @@ const GameScreen = ({navigation, route}) => {
 	  		<>
 	  			<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
 	  				<BlackKufam size={20}> Forfeit this Game ? </BlackKufam>
-	  				<GreenButton> Yes </GreenButton>
+	  				<GreenButton dark={false} icon="check" mode="contained" onPress={() => navigation.replace('Home')}> Yes </GreenButton>
 	  			</Popup>
 	  			<Game key={currentRound} round={currentRound} {...gameProps}/> 
 	  		</>
