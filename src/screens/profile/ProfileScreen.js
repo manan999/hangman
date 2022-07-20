@@ -66,8 +66,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, password} = data ;
 
-        // fetch('https://web.myarthhardware.com/myarth/login' ,{
-        fetch('http://192.168.1.14:8000/myarth/login' ,{
+        fetch('https://web.myarthhardware.com/myarth/login' ,{
+        // fetch('http://192.168.1.14:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),

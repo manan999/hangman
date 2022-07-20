@@ -40,8 +40,8 @@ const ResultScreen = ({navigation, route}) => {
         if(user.name) {
             // console.log(JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}))
             
-            // fetch('https://web.myarthhardware.com/game' ,{
-            fetch('http://192.168.1.14:8000/game' ,{
+            fetch('https://web.myarthhardware.com/game' ,{
+            // fetch('http://192.168.1.14:8000/game' ,{
                 method : 'post',
                 headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
                 body : JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}),

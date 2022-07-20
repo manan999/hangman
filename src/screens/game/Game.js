@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react' ;
-import { Pressable, Vibration } from 'react-native';
+import { useState, useEffect, useRef } from 'react' ;
+import { Pressable, Vibration, Dimensions } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 
 import Cross from '../../comps/icons/Cross.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import { MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView } from './cssGameScreen.js' ;
 import { Alpha, Letter } from './AlphaLetter.js' ;
+import hurray from '../../../assets/hurray.json' ;
+import red from '../../../assets/red.json' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
@@ -19,6 +22,10 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	const [correct, setCorrect] = useState(0) ;
 	const [time, setTime] = useState(config.startTime) ;
 	const [wait, setWait] = useState(true) ;
+    const windowHeight = Dimensions.get('window').height;
+
+    let gameRef = useRef(null)
+    let heartRef = useRef(null)
 
 	useEffect(() => {
 	  const timer = setTimeout(() => setWait(false), 2000);
@@ -54,11 +61,14 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 			if(l) {
 				if(details[l]) {
 					setCorrect(correct+details[l]) ;
+					gameRef.current.play() ;
 					Vibration.vibrate(25) ;
 				}
 				else
 					if(wrong < 5) {
 						setWrong(wrong+1) ;
+						gameRef.current.reset() ;
+						heartRef.current.play(0, 30) ;
 						Vibration.vibrate(100) ;
 					}
 					else {
@@ -116,6 +126,8 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 
 	return (
 	    <MainView>
+        	<LottieView ref={gameRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={hurray} loop={false} />
+        	<LottieView ref={heartRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={red} loop={false} progress={0.02} />
 			<GameHeader>
 				<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
 	    		<AnimateView>{returnHintButton()}</AnimateView>
