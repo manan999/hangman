@@ -1,6 +1,6 @@
 import styled from 'styled-components/native' ;
 import { View } from 'react-native';
-import {MainScrollView, KufamText} from '../../../cssApp.js' ;
+import {MainScrollView, KufamText, Row} from '../../../cssApp.js' ;
 import {HomeImage } from '../home/cssHomeScreen.js' ;
 
 
@@ -22,6 +22,11 @@ const LogoImage = styled(HomeImage)`
 
 const AboutText = styled(KufamText)`
   text-align: justify ;
+  margin: 15px 0 3px ;
 ` ;
 
-export {AboutView, LogoImage, LogoView, AboutText} ;
+const AboutRow = styled(Row)`
+  margin-bottom: 15px ;
+` ;
+
+export {AboutView, LogoImage, LogoView, AboutText, AboutRow} ;

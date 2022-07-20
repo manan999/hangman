@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from 'react' ;
 import { View, Text, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
-import { Snackbar, TextInput } from 'react-native-paper' ;
+import { Snackbar, TextInput, Avatar, DataTable } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
+import {  } from 'react-native-paper';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, WhiteButton, Shrink } from '../../../cssApp.js' ;
+import { Row, WhiteButton, Shrink, KufamText, MainView } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
-import { MainView2, ProfileView, ProfileText, MarginRow } from './cssProfile.js' ;
+import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -27,6 +28,12 @@ const ProfileScreen = ({navigation, route}) => {
 
     const {user, loadUser} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
+
+    const avatarProps = {
+        style : { backgroundColor: theme.colors.white},
+        size : 100,
+        source : user.name?{uri: user.image}:require('../../../assets/user.png'),
+    } ;
     
     useEffect(() => {
         const showKB = Keyboard.addListener("keyboardDidShow", () => setLogo(false));
@@ -60,6 +67,13 @@ const ProfileScreen = ({navigation, route}) => {
             {name: 'password', type:'password', label: 'Enter a Password'},
             {name: 'repass', type:'password', label: 'Re-Enter Password'},
         ],
+        // edit: [
+        //     {name: 'name', type:'text', label: 'Choose a Username'},
+        //     {name: 'email', type:'text', label: 'Enter Email (Optional)'},
+        //     {name: 'password', type:'password', label: 'Enter old Password'},
+        //     {name: 'password', type:'password', label: 'Enter new Password'},
+        //     {name: 'repass', type:'password', label: 'Re-Enter new Password'},
+        // ],
     } ;
 
     const sendLoginReq = () => {
@@ -67,7 +81,7 @@ const ProfileScreen = ({navigation, route}) => {
         const {name, password} = data ;
 
         // fetch('https://web.myarthhardware.com/myarth/login' ,{
-        fetch('http://192.168.1.14:8000/myarth/login' ,{
+        fetch('http://192.168.0.103:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
@@ -95,8 +109,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, email, image, password} = data ;
 
-        fetch('https://web.myarthhardware.com/myarth/users' ,{
-        // fetch('http://192.168.1.8:8000/myarth/users' ,{
+        // fetch('https://web.myarthhardware.com/myarth/users' ,{
+        fetch('http://192.168.0.103:8000/myarth/users' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, email, image, password}),
@@ -210,15 +224,26 @@ const ProfileScreen = ({navigation, route}) => {
                 </>
             ) ;
         }
+
+        // else if( mode === "edit") {
+        //     return (
+        //         <>
+        //         </>
+        //     ) ;
+        // }
     }
 
     if(user.name)
         return (
-            <MainView2>
-                <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
-                <Text> {user.name} </Text>
-                <TouchableOpacity onPress={()=>loadUser({})}><Text>Logout</Text></TouchableOpacity>
-            </MainView2>
+            <MainView>
+                <Avatar.Image {...avatarProps}/>
+                <DisplayText size={20} tt>{user.name} </DisplayText>
+                <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
+                <Row>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>loadUser({})} size={13}> Logout </WhiteButton>
+                </Row>
+            </MainView>
         ) ;
     else
         return (

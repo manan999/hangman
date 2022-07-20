@@ -1,11 +1,12 @@
-import { View, Text, Dimensions} from 'react-native' ;
+import { View, Text, Dimensions, TouchableOpacity, Linking} from 'react-native' ;
 import LottieView from 'lottie-react-native';
 
 import {HomeImage } from '../home/cssHomeScreen.js' ;
-import {MainView, KufamText} from '../../../cssApp.js' ;
+import {Row, MainView, KufamText, WhiteButton} from '../../../cssApp.js' ;
+import { theme } from '../../theme.js' ;
 import sky from '../../../assets/sky.json' ;
 
-import {AboutView, LogoImage, LogoView, AboutText} from './cssAbout.js' ;
+import {AboutView, LogoImage, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
 
 const AboutScreen = ({navigation, route}) => {
     const windowHeight = Dimensions.get('window').height;
@@ -18,13 +19,22 @@ const AboutScreen = ({navigation, route}) => {
                 <HomeImage source={require('../../../assets/AurBatao.png')} />
             </LogoView>
             <AboutView contentContainerStyle={{ alignItems: 'center' }}>
-                <AboutText size={20} > 
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <AboutText size={18} > 
+                    "Aur Batao" is a word-guessing game where you have to guess the word based on given alphabets and clues. The title is a phrase commonly used in Hindi language traditionally meaning tell me more. But a modern meaning of the phrase is similar to "Whats Up?".
                 </AboutText>
-                <LogoImage source={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-black.png"}} />
-                <AboutText size={20} > 
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <LogoImage source={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-white.png"}} />
+                <AboutText size={18} > 
+                   Myarth is an indie developer team based in New Delhi. We believe in making techonlogy for the future and we specialise in creating mobile apps and websites. We also build customised apps for organisations. You can find us at Our website 
                 </AboutText>
+                <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://www.myarth.in')} size={13}> Visit Us </WhiteButton>
+                <AboutText size={15} > 
+                    Send your feedbacks or queries to myarth.tech@gmail.com
+                </AboutText>
+                <AboutText size={11} >Credits :</AboutText>
+                <AboutRow>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://lottiefiles.com/jkkim0124')} size={9}>Backgorund Image </WhiteButton>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')} size={9}> Avatar Images </WhiteButton>
+                </AboutRow>
             </AboutView>
         </MainView>
     ) ;

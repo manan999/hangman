@@ -22,8 +22,15 @@ const ProfileText = styled(KufamText)`
   text-align: center ;
 ` ;
 
+const DisplayText = styled(KufamText)`
+  margin-top: 0px ;
+  margin-bottom: 0px ;
+  text-align: center ;
+  text-transform: ${({tt}) => tt?'capitalize':'none'} ;
+` ;
+
 const MarginRow = styled(Row)`
   margin: 15px ; 
 ` ;
 
-export {ProfileText, ProfileView, MarginRow, MainView2} ;
+export {ProfileText, ProfileView, MarginRow, MainView2, DisplayText} ;
