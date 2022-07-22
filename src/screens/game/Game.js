@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 
-import Cross from '../../comps/icons/Cross.js' ;
+import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import { MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView } from './cssGameScreen.js' ;
 import { Alpha, Letter } from './AlphaLetter.js' ;
