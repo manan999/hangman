@@ -80,8 +80,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, password} = data ;
 
-        // fetch('https://web.myarthhardware.com/myarth/login' ,{
-        fetch('http://192.168.0.103:8000/myarth/login' ,{
+        fetch('https://web.myarthhardware.com/myarth/login' ,{
+        // fetch('http://192.168.1.14:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
@@ -109,8 +109,8 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, email, image, password} = data ;
 
-        // fetch('https://web.myarthhardware.com/myarth/users' ,{
-        fetch('http://192.168.0.103:8000/myarth/users' ,{
+        fetch('https://web.myarthhardware.com/myarth/users' ,{
+        // fetch('http://192.168.0.103:8000/myarth/users' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, email, image, password}),

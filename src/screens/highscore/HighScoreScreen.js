@@ -27,8 +27,8 @@ const HighScoreScreen = ({navigation, route}) => {
 
     useEffect( () => {
         setData([]) ;
-        // fetch(`https://web.myarthhardware.com/movie`)
-        fetch('http://192.168.1.14:8000/scores' ,{
+        fetch(`https://web.myarthhardware.com/scores`, {
+        // fetch('http://192.168.1.14:8000/scores' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${userToken}`},
             body : JSON.stringify({filter: filterBy, topic, mode: gameMode}),
