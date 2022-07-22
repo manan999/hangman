@@ -19,6 +19,7 @@ Setup App-
 6)  go to app folder
 7)  app.js me se code hata do by default wala
 8)  create a folder src within which you can create other folders like context, comps, pages, etc
+9)  run "expo start" and change according to your needs
 
 Buliding-
 
