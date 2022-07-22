@@ -8,15 +8,15 @@ import { DDView, ScoreTable } from './cssHighScore.js' ;
 import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
-    const [filterBy, setFilterBy] = useState('all') ;
+    const [filterBy, setFilterBy] = useState(route.params.filter?route.params.filter:'all') ;
     const [filterOpen, setFilterOpen] = useState(false) ;
     const [filterItems, setFilterItems] = useState([{label: 'Show For : All', value: 'all'}, {label: 'Show For : Only Me', value: 'me'} ]) ;
 
-    const [topic, setTopic] = useState('Movies') ;
+    const [topic, setTopic] = useState(route.params.topic?route.params.topic:'Movies') ;
     const [topicOpen, setTopicOpen] = useState(false) ;
     const [topicItems, setTopicItems] = useState([{label: 'Topic : Movies', value: 'Movies'} ]) ;
 
-    const [gameMode, setGameMode] = useState('practice') ;
+    const [gameMode, setGameMode] = useState(route.params.mode?route.params.mode:'practice') ;
     const [modeOpen, setModeOpen] = useState(false) ;
     const [modeItems, setModeItems] = useState([{label: 'Mode : Practice', value: 'practice'}, {label: 'Mode : Challenge', value: 'challenge'} ]) ;
     

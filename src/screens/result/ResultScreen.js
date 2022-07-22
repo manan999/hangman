@@ -81,7 +81,7 @@ const ResultScreen = ({navigation, route}) => {
                     <CapitalKufam size={20}>Your High Scores</CapitalKufam>
                     <ScoreTable>{ returnRows() }</ScoreTable>
                     <ButtonRow>
-                        <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => navigation.navigate('HighScore')}>See More</WhiteButton>
+                        <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => navigation.navigate('HighScore', {topic, mode, filter: 'me'})}>See More</WhiteButton>
                     </ButtonRow>
                 </>
         ) ;

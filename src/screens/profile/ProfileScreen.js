@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react' ;
 import { View, Text, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput, Avatar, DataTable } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
-import {  } from 'react-native-paper';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
 import { Row, WhiteButton, Shrink, KufamText, MainView } from '../../../cssApp.js' ;
@@ -11,6 +10,7 @@ import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText } from './c
 import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
+import { Gem } from '../../comps/icons.js' ;
 import sky from '../../../assets/sky.json' ;
 
 const initObj = {
@@ -26,7 +26,7 @@ const ProfileScreen = ({navigation, route}) => {
     const [error, setError] = useState([]) ;
     const [errorCount, setErrorCount] = useState(null) ;
 
-    const {user, loadUser} = useContext(UserContext) ;
+    const {user, loadUser, userToken} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
 
     const avatarProps = {
@@ -121,6 +121,33 @@ const ProfileScreen = ({navigation, route}) => {
             if(resp.user) {
                 loadUser(resp) ;      
                 ToastAndroid.show("Registered Successfully", ToastAndroid.LONG)
+                navigation.replace('Home') ;
+            }
+            else {
+                setError([resp]) ;
+                setErrorCount(1) ;
+            }
+        })
+        .catch( err  => {
+            console.log(err) ;
+            ToastAndroid.show(err, ToastAndroid.SHORT)
+        }) ;
+    }
+
+    const onLogoutClick = () => {
+        ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
+
+        fetch('https://web.myarthhardware.com/myarth/logout' ,{
+        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${userToken}`},
+        })
+        .then(res =>  res.json())
+        .then(resp => { 
+            // console.log(resp) ;  
+            if(typeof resp === 'string') {
+                loadUser({}) ;
+                ToastAndroid.show("Logged Out Successfully", ToastAndroid.LONG)
                 navigation.replace('Home') ;
             }
             else {
@@ -233,18 +260,21 @@ const ProfileScreen = ({navigation, route}) => {
         // }
     }
 
-    if(user.name)
+    if(user.name) {
+        console.log(user)
         return (
             <MainView>
                 <Avatar.Image {...avatarProps}/>
                 <DisplayText size={20} tt>{user.name} </DisplayText>
                 <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
+                <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
                 <Row>
                     <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
-                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>loadUser({})} size={13}> Logout </WhiteButton>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
                 </Row>
             </MainView>
         ) ;
+    }
     else
         return (
             <MainView2>

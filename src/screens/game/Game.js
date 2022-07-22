@@ -99,16 +99,18 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 		}) ;
 	}
 
+	const onHintPress = () => {
+		let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => one !== ' ' && !guessed.includes(one)) ;
+		if(hints.length > 0) {
+			console.log(hints) ;
+			setGuessed([...guessed, hints[0]]) ;
+		}
+		setHintCount(hintCount+1) ;
+	}
+
 	const returnHintButton = () => {
 		if(hintCount && hintCount < 4)
-			return <Pressable onPress={() => {
-				let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => one !== ' ' && !guessed.includes(one)) ;
-				if(hints.length > 0) {
-					console.log(hints) ;
-					setGuessed([...guessed, hints[0]]) ;
-				}
-				setHintCount(hintCount+1) ;
-			}}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
+			return <Pressable onPress={onHintPress}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
 		else
 			return <MaterialIcons name="lightbulb" size={36} color="grey" /> ;
 	}
