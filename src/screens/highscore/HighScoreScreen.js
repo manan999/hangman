@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react' ;
 import { View, Text } from 'react-native' ;
-import { DataTable, ActivityIndicator } from 'react-native-paper';
+import { Avatar, DataTable, ActivityIndicator } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker' ;
 
 import { UserContext } from '../../context/UserContext.js' ;
 import { DDView, ScoreTable } from './cssHighScore.js' ;
 import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
+import { theme } from '../../theme.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
     const [filterBy, setFilterBy] = useState(route.params.filter?route.params.filter:'all') ;
@@ -23,7 +24,7 @@ const HighScoreScreen = ({navigation, route}) => {
     const [data, setData] = useState([]) ;
     const {user, userToken} = useContext(UserContext) ;
 
-    // console.log(data) ;
+    
 
     useEffect( () => {
         setData([]) ;
@@ -46,18 +47,25 @@ const HighScoreScreen = ({navigation, route}) => {
     const formatDate = (dt) => {
         const date = new Date(dt).toLocaleString("en-IN", {timeZone: "Asia/Kolkata"}) ;
         const [ day, m, d, t, y ] = date.split(' ').filter(o=>o.length>0) ;
-        return `${t.slice(0,5)}, ${d} ${m} ${y}`;
+        return `${d} ${m} ${y}`;
     }
 
     const returnRows = () => {
         if(data.length > 0) {
             let arr = data.map((score, i) => {
+                const avatarProps = {
+                    style : { backgroundColor: theme.colors.white},
+                    size : 50,
+                    source : {uri: score.image},
+                }
+
                 return (
                     <DataTable.Row key={i}>
                         <DataTable.Cell style={{flex:1}}><KufamText size={13}>{i+1}</KufamText></DataTable.Cell>
-                        <DataTable.Cell style={{flex:2}}><KufamText size={16}>{score.playerName}</KufamText></DataTable.Cell>
+                        <DataTable.Cell style={{flex:1.5}}><Avatar.Image {...avatarProps} /></DataTable.Cell>
+                        <DataTable.Cell style={{flex:3}}><KufamText size={16}>{score.playerName}</KufamText></DataTable.Cell>
                         <DataTable.Cell style={{flex:1}}><KufamText size={16}>{score.score}</KufamText></DataTable.Cell>
-                        <DataTable.Cell style={{flex:3}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>
+                        <DataTable.Cell style={{flex:2}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>
                     </DataTable.Row>
                 ) ;
             })

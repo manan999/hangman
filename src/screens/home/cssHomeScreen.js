@@ -12,11 +12,12 @@ const MainView = styled.View`
 
 const SubText = styled.Text`
   color: ${ ({theme}) => theme.colors.main } ;
-  font-size: 20px ;
-  font-family: ${ ({theme}) => theme.fonts.main } ;
+  font-size: ${ ({size}) => size?size:20 }px ;
+  font-family: ${ ({bold, theme}) => bold?theme.fonts.mainThick:theme.fonts.main } ;
   text-align: center;
-  margin-top: 15px ;
+  margin-top: ${ ({mt}) => mt?mt:15 }px ; ;
 ` ;
+  // font-weight: ${ ({bold}) => bold?'bold':'normal' } ;
 
 // export const SearchBarCon = styled.View`
 //   background-color: ${ ({theme}) => theme.colors.ui.mainBg} ;

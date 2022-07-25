@@ -14,6 +14,7 @@ export const theme = {
 	fonts : {
 		main : "Lexend_400Regular" ,
 		mainBold: "Lexend_500Medium" ,
+		mainThick: "Lexend_700Bold" ,
 		second: "Montserrat_400Regular" ,
 		third: "Kufam_400Regular",
 		monospace: "", 

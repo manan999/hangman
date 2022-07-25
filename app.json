@@ -2,7 +2,7 @@
   "expo": {
     "name": "aurbatao",
     "slug": "aurbatao",
-    "version": "1.0.0 (beta)",
+    "version": "1.0.1 (beta)",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

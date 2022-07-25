@@ -1,5 +1,13 @@
-1 profile page banana hai
-2 error handling sahi karni hai like password incorrect, user already exists etc
-3 game store ho ye feature dena hai
-4 highscore ka system lagana hai
-5 about page banana hai
+1 music daalna hai
+2 tutorial me animations daalkar improve karna hai
+3 result page me "  "  "  "  
+5 user profile page pe stats dikhane hai
+6 edit profile ka banana hai
+7 Gems Implementation
+8 Smarter AI for word picking
+
+-- bonus time system
+-- Database clean
+	--- Add more topics
+-- Reward System
+-- level system

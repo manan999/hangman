@@ -260,8 +260,7 @@ const ProfileScreen = ({navigation, route}) => {
         // }
     }
 
-    if(user.name) {
-        console.log(user)
+    if(user.name) 
         return (
             <MainView>
                 <Avatar.Image {...avatarProps}/>
@@ -274,7 +273,6 @@ const ProfileScreen = ({navigation, route}) => {
                 </Row>
             </MainView>
         ) ;
-    }
     else
         return (
             <MainView2>

@@ -27,6 +27,7 @@ const BlackKufam = styled.Text`
   color: ${ ({theme}) => theme.colors.black } ;
   font-size: ${ ({size}) => size?size:24 }px ;
   font-family: ${ ({theme}) => theme.fonts.third } ;
+  text-align: center ;
 ` ;
 
 const Row = styled.View`
@@ -40,7 +41,7 @@ const MainView = styled.View`
   flex: 1 ;
   justify-content: center ;
   align-items: center ;
-  background-color: ${ ({theme}) => theme.colors.main } ;
+  background-color: ${ ({theme, white}) => white?theme.colors.white:theme.colors.main } ;
 ` ;
 
 const MainScrollView = styled.ScrollView`
