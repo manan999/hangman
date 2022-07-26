@@ -1,9 +1,10 @@
+. special char handle karna hai
+. thoda easy karna hai
+. gems me bhi countup wali animation lagani hai (gamescreen) 
 1 music daalna hai
 2 tutorial me animations daalkar improve karna hai
-3 result page me "  "  "  "  
 5 user profile page pe stats dikhane hai
 6 edit profile ka banana hai
-7 Gems Implementation
 8 Smarter AI for word picking
 
 -- bonus time system

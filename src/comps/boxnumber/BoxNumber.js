@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native' ;
 import styled from 'styled-components/native' ;
+import { CountUp } from 'use-count-up' ;
 
 import {theme} from '../../theme.js' ;
 
@@ -26,7 +27,7 @@ const ColorText = styled.Text`
 const BoxNumber = ({num, text, color=theme.colors.white}) => {
 	return (
 		<BoxNumberView>
-			<NumText bgColor={color}> {num} </NumText>
+			<NumText bgColor={color}> <CountUp isCounting end={num} duration={2} /> </NumText>
 			<ColorText textColor={color}> {text} </ColorText>
 		</BoxNumberView>
 	) ;

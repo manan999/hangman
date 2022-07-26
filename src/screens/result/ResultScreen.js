@@ -3,18 +3,22 @@ import { useFocusEffect } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { Avatar, DataTable } from 'react-native-paper';
 import { BackHandler } from 'react-native' ;
+import { CountUp } from 'use-count-up' ;
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
 import { MainView, CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
 import { WhiteButton, KufamText, MainScrollView, Row } from '../../../cssApp.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
+import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { theme } from '../../theme.js' ;
+import AnimateView from '../../comps/animateview/AnimateView.js' ;
 
 const ResultScreen = ({navigation, route}) => {
     const [scores, setScores] = useState([]) ;
+    const [final, setFinal] = useState(false) ;
     const {rounds, wins, hints, wrongs, topic, mode} = route.params ;
-    const {user, userToken} = useContext(UserContext) ;
+    const {user, userToken, gems, addGems} = useContext(UserContext) ;
 
     const countDown = mode==='practice'?{rounds, wins}:{rounds: rounds*20, wins} ;
 
@@ -54,6 +58,14 @@ const ResultScreen = ({navigation, route}) => {
             .catch( err  => console.log(err) ) ;
         }
     }, [])
+
+    const returnGemText = () => {
+        if(mode !== 'practice' && user.name)
+            if(final)
+                return <AnimateView delay={300}><KufamText> <Gem /> {gems} </KufamText></AnimateView> ;
+            else
+                return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/10)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/10)} duration={2} /> </KufamText> ;
+    }
 
     const avatarProps = {
         style : { backgroundColor: theme.colors.white},
@@ -98,13 +110,13 @@ const ResultScreen = ({navigation, route}) => {
         <MainScrollView contentContainerStyle={{ alignItems: 'center' }}>
             <KufamText>{topic} {mode} Summary</KufamText>
             <CountdownCircleTimer duration={countDown.rounds} initialRemainingTime={countDown.wins} colors="#f55442" trailColor="#ffffff" trailStrokeWidth={24}>
-              {({ remainingTime }) => <TimerText>{remainingTime}</TimerText>}
+              {({ remainingTime }) => <TimerText><CountUp isCounting end={remainingTime} duration={2} /></TimerText>}
             </CountdownCircleTimer>
             <Row>
                 <BoxNumber text="Your Score" num={wins} color={theme.colors.green}/>
-                <BoxNumber text="Hearts Lost" num={wrongs} color={theme.colors.red}/>
                 <BoxNumber text="Hints Used" num={hints} color={theme.colors.mainLight}/>
             </Row>
+            { returnGemText() }
             <ButtonRow>
                 <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode})}>Play Again</WhiteButton>
                 <WhiteButton dark={false} icon="home" mode="contained" onPress={() => navigation.replace('Home')}>Go Home</WhiteButton>

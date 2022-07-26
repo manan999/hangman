@@ -1,4 +1,4 @@
-import { useContext } from 'react' ;
+import { useContext, useEffect } from 'react' ;
 import { View, Dimensions, ToastAndroid } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
@@ -12,8 +12,13 @@ import sky from '../../../assets/sky.json' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
 const HomeScreen = ({navigation}) => {
-    const {user} = useContext(UserContext) ;
+    const {user, addGems} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
+    
+    useEffect( () => {
+        if(user.name)
+            addGems(0) ;
+    }, [])
 
     const returnHSButton = () => {
         return (

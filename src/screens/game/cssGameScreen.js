@@ -1,5 +1,5 @@
 import styled from 'styled-components/native' ;
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;
@@ -82,15 +82,25 @@ const GameHeader = styled.View`
   padding : 15px ; 
 ` ;
 
-const ScoreView = styled.View`
-  flex-direction: row ;
+const GameHeaderRight = styled.View`
+  align-items: flex-end ;
+` ;
+
+const GameHeaderLeft = styled.View`
   align-items: center ;
+  margin-top: 10px ;
+` ;
+
+const ScoreView = styled.View`
+  align-items: center ;
+  margin-top: 10px ;
 ` ;
 
 const ScoreHead = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 16px ;
-  font-family: ${ ({theme}) => theme.fonts.second } ;
+  font-family: ${ ({theme}) => theme.fonts.main } ;
+  margin-top: 3px ;
 ` ;
 
 const ScoreText = styled.Text`
@@ -112,5 +122,10 @@ const GreenButton = styled(Button).attrs(({size}) => ({
   margin: 20px 0 0 ;
 ` ;
 
+const IconButton = styled.Pressable`
+  margin-top: 12px ;
+` ;
+
 export {MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, 
-        HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText, GreenButton} ;
+        HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText, GreenButton, 
+        GameHeaderRight, GameHeaderLeft, IconButton} ;
