@@ -45,7 +45,7 @@ const invalidPass = (str, str2) => {
 	else if (str.length < 6 || str2.length < 6 )
 		return 'Password must be at least 6 digits long' ;
 	else if ( str !== str2 )
-		return 'Re-Password must match password' ;
+		return 'Passwords do not match' ;
 	else
 		return false ;
 }

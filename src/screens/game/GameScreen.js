@@ -82,17 +82,17 @@ const GameScreen = ({navigation, route}) => {
 			return {initGuess : ['a','e','i','o','u']} ;
 		else {
 			if(currentRound < 10)
-				return {startTime : 45, initGuess : ['a','e','i','o','u']} ;
-			else if(currentRound < 15)
-				return {startTime : 45, initGuess : ['a','e','i','o']} ;
+				return {startTime : 50, initGuess : ['a','e','i','o','u']} ;
 			else if(currentRound < 20)
-				return {startTime : 30, initGuess : ['a','e','i']} ;
-			else if(currentRound < 25)
-				return {startTime : 30, initGuess : ['a','e']} ;
+				return {startTime : 40, initGuess : ['a','e','i','o']} ;
 			else if(currentRound < 30)
+				return {startTime : 30, initGuess : ['a','e','i']} ;
+			else if(currentRound < 45)
+				return {startTime : 30, initGuess : ['a','e']} ;
+			else if(currentRound < 50)
 				return {startTime : 20, initGuess : ['a']} ;
 			else
-				return {startTime : 20, initGuess : []} ;
+				return {startTime : 15, initGuess : []} ;
 		}
 	}
 

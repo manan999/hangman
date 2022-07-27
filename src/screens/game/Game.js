@@ -4,6 +4,7 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
+import valid from 'validator' ;
 
 import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
@@ -105,12 +106,15 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	}
 
 	const onHintPress = () => {
-		let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => one !== ' ' && !guessed.includes(one)) ;
+		let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => valid.isAlpha(one) && !guessed.includes(one) ) ;
 
 		if(hints.length > 0) {
 			// console.log(hints) ;
 			if(mode === 'practice') 
-				setGuessed([...guessed, hints[0]]) ;
+				if (hintCount < 4)
+					setGuessed([...guessed, hints[0]]) ;
+				else
+        			ToastAndroid.show("No More Hints for this Word", ToastAndroid.SHORT)
 			else
 				if (gems > 9) {
 					setGuessed([...guessed, hints[0]]) ;
