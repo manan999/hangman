@@ -21,6 +21,19 @@ Setup App-
 8)  create a folder src within which you can create other folders like context, comps, pages, etc
 9)  run "expo start" and change according to your needs
 
+
+Installing Google Fonts
+1)  npm "npm i @expo-google-fonts/<name>" , where <name> should be replaced by font name
+2) In your app.js, import these fonts like : 
+	"import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;"
+3) if you need more than regular style of font, add it in the import
+4) use the "useSomething" hook as : (injection)
+	"let [kufamLoaded] = useKufam({ Kufam_400Regular });"
+5) in your theme.js file, now you can use the font you just imported and injected
+
+Tip: check kufamLoaded variable before showing app (or it may crash)
+
+
 Buliding-
 
 1) run "eas build -p android --profile production" . (production naam ki profile banane ke baad)
@@ -72,10 +85,15 @@ Libraries/Packages :-
 2)	react-native-elements                     : ReadyMade Components
 3)  styled-components                         : Custom CSS Components
 4)	react-native-svg                          : To display SVG
-5)  react-navigation                          : to navigate (like react-router)
+5)  @react-navigation/native                  : to navigate (like react-router)
+	5.1 react-native-screens 
+	5.2 react-native-safe-area-context
 6)  @expo/vector-icons	                      : for icons like FontAwesome (installed by default)
 7)  @react-native-async-storage/async-storage : Cache Storing
 8)  firebase 								  : User Authentication
 9)  lottie-react-native						  : Animation Library
 10) expo-camera
-11) 
+11) expo-font 								  : For Custom Fonts (google fonts)
+    11.1 @expo-google-fonts/<name>
+12) react-native-animatable 				  : For Custom Animations
+13) react-native-dropdown-picker 			  : ReadyMade DropDown
