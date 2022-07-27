@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react' ;
-import { Pressable, Vibration, Dimensions } from 'react-native';
+import { useState, useEffect, useRef, useContext } from 'react' ;
+import { Pressable, Vibration, Dimensions, ToastAndroid } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
@@ -7,8 +7,10 @@ import * as Animatable from 'react-native-animatable';
 
 import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
-import { MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView } from './cssGameScreen.js' ;
+import { MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView, GameHeaderRight, GameHeaderLeft, IconButton } from './cssGameScreen.js' ;
 import { Alpha, Letter } from './AlphaLetter.js' ;
+import { Gem } from '../../comps/icons.js' ;
+import { UserContext } from '../../context/UserContext.js' ;
 import hurray from '../../../assets/hurray.json' ;
 import red from '../../../assets/red.json' ;
 
@@ -21,8 +23,11 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	const [hintCount, setHintCount] = useState(1) ;
 	const [correct, setCorrect] = useState(0) ;
 	const [time, setTime] = useState(config.startTime) ;
+	const [eta, setEta] = useState(config.startTime) ;
 	const [wait, setWait] = useState(true) ;
     const windowHeight = Dimensions.get('window').height;
+
+    const {gems, addGems} = useContext(UserContext) ;
 
     let gameRef = useRef(null)
     let heartRef = useRef(null)
@@ -101,18 +106,41 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 
 	const onHintPress = () => {
 		let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => one !== ' ' && !guessed.includes(one)) ;
+
 		if(hints.length > 0) {
 			// console.log(hints) ;
-			setGuessed([...guessed, hints[0]]) ;
+			if(mode === 'practice') 
+				setGuessed([...guessed, hints[0]]) ;
+			else
+				if (gems > 9) {
+					setGuessed([...guessed, hints[0]]) ;
+					addGems(-10) ;
+				}
+				else
+        			ToastAndroid.show("Not Enough Gems", ToastAndroid.SHORT)
 		}
 		setHintCount(hintCount+1) ;
 	}
 
 	const returnHintButton = () => {
-		if(hintCount && hintCount < 4)
-			return <Pressable onPress={onHintPress}><MaterialIcons name="lightbulb" size={36} color="yellow" /></Pressable> ;
+		if(mode !== 'practice')
+			return <IconButton onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /><ScoreHead><Gem size={13}/>&nbsp;10</ScoreHead></IconButton> ;
 		else
-			return <MaterialIcons name="lightbulb" size={36} color="grey" /> ;
+			return <IconButton onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /></IconButton> ;
+	}
+
+	const onAddTimePress = () => {
+		if(gems > 19) {
+			setTime(time+15) ;
+			addGems(-20) ;
+		}
+		else
+    		ToastAndroid.show("Not Enough Gems", ToastAndroid.SHORT)
+	}
+
+	const returnAddTimeButton = () => {
+		if(mode !== 'practice')
+			return <IconButton onPress={onAddTimePress}><MaterialIcons name="more-time" size={32} color="white" /><ScoreHead><Gem size={13}/>&nbsp;20</ScoreHead></IconButton> ;
 	}
 
 	const returnCountDown = () => {
@@ -126,13 +154,29 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 			) ;
 	}
 
+	const returnGems = () => {
+		if(mode !== 'practice')
+			return <ScoreHead><Gem size={15}/>&nbsp;{gems}</ScoreHead> ;
+	}
+
 	return (
 	    <MainView>
         	<LottieView ref={gameRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={hurray} loop={false} />
         	<LottieView ref={heartRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={red} loop={false} progress={0.02} />
 			<GameHeader>
-				<ScoreView><ScoreHead>Score :</ScoreHead><ScoreText>{config.score}</ScoreText></ScoreView>
-	    		<AnimateView>{returnHintButton()}</AnimateView>
+				<GameHeaderLeft>
+			    	{ returnGems() }
+					<ScoreView>
+						<ScoreHead>Score</ScoreHead>
+						<ScoreText>{config.score}</ScoreText>
+					</ScoreView>
+			    </GameHeaderLeft>
+	    		<AnimateView>
+	    			<GameHeaderRight>
+		    			{ returnHintButton() }
+		    			{ returnAddTimeButton() }
+	    			</GameHeaderRight>
+	    		</AnimateView>
 			</GameHeader>
 	    	<CrossView>{[4,3,2,1,0].map(one =><CrossCon key={one}><Cross color={one>=wrong}/></CrossCon>)}</CrossView>
 	    	{returnCountDown()}

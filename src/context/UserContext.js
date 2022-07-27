@@ -34,9 +34,33 @@ const UserContextProvider = ({children}) => {
             AsyncStorage.multiRemove(['@abUser', '@abUserToken']) ;
         }
     }
+
+    const addGems = (num) => {
+        fetch('https://web.myarthhardware.com/myarth/users/addGems' ,{
+        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
+            body : JSON.stringify({gems: num}),
+        })
+        .then(res =>  res.json())
+        .then(resp => { 
+            // console.log(resp) ;  
+            if(typeof resp === 'number') {
+                setUser({...user, gems: resp}) ;
+                AsyncStorage.setItem('@abUser', JSON.stringify({...user, gems: resp}))
+            }
+            else 
+                throw resp ;
+        })
+        .catch( err  => {
+            console.log(err) ;
+            ToastAndroid.show(err, ToastAndroid.SHORT)
+        }) ;
+        
+    }
     
     return (
-        <UserContext.Provider value={ { user, userToken, loadUser } }>
+        <UserContext.Provider value={ { user, userToken, loadUser, gems: user.name?user.gems:0, addGems } }>
             {children}
         </UserContext.Provider>
     ) ;

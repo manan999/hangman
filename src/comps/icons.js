@@ -7,8 +7,8 @@ const Cross = ({color}) => {
 	return <Ionicons name="md-heart" size={24} color={str} />
 }
 
-const Gem = () => {
-	return <SvgUri width="18px" height="18px" uri="https://www.svgrepo.com/download/247990/diamond.svg" /> ;
+const Gem = ({size=18}) => {
+	return <SvgUri width={`${size}px`} height={`${size}px`} uri="https://www.svgrepo.com/download/247990/diamond.svg" /> ;
 }
 
 export { Cross, Gem } ;
