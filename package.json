@@ -1,6 +1,6 @@
 {
   "name": "Aur Batao",
-  "version": "1.0.1 (beta)",
+  "version": "1.1.0 (beta)",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
