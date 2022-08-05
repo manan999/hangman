@@ -1,11 +1,9 @@
 1 music daalna hai
 2 tutorial me animations daalkar improve karna hai
-5 user profile page pe stats dikhane hai
-6 edit profile ka banana hai
-8 Smarter AI for word picking
+3 user profile page pe stats dikhane hai
+4 edit profile ka banana hai
+5 Smarter AI for word picking
 
 -- bonus time system
--- Database clean
-	--- Add more topics
--- Reward System
+-- Database (Add more topics)
 -- level system

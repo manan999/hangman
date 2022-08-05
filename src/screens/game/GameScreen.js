@@ -38,7 +38,7 @@ const GameScreen = ({navigation, route}) => {
 
 	useEffect( ()=> {
 		if(currentRound % 10 === 8 || movies.length === 0) {
-			fetch(`https://web.myarthhardware.com/movie`)
+			fetch(`https://web.myarthhardware.com/movie?stage=${currentRound}`)
 			// fetch(`http://localhost:8000/movie`)
 			.then(res => {
 				if(res.ok)
@@ -87,7 +87,7 @@ const GameScreen = ({navigation, route}) => {
 				return {startTime : 40, initGuess : ['a','e','i','o']} ;
 			else if(currentRound < 30)
 				return {startTime : 30, initGuess : ['a','e','i']} ;
-			else if(currentRound < 45)
+			else if(currentRound < 40)
 				return {startTime : 30, initGuess : ['a','e']} ;
 			else if(currentRound < 50)
 				return {startTime : 20, initGuess : ['a']} ;

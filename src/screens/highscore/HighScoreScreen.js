@@ -39,7 +39,7 @@ const HighScoreScreen = ({navigation, route}) => {
                 return res.json() ;
             throw Error(res.statusText) ;
         })
-        .then( data => setData(data) ) 
+        .then( data => setData(data.filter(one => one)) ) 
         .catch( err  => console.log(err) ) ;
     }, [filterBy, topic, gameMode])
 
