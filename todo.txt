@@ -2,8 +2,5 @@
 2 tutorial me animations daalkar improve karna hai
 3 user profile page pe stats dikhane hai
 4 edit profile ka banana hai
-5 Smarter AI for word picking
 
--- bonus time system
--- Database (Add more topics)
 -- level system

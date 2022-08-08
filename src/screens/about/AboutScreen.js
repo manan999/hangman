@@ -20,7 +20,7 @@ const AboutScreen = ({navigation, route}) => {
             </LogoView>
             <AboutView contentContainerStyle={{ alignItems: 'center' }}>
                 <AboutText size={18} > 
-                    "Aur Batao" is a word-guessing game where you have to guess the word based on given alphabets and clues. The title is a phrase commonly used in Hindi language traditionally meaning tell me more. But a modern meaning of the phrase is similar to "Whats Up?".
+                    "Aur Batao : The Guessing Game" is a word-guessing game where you have to guess the word based on given alphabets and clues. The title is a phrase commonly used in Hindi language traditionally meaning tell me more. But a modern meaning of the phrase is similar to "Whats Up?".
                 </AboutText>
                 <LogoImage source={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-white.png"}} />
                 <AboutText size={18} > 

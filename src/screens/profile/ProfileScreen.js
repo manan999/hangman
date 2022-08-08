@@ -265,7 +265,7 @@ const ProfileScreen = ({navigation, route}) => {
             <MainView>
                 <Avatar.Image {...avatarProps}/>
                 <DisplayText size={20} tt>{user.name} </DisplayText>
-                <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
+                <DisplayText size={15} >{user.email?user.email:'Email Id not entered'} </DisplayText>
                 <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
                 <Row>
                     <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
