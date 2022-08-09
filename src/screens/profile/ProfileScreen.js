@@ -25,6 +25,9 @@ const ProfileScreen = ({navigation, route}) => {
     const [hidePass, setHidePass] = useState({password: true, repass: true}) ;
     const [error, setError] = useState([]) ;
     const [errorCount, setErrorCount] = useState(null) ;
+    const [userData, setUserData] = useState({}) ;
+
+    
 
     const {user, loadUser, userToken} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
@@ -43,6 +46,42 @@ const ProfileScreen = ({navigation, route}) => {
           showKB.remove();
           hideKB.remove();
         };
+    }, [])
+
+    useEffect(() => {
+        if(user.name)
+        {
+            fetch('https://web.myarthhardware.com/myarth/users/me' ,{
+            // fetch('http://192.168.0.103:8000/myarth/users/me' ,{
+                method : 'get',
+                headers : { 'Content-Type' : 'application/json' , 'Authorization': `Bearer ${userToken}`},
+            })
+            .then(res =>  res.json())
+            .then(data => {
+                // console.log(data) ;
+                let arr = data.filter(one => one.mode === 'practice') ;
+                let practiceTotal = arr.length ;
+                let totalScore = 0 ;
+                let totalHints = 0 ;
+                let totalTopics = {} ;
+                arr.forEach((one,i) => {
+                    totalHints += one.hints ;
+                    totalScore += one.score ;
+                    totalTopics[one.topic]?(totalTopics[one.topic]++):(totalTopics[one.topic] = 1) 
+                })
+
+                let practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
+                let practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
+
+                setUserData({totalHints, totalScore, practiceAvgScore, practiceAvgHints}) ;
+                // let detailsObj = {
+                //     practiceTotal,
+
+                // }
+                console.log(totalHints, totalScore, totalTopics, practiceAvgScore) ;
+            })
+            .catch( err  => console.log(err) ) ;     
+        }   
     }, [])
 
     useEffect(() => setData(initObj[mode]), [mode])
@@ -78,7 +117,7 @@ const ProfileScreen = ({navigation, route}) => {
         const {name, password} = data ;
 
         fetch('https://web.myarthhardware.com/myarth/login' ,{
-        // fetch('http://192.168.1.14:8000/myarth/login' ,{
+        // fetch('http://192.168.0.103:8000/myarth/login' ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
@@ -279,6 +318,13 @@ const ProfileScreen = ({navigation, route}) => {
                     <DisplayText size={20} tt>{user.name} </DisplayText>
                     <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
                     <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
+                    <View>
+                        <DisplayText>Mode : Practice</DisplayText>
+                        <DisplayText>Total Hints : {userData.totalHints}</DisplayText>
+                        <DisplayText>Total Score : {userData.totalScore}</DisplayText>
+                        <DisplayText>Average Score : {userData.practiceAvgScore}</DisplayText>
+                        <DisplayText>Average Hints : {userData.practiceAvgHints}</DisplayText>
+                    </View>
                     <Row>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
