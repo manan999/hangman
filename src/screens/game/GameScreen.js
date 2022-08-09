@@ -7,6 +7,7 @@ import { MainView, GreenButton } from './cssGameScreen.js' ;
 import { BlackKufam } from '../../../cssApp.js' ;
 import Game from './Game.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
+import {topicData} from './topicData.js' ;
 
 const initGame = {
 	wins: 0,
@@ -16,17 +17,16 @@ const initGame = {
 
 const GameScreen = ({navigation, route}) => {
 	const [currentRound, setCurrentRound] = useState(0) ;
-	const [movies, setMovies] = useState([]) ;
+	const [data, setData] = useState([]) ;
 	const [movie, setMovie] = useState('') ;
 	const [gameData, setGameData] = useState(initGame) ;
 	const [popOpen, setPopOpen] = useState(false) ;
 
-	const {mode} = route.params ;
+	const {mode, topic} = route.params ;
 
 	useFocusEffect(
 	    useCallback(() => {
 	    	const onBackPress = () => {
-	        	// ToastAndroid.show("Back Button is disabled on this screen", ToastAndroid.SHORT) ;
 	        	setPopOpen(true) ;
 	          	return true;
 	      	};
@@ -37,24 +37,23 @@ const GameScreen = ({navigation, route}) => {
 	);
 
 	useEffect( ()=> {
-		if(currentRound % 10 === 8 || movies.length === 0) {
-			fetch(`https://web.myarthhardware.com/movie`)
-			// fetch(`http://localhost:8000/movie`)
+		if(currentRound % 10 === 8 || data.length === 0) {
+			fetch(`${topicData[topic].url}?stage=${currentRound}`)
 			.then(res => {
 				if(res.ok)
 					return res.json() ;
 				throw Error(res.statusText) ;
 			})
-			.then( data => setMovies([...movies, ...data]) ) 
+			.then( resp => setData([...data, ...resp]) ) 
 			.catch( err  => console.log(err) ) ;
 		}
 	}, [currentRound])
 
 	useEffect( () => {
-		if(movies.length > 0 ) {
-			setMovie(movies[currentRound].name) ;
+		if(data.length > 0 ) {
+			setMovie(data[currentRound].name) ;
 		}
-	}, [currentRound, movies])
+	}, [currentRound, data])
 
 	const next = (str, num = 0, hintCount) => {
 		const {wins, hints, wrongs } = gameData ;
@@ -64,7 +63,7 @@ const GameScreen = ({navigation, route}) => {
 				setCurrentRound(currentRound+1) ;
 			}
 			else 
-				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic: 'Movies', mode: 'practice' }) ; 
+				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode: 'practice' }) ; 
 		}
 		else {
 			if(str === 'Win') {
@@ -73,33 +72,21 @@ const GameScreen = ({navigation, route}) => {
 				setCurrentRound(currentRound+1) ;
 			}		
 			else
-				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic: 'Movies', mode: 'challenge' })
+				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode: 'challenge' })
 		} 
 	}
 
 	const returnTimeGuess = () => {
 		if(mode === 'practice')
 			return {initGuess : ['a','e','i','o','u']} ;
-		else {
-			if(currentRound < 10)
-				return {startTime : 50, initGuess : ['a','e','i','o','u']} ;
-			else if(currentRound < 20)
-				return {startTime : 40, initGuess : ['a','e','i','o']} ;
-			else if(currentRound < 30)
-				return {startTime : 30, initGuess : ['a','e','i']} ;
-			else if(currentRound < 45)
-				return {startTime : 30, initGuess : ['a','e']} ;
-			else if(currentRound < 50)
-				return {startTime : 20, initGuess : ['a']} ;
-			else
-				return {startTime : 15, initGuess : []} ;
-		}
+		else 
+			return topicData[topic].timeLogic(currentRound) ;
 	}
 
-	if(movies.length > 0) {
+	if(data.length > 0) {
 		const gameProps = {
 			movie, next, mode,
-			hint: movies[currentRound].hints,
+			hint: data[currentRound].hints,
 			config: {
 				score: gameData.wins,
 				...returnTimeGuess()

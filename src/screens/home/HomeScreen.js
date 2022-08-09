@@ -60,14 +60,14 @@ const HomeScreen = ({navigation}) => {
         <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
         <View>
             <HomeImage source={require('../../../assets/AurBatao.png')} />
-            <SubText> A WORD GUESSING GAME </SubText>
+            <SubText> THE GUESSING GAME </SubText>
             { returnGreeting() }
         </View>
         <View>
-            <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Game', {mode: 'challenge'})}>
+            <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
                 Challenge
             </HomeButton>
-            <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Game', {mode: 'practice'})}>
+            <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
                 Practice
             </HomeButton>
             <HomeButton dark={true} color={theme.colors.darkGreen} icon="notebook" mode="contained" onPress={() => navigation.navigate('Tutorial')}>

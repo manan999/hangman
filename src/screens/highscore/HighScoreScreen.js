@@ -15,7 +15,7 @@ const HighScoreScreen = ({navigation, route}) => {
 
     const [topic, setTopic] = useState(route.params.topic?route.params.topic:'Movies') ;
     const [topicOpen, setTopicOpen] = useState(false) ;
-    const [topicItems, setTopicItems] = useState([{label: 'Topic : Movies', value: 'Movies'} ]) ;
+    const [topicItems, setTopicItems] = useState([{label: 'Topic : Movies', value: 'Movies'}, {label: 'Topic : Pokemon', value: 'Pokemon'} ]) ;
 
     const [gameMode, setGameMode] = useState(route.params.mode?route.params.mode:'practice') ;
     const [modeOpen, setModeOpen] = useState(false) ;
@@ -39,7 +39,7 @@ const HighScoreScreen = ({navigation, route}) => {
                 return res.json() ;
             throw Error(res.statusText) ;
         })
-        .then( data => setData(data) ) 
+        .then( data => setData(data.filter(one => one)) ) 
         .catch( err  => console.log(err) ) ;
     }, [filterBy, topic, gameMode])
 
