@@ -67,13 +67,10 @@ const ProfileScreen = ({navigation, route}) => {
             {name: 'password', type:'password', label: 'Enter a Password'},
             {name: 'repass', type:'password', label: 'Re-Enter Password'},
         ],
-        // edit: [
-        //     {name: 'name', type:'text', label: 'Choose a Username'},
-        //     {name: 'email', type:'text', label: 'Enter Email (Optional)'},
-        //     {name: 'password', type:'password', label: 'Enter old Password'},
-        //     {name: 'password', type:'password', label: 'Enter new Password'},
-        //     {name: 'repass', type:'password', label: 'Re-Enter new Password'},
-        // ],
+        edit: [
+            {name: 'name', type:'text', label: 'Choose a Username'},
+            {name: 'email', type:'text', label: 'Enter Email (Optional)'},
+        ],
     } ;
 
     const sendLoginReq = () => {
@@ -191,6 +188,15 @@ const ProfileScreen = ({navigation, route}) => {
         setErrorCount(errorArr.length) ;
     }
 
+     const onEditPress = () => {
+        const {name, email, password, repass} = data;
+        const errorArr = [invalidName(name), invalidEmail(email), invalidPass(password, repass)].filter(one => one) ;
+
+        console.log(data, errorArr) ;
+        // setError(errorArr) ;
+        // setErrorCount(errorArr.length) ;
+    }
+
     const returnLogo = () => {
         if(logo)
             return (
@@ -245,34 +251,40 @@ const ProfileScreen = ({navigation, route}) => {
                         <ProfileText size={16}> Sign Up </ProfileText>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Register </WhiteButton></Shrink>
+                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Confirm </WhiteButton></Shrink>
+                    </ProfileView>
+                </>
+            ) ;
+        }
+    }
+
+    if(user.name)
+         if( mode === "edit") {
+            return (
+                <>
+                    <ProfileView fl={logo?0.9:1}>
+                        <ProfileText size={16}> Edit Profile </ProfileText>
+                        { returnAvatarChoice() }
+                        { returnForm() }
+                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onEditPress}> Register </WhiteButton></Shrink>
                         { returnSignInText() }
                     </ProfileView>
                 </>
             ) ;
         }
-
-        // else if( mode === "edit") {
-        //     return (
-        //         <>
-        //         </>
-        //     ) ;
-        // }
-    }
-
-    if(user.name) 
-        return (
-            <MainView>
-                <Avatar.Image {...avatarProps}/>
-                <DisplayText size={20} tt>{user.name} </DisplayText>
-                <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
-                <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
-                <Row>
-                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
-                    <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
-                </Row>
-            </MainView>
-        ) ;
+        else 
+            return (
+                <MainView>
+                    <Avatar.Image {...avatarProps}/>
+                    <DisplayText size={20} tt>{user.name} </DisplayText>
+                    <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
+                    <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
+                    <Row>
+                        <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
+                        <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
+                    </Row>
+                </MainView>
+            ) ;
     else
         return (
             <MainView2>
