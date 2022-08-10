@@ -33,4 +33,11 @@ const MarginRow = styled(Row)`
   margin: 15px ; 
 ` ;
 
-export {ProfileText, ProfileView, MarginRow, MainView2, DisplayText} ;
+const ProfileTop = styled.View`
+  padding: 30px 20px ;
+  margin: 0 ;
+  align-items: center ;
+  width: 100% ;
+` ;
+
+export {ProfileText, ProfileView, MarginRow, MainView2, DisplayText, ProfileTop} ;

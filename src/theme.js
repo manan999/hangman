@@ -11,6 +11,7 @@ export const theme = {
 		darkGreen: '#13542f',
 		black: "#000000",
 		halfBlack: "rgba(0, 0, 0, 0.5)",
+		quarterBlack: "rgba(0, 0, 0, 0.25)",
 	},
 	fonts : {
 		main : "Lexend_400Regular" ,

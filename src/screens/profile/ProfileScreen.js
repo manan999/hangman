@@ -4,9 +4,9 @@ import { Snackbar, TextInput, Avatar, DataTable } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, WhiteButton, Shrink, KufamText, MainView, GreenView } from '../../../cssApp.js' ;
+import { Row, WhiteButton, Shrink, KufamText, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
-import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText } from './cssProfile.js' ;
+import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -59,20 +59,47 @@ const ProfileScreen = ({navigation, route}) => {
                 // console.log(data) ;
                 let arr = data.filter(one => one.mode === 'practice') ;
                 let practiceTotal = arr.length ;
-                let totalScore = 0 ;
-                let totalHints = 0 ;
-                let totalTopics = {} ;
-                arr.forEach((one,i) => {
-                    totalHints += one.hints ;
-                    totalScore += one.score ;
-                    totalTopics[one.topic]?(totalTopics[one.topic]++):(totalTopics[one.topic] = 1) 
-                })
-                let practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
-                let practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
+                let userObj = {} ;
+                
+                if(practiceTotal > 0) {
+                    let totalScore = 0 ;
+                    let totalHints = 0 ;
+                    let totalTopics = {} ;
+                    arr.forEach((one,i) => {
+                        totalHints += one.hints ;
+                        totalScore += one.score ;
+                        totalTopics[one.topic]?(totalTopics[one.topic]++):(totalTopics[one.topic] = 1) 
+                    })
+                    Object.keys(totalTopics).forEach(one => totalTopics[one] = Math.round(totalTopics[one]*100/practiceTotal))
 
-                Object.keys(totalTopics).forEach(one => totalTopics[one] = Math.round(totalTopics[one]*100/practiceTotal))
+                    let practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
+                    let practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
+                    userObj = {totalHints, totalScore, practiceAvgScore, practiceAvgHints, totalTopics, ...userObj} ;
+                }
 
-                setUserData({totalHints, totalScore, practiceAvgScore, practiceAvgHints, totalTopics}) ;
+
+                let arr2 = data.filter(one => one.mode === 'challenge') ;
+                let challTotal = arr2.length ;
+                
+                if(challTotal > 0) {
+                    let challTotalScore = 0 ;
+                    let challTotalHints = 0 ;
+                    let challTotalTopics = {} ;
+
+                    arr2.forEach((one,i) => {
+                        challTotalHints += one.hints ;
+                        challTotalScore += one.score ;
+                        challTotalTopics[one.topic]?(challTotalTopics[one.topic]++):(challTotalTopics[one.topic] = 1) 
+                    })
+
+                    Object.keys(challTotalTopics).forEach(one => challTotalTopics[one] = Math.round(challTotalTopics[one]*100/challTotal))
+
+                    let challAvgScore = Math.floor(challTotalScore/challTotal) ; 
+                    let challAvgHints = Math.floor(challTotalHints/challTotal) ;
+                    userObj = {challTotalHints, challTotalScore, challAvgScore, challAvgHints, challTotalTopics, ...userObj} ;
+                }
+                
+                setUserData(userObj) ;
             })
             .catch( err  => console.log(err) ) ;     
         }   
@@ -292,13 +319,39 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const userDataCheck = () => {
-        console.log(userData) ;
-        if(userData.totalTopics)
-            return(
-                 <View>
-                    {Object.keys(userData.totalTopics).map((one,i)=><DisplayText size={15}>{one}&emsp;{userData.totalTopics[one]}%</DisplayText>)}
-                </View>
+        if(userData.totalScore)
+            return ( 
+                <GreenView>
+                    <DisplayText size={20}>Total Score  {userData.totalScore}</DisplayText>
+                    <DisplayText size={20}>Average Score  {userData.practiceAvgScore}</DisplayText>
+                    <DisplayText size={20}>Total Hints Used  {userData.totalHints}</DisplayText>
+                    <DisplayText size={20}>Average Hints Used  {userData.practiceAvgHints}</DisplayText>
+                    <DisplayText size={20}>Topics</DisplayText>
+                    <View>
+                        {Object.keys(userData.totalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.totalTopics[one]}%</DisplayText>)}
+                    </View>
+                </GreenView>
             ) ;
+        else
+            return <DisplayText size={15}> Play Practice Mode to show analysis here</DisplayText>
+    }
+
+    const userDataCheck2 = () => {
+        if(userData.challTotalScore)
+            return ( 
+                <GreenView>
+                    <DisplayText size={20}>Total Score  {userData.challTotalScore}</DisplayText>
+                    <DisplayText size={20}>Average Score  {userData.challAvgScore}</DisplayText>
+                    <DisplayText size={20}>Total Hints Used  {userData.challTotalHints}</DisplayText>
+                    <DisplayText size={20}>Average Hints Used  {userData.challAvgHints}</DisplayText>
+                    <DisplayText size={20}>Topics</DisplayText>
+                    <View>
+                        {Object.keys(userData.challTotalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.challTotalTopics[one]}%</DisplayText>)}
+                    </View>
+                </GreenView>
+            ) ;
+        else
+            return <DisplayText size={15}> Play Challenge Mode to show analysis here</DisplayText>
     }
 
     if(user.name)
@@ -317,25 +370,22 @@ const ProfileScreen = ({navigation, route}) => {
         }
         else 
             return (
-                <MainView>
-                    <Avatar.Image {...avatarProps}/>
-                    <DisplayText size={20} tt>{user.name} </DisplayText>
-                    <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
-                    <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
-                    <GreenView>
-                        <DisplayText>Practice Mode Statistics </DisplayText>
-                        <DisplayText size={20}>Total Score  {userData.totalScore}</DisplayText>
-                        <DisplayText size={20}>Average Score  {userData.practiceAvgScore}</DisplayText>
-                        <DisplayText size={20}>Total Hints Used  {userData.totalHints}</DisplayText>
-                        <DisplayText size={20}>Average Hints Used  {userData.practiceAvgHints}</DisplayText>
-                        <DisplayText size={20}>Topics</DisplayText>
-                        
-                    </GreenView>
+                <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
+                    <ProfileTop>
+                        <Avatar.Image {...avatarProps}/>
+                        <DisplayText size={20} tt>{user.name} </DisplayText>
+                        <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
+                        <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
+                    </ProfileTop>
+                    <DisplayText>Practice Mode Statistics </DisplayText>
+                    { userDataCheck() }
+                    <DisplayText>Challenge Mode Statistics </DisplayText>
+                    { userDataCheck2() }
                     <Row>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
                     </Row>
-                </MainView>
+                </MainScrollView>
             ) ;
     else
         return (

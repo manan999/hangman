@@ -54,8 +54,10 @@ const Shrink = styled.View`
 ` ;
 
 const GreenView = styled.View`
-  background-color: ${ ({theme}) => theme.colors.second } ;
+  background-color: ${ ({theme}) => theme.colors.quarterBlack } ;
   align-self: stretch ;
+  margin-bottom: 15px ;
+  padding: 10px 0 ;
 ` ;
 
-export {WhiteButton, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView} ;
+export {WhiteButton, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView, GreenView} ;
