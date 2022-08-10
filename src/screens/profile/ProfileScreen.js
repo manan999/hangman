@@ -4,7 +4,7 @@ import { Snackbar, TextInput, Avatar, DataTable } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, WhiteButton, Shrink, KufamText, MainView } from '../../../cssApp.js' ;
+import { Row, WhiteButton, Shrink, KufamText, MainView, GreenView } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
 import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
@@ -25,9 +25,7 @@ const ProfileScreen = ({navigation, route}) => {
     const [hidePass, setHidePass] = useState({password: true, repass: true}) ;
     const [error, setError] = useState([]) ;
     const [errorCount, setErrorCount] = useState(null) ;
-    const [userData, setUserData] = useState({}) ;
-
-    
+    const [userData, setUserData] = useState({}) ;    
 
     const {user, loadUser, userToken} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
@@ -69,16 +67,12 @@ const ProfileScreen = ({navigation, route}) => {
                     totalScore += one.score ;
                     totalTopics[one.topic]?(totalTopics[one.topic]++):(totalTopics[one.topic] = 1) 
                 })
-
                 let practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
                 let practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
 
-                setUserData({totalHints, totalScore, practiceAvgScore, practiceAvgHints}) ;
-                // let detailsObj = {
-                //     practiceTotal,
+                Object.keys(totalTopics).forEach(one => totalTopics[one] = Math.round(totalTopics[one]*100/practiceTotal))
 
-                // }
-                console.log(totalHints, totalScore, totalTopics, practiceAvgScore) ;
+                setUserData({totalHints, totalScore, practiceAvgScore, practiceAvgHints, totalTopics}) ;
             })
             .catch( err  => console.log(err) ) ;     
         }   
@@ -297,6 +291,16 @@ const ProfileScreen = ({navigation, route}) => {
         }
     }
 
+    const userDataCheck = () => {
+        console.log(userData) ;
+        if(userData.totalTopics)
+            return(
+                 <View>
+                    {Object.keys(userData.totalTopics).map((one,i)=><DisplayText size={15}>{one}&emsp;{userData.totalTopics[one]}%</DisplayText>)}
+                </View>
+            ) ;
+    }
+
     if(user.name)
          if( mode === "edit") {
             return (
@@ -318,13 +322,15 @@ const ProfileScreen = ({navigation, route}) => {
                     <DisplayText size={20} tt>{user.name} </DisplayText>
                     <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
                     <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
-                    <View>
-                        <DisplayText>Mode : Practice</DisplayText>
-                        <DisplayText>Total Hints : {userData.totalHints}</DisplayText>
-                        <DisplayText>Total Score : {userData.totalScore}</DisplayText>
-                        <DisplayText>Average Score : {userData.practiceAvgScore}</DisplayText>
-                        <DisplayText>Average Hints : {userData.practiceAvgHints}</DisplayText>
-                    </View>
+                    <GreenView>
+                        <DisplayText>Practice Mode Statistics </DisplayText>
+                        <DisplayText size={20}>Total Score  {userData.totalScore}</DisplayText>
+                        <DisplayText size={20}>Average Score  {userData.practiceAvgScore}</DisplayText>
+                        <DisplayText size={20}>Total Hints Used  {userData.totalHints}</DisplayText>
+                        <DisplayText size={20}>Average Hints Used  {userData.practiceAvgHints}</DisplayText>
+                        <DisplayText size={20}>Topics</DisplayText>
+                        
+                    </GreenView>
                     <Row>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>

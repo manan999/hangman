@@ -53,4 +53,9 @@ const Shrink = styled.View`
   align-items: center ; 
 ` ;
 
+const GreenView = styled.View`
+  background-color: ${ ({theme}) => theme.colors.second } ;
+  align-self: stretch ;
+` ;
+
 export {WhiteButton, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView} ;
