@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react' ;
 import { View, Text, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
-import { Snackbar, TextInput, Avatar, DataTable } from 'react-native-paper' ;
+import { Snackbar, TextInput, Avatar } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, WhiteButton, Shrink, KufamText, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
+import { Row, WhiteButton, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
 import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;

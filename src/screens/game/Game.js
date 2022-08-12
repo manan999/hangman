@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react' ;
-import { Pressable, Vibration, Dimensions, ToastAndroid } from 'react-native';
+import {  Vibration, Dimensions, ToastAndroid } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';

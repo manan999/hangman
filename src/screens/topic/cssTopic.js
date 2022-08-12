@@ -1,5 +1,4 @@
 import styled from 'styled-components/native' ;
-import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;

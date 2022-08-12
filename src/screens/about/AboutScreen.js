@@ -1,8 +1,8 @@
-import { View, Text, Dimensions, TouchableOpacity, Linking} from 'react-native' ;
+import { View, Text, Dimensions, Linking} from 'react-native' ;
 import LottieView from 'lottie-react-native';
 
 import {HomeImage } from '../home/cssHomeScreen.js' ;
-import {Row, MainView, KufamText, WhiteButton} from '../../../cssApp.js' ;
+import {Row, MainView, WhiteButton} from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 import sky from '../../../assets/sky.json' ;
 

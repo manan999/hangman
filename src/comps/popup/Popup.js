@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Modal } from 'react-native' ;
+import { View, Modal } from 'react-native' ;
 import styled from 'styled-components/native' ;
 import { Entypo } from '@expo/vector-icons'; 
 

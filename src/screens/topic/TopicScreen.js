@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react' ;
+import { useState, useCallback } from 'react' ;
 import { useFocusEffect } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { View, BackHandler } from 'react-native' ;
 
 import Popup from '../../comps/popup/Popup.js' ;
-import { Row, MainView, KufamText, BlackKufam} from '../../../cssApp.js' ;
+import { MainView, KufamText, BlackKufam} from '../../../cssApp.js' ;
 import { GreenButton } from '../game/cssGameScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { TopicButton } from './cssTopic.js' ;

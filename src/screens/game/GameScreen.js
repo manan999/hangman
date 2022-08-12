@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react' ;
 import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper' ;
-import { ToastAndroid, BackHandler, Modal } from 'react-native' ;
+import { BackHandler } from 'react-native' ;
 
 import { MainView, GreenButton } from './cssGameScreen.js' ;
 import { BlackKufam } from '../../../cssApp.js' ;

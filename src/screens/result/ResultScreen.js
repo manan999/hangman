@@ -6,7 +6,7 @@ import { BackHandler } from 'react-native' ;
 import { CountUp } from 'use-count-up' ;
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
-import { MainView, CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
+import { CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
 import { WhiteButton, KufamText, MainScrollView, Row } from '../../../cssApp.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
 import { Gem } from '../../comps/icons.js' ;

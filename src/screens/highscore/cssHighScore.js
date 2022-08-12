@@ -2,7 +2,6 @@ import styled from 'styled-components/native' ;
 import { View, Text } from 'react-native';
 import { DataTable } from 'react-native-paper';
 
-import { KufamText, Row } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 
 // const MainView = styled.View`
