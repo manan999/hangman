@@ -56,7 +56,7 @@ const ProfileScreen = ({navigation, route}) => {
             })
             .then(res =>  res.json())
             .then(data => {
-                // console.log(data) ;
+                // console.log(data, 'data') ;
                 let arr = data.filter(one => one.mode === 'practice') ;
                 let practiceTotal = arr.length ;
                 let userObj = {} ;
@@ -105,7 +105,7 @@ const ProfileScreen = ({navigation, route}) => {
         }   
     }, [])
 
-    useEffect(() => setData(initObj[mode]), [mode])
+    useEffect(() => mode==='edit'?setData(user):setData(initObj[mode]), [mode])
 
     useEffect(() => {
         if(errorCount === 0 && data !== initObj[mode]) {
@@ -113,6 +113,8 @@ const ProfileScreen = ({navigation, route}) => {
                 sendRegisterReq() ;
             else if(mode === 'login')
                 sendLoginReq() ;
+            else if(mode === 'edit')
+                sendEditReq() ;
         }
     }, [errorCount, error])
 
@@ -128,8 +130,8 @@ const ProfileScreen = ({navigation, route}) => {
             {name: 'repass', type:'password', label: 'Re-Enter Password'},
         ],
         edit: [
-            {name: 'name', type:'text', label: 'Choose a Username'},
-            {name: 'email', type:'text', label: 'Enter Email (Optional)'},
+            {name: 'name', type:'text', label: 'Change your Username'},
+            {name: 'email', type:'text', label: 'Change Email (Optional)'},
         ],
     } ;
 
@@ -178,6 +180,37 @@ const ProfileScreen = ({navigation, route}) => {
             if(resp.user) {
                 loadUser(resp) ;      
                 ToastAndroid.show("Registered Successfully", ToastAndroid.LONG)
+                navigation.replace('Home') ;
+            }
+            else {
+                setError([resp]) ;
+                setErrorCount(1) ;
+            }
+        })
+        .catch( err  => {
+            console.log(err) ;
+            ToastAndroid.show(err, ToastAndroid.SHORT)
+        }) ;
+    }
+
+    const sendEditReq = () => {
+        ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
+        const {name, email, image} = data ;
+
+        // console.log(name, email, image) ;
+
+        fetch('https://web.myarthhardware.com/myarth/users/me' ,{
+        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+            method : 'PATCH',
+            headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
+            body : JSON.stringify({name, email, image}),
+        })
+        .then(res =>  res.json())
+        .then(resp => { 
+            // console.log(resp) ;  
+            if(resp.name) {
+                loadUser({ user: resp, token: userToken}) ;      
+                ToastAndroid.show("Details Changed Successfully", ToastAndroid.LONG)
                 navigation.replace('Home') ;
             }
             else {
@@ -249,12 +282,11 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
      const onEditPress = () => {
-        const {name, email, password, repass} = data;
-        const errorArr = [invalidName(name), invalidEmail(email), invalidPass(password, repass)].filter(one => one) ;
+        const {name, email} = data;
+        const errorArr = [invalidName(name), invalidEmail(email)].filter(one => one) ;
 
-        console.log(data, errorArr) ;
-        // setError(errorArr) ;
-        // setErrorCount(errorArr.length) ;
+        setError(errorArr) ;
+        setErrorCount(errorArr.length) ;
     }
 
     const returnLogo = () => {
@@ -268,7 +300,7 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const returnAvatarChoice = () => {
-        if(logo)
+        if(logo || mode === 'edit')
             return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})}/> ;
     }
 
@@ -319,6 +351,7 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const userDataCheck = () => {
+        // console.log(userData) ;
         if(userData.totalScore)
             return ( 
                 <GreenView>
@@ -357,15 +390,15 @@ const ProfileScreen = ({navigation, route}) => {
     if(user.name)
          if( mode === "edit") {
             return (
-                <>
+                <MainView>
                     <ProfileView fl={logo?0.9:1}>
-                        <ProfileText size={16}> Edit Profile </ProfileText>
+                        <ProfileText size={26}> Edit Profile </ProfileText>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onEditPress}> Register </WhiteButton></Shrink>
-                        { returnSignInText() }
+                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onEditPress}> Submit </WhiteButton></Shrink>
                     </ProfileView>
-                </>
+                    <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>  
+                </MainView>
             ) ;
         }
         else 

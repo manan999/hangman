@@ -1,8 +1,10 @@
-import { useContext, useEffect } from 'react' ;
-import { View, Dimensions, ToastAndroid } from 'react-native' ;
+import { useContext, useEffect, useState, useCallback } from 'react' ;
+import { View, Dimensions, ToastAndroid, BackHandler } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
+import {Audio} from 'expo-av' ;
+import { useFocusEffect } from '@react-navigation/native';
 
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;
 import { Row } from '../../../cssApp.js' ;
@@ -12,13 +14,52 @@ import sky from '../../../assets/sky.json' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
 const HomeScreen = ({navigation}) => {
+    const [sound, setSound] = useState() ;
     const {user, addGems} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
     
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         const onBackPress = () => {
+    //             setSound(false) ;
+    //             BackHandler.exitApp() ;
+    //             return true;
+    //         };
+
+    //         BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    //         return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    //     }, [setSound])
+    //  );
+
     useEffect( () => {
         if(user.name)
             addGems(0) ;
+        // playSound() ;
     }, [])
+
+
+    // useEffect(() => {
+    //     return sound? () => {
+    //           console.log('Unloading Sound');
+    //           sound.unloadAsync(); }
+    //       : undefined;
+    // }, [sound]);
+
+    // const playSound = async () => {
+    //     try {
+    //     console.log('Loading Sound');
+    //     const { sound } = await Audio.Sound.createAsync(
+    //        require('../../../assets/success.mp3')
+    //     );
+    //     setSound(sound);
+    //     await sound.setIsLoopingAsync(true) ;
+
+    //     console.log('Playing Sound');
+    //     await sound.playAsync(); 
+    //     } catch (e) {
+    //         console.log(e) ;
+    //     }
+    // }
 
     const returnHSButton = () => {
         return (
@@ -89,3 +130,24 @@ const HomeScreen = ({navigation}) => {
 }
 
 export default HomeScreen ;
+    // useEffect( async () => {
+
+    //     // const song = new Audio.Sound();
+    //     // await song.loadAsync(require('../../../assets/one_2.mp3'));
+    //     // await song.playAsync();   
+
+        // await song.setAudioModeAsync({
+        //     staysActiveInBackground: false,
+        //     interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        //     shouldDuckAndroid: true,
+        //     playThroughEarpieceAndroid: true,
+        //     allowsRecordingIOS: true,
+        //     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        //     playsInSilentModeIOS: true,
+        //   });
+
+    //     // return (async () => {
+    //     //   let abc = await song.unloadAsync() ;
+    //     //   console.log(abc) ;
+    //     // }) 
+    // }, [])

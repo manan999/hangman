@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
-import { Audio } from 'expo-av' ;
 
 import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
 import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;
@@ -31,29 +30,6 @@ export default function App() {
   let [montLoaded] = useMont({ Montserrat_400Regular});
 
   useEffect( () => console.log('app loaded on '+ new Date()), [])
-
-  useEffect( async () => {
-
-    // const song = new Audio.Sound();
-    // await song.loadAsync(require('./assets/one_2.mp3'));
-    // await song.playAsync();   
-    // await song.setIsLoopingAsync(true) ;
-
-    // await song.setAudioModeAsync({
-    //     staysActiveInBackground: false,
-    //     interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-    //     shouldDuckAndroid: true,
-    //     playThroughEarpieceAndroid: true,
-    //     allowsRecordingIOS: true,
-    //     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-    //     playsInSilentModeIOS: true,
-    //   });
-
-    // return (async () => {
-    //   let abc = await song.unloadAsync() ;
-    //   console.log(abc) ;
-    // }) 
-  }, [])
 
   const Stack = createNativeStackNavigator() ;
   
