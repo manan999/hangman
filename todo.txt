@@ -1,6 +1,4 @@
 1 music daalna hai
 2 tutorial me animations daalkar improve karna hai
-3 user profile page pe stats dikhane hai
-4 edit profile ka banana hai
 
 -- level system

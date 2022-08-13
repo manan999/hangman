@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react' ;
-import {  Vibration, Dimensions, ToastAndroid } from 'react-native';
+import {  Vibration, Dimensions, ToastAndroid, Image, Pressable, View } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
@@ -8,7 +8,8 @@ import valid from 'validator' ;
 
 import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
-import { MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, HintHead, HintText, HintView, GameHeader, ScoreHead, ScoreText, ScoreView, GameHeaderRight, GameHeaderLeft, IconButton } from './cssGameScreen.js' ;
+import { MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild } from './cssGameScreen.js' ;
+import { Row } from '../../../cssApp.js' ; 
 import { Alpha, Letter } from './AlphaLetter.js' ;
 import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -93,12 +94,13 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 	}
 
 	const returnGuesser = () => {
+		// return 'The Accidental Prime Minister'.toLowerCase().split(' ').map( (one, i) => {
 		return movie.toLowerCase().split(' ').map( (one, i) => {
 			return (
 				<WordView key={i}>
 					{	one.split('').map((two,i) => {
-							return <Letter key={i} text={returnLetter(two)} /> ;
-					  }) 
+							return <Letter key={i} text={returnLetter(two)} size={one.length>10?20:24}/> ;
+					    }) 
 					}
 				</WordView>
 			) ;
@@ -128,9 +130,9 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 
 	const returnHintButton = () => {
 		if(mode !== 'practice')
-			return <IconButton onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /><ScoreHead><Gem size={13}/>&nbsp;10</ScoreHead></IconButton> ;
+			return <Pressable onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /><ScoreHead><Gem size={13}/>&nbsp;10</ScoreHead></Pressable> ;
 		else
-			return <IconButton onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /></IconButton> ;
+			return <Pressable onPress={onHintPress}><MaterialIcons name="lightbulb" size={32} color="yellow" /></Pressable> ;
 	}
 
 	const onAddTimePress = () => {
@@ -144,14 +146,14 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 
 	const returnAddTimeButton = () => {
 		if(mode !== 'practice')
-			return <IconButton onPress={onAddTimePress}><MaterialIcons name="more-time" size={32} color="white" /><ScoreHead><Gem size={13}/>&nbsp;20</ScoreHead></IconButton> ;
+			return <Pressable onPress={onAddTimePress}><MaterialIcons name="more-time" size={32} color="white" /><ScoreHead><Gem size={13}/>&nbsp;20</ScoreHead></Pressable> ;
 	}
 
 	const returnCountDown = () => {
 		if(mode !== 'practice')
 			return (
 				<AnimateView>
-			    	<CountdownCircleTimer isPlaying={!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss', wrong, hintCount)} size={90} strokeWidth={8}>
+			    	<CountdownCircleTimer isPlaying={/*false*/!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss', wrong, hintCount)} size={80} strokeWidth={8}>
 					    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
 					</CountdownCircleTimer>
 				</AnimateView>
@@ -168,42 +170,52 @@ const Game = ({movie, round, next, hint, config, mode}) => {
         	<LottieView ref={gameRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={hurray} loop={false} />
         	<LottieView ref={heartRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={red} loop={false} progress={0.02} />
 			<GameHeader>
-				<GameHeaderLeft>
-			    	{ returnGems() }
-					<ScoreView>
-						<ScoreHead>Score</ScoreHead>
-						<ScoreText>{config.score}</ScoreText>
-					</ScoreView>
-			    </GameHeaderLeft>
 	    		<AnimateView>
-	    			<GameHeaderRight>
+					<HeaderChild>
+				    	{ returnGems() }
+						<HeaderChild>
+							<ScoreHead>Score</ScoreHead>
+							<ScoreText>{config.score}</ScoreText>
+						</HeaderChild>
+				    </HeaderChild>
+	    		</AnimateView>
+				<HeaderChild>
+	    			<AnimateView>
+		    			<Row>
+		    				{[4,3,2,1,0].map(one =><CrossCon key={one}><Cross color={one>=wrong}/></CrossCon>)}
+		    			</Row>
+	    			</AnimateView>
+		    		{returnCountDown()}
+		    	</HeaderChild>
+	    		<AnimateView>
+	    			<HeaderChild>
 		    			{ returnHintButton() }
 		    			{ returnAddTimeButton() }
-	    			</GameHeaderRight>
+	    			</HeaderChild>
 	    		</AnimateView>
 			</GameHeader>
-	    	<CrossView>{[4,3,2,1,0].map(one =><CrossCon key={one}><Cross color={one>=wrong}/></CrossCon>)}</CrossView>
-	    	{returnCountDown()}
 	    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
 	    		<GameText> Movies : Round {round+1} </GameText>
 	    	</Animatable.View>
 	    	<GuesserView>
-			  	<AnimateView><AlphaRow>{returnGuesser()}</AlphaRow></AnimateView>
-			  	<AnimateView> 
-			  		<HintView>
-				  		<HintHead> Hints : </HintHead>
-				  		<HintText>{hint.join(', ')}</HintText>
-				  	</HintView>
-			    </AnimateView>
-	      </GuesserView>
-	      <AnimateView> 
-	      	{	alphas.map( (one,i) => <AlphaRow key={i}>
-	      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => {
-	      				if(!wait) setGuessed([...guessed, str]) ;
-	      			}} guessed={guessed.includes(two)}/>)}
-	      		</AlphaRow>)
-	      	} 
-	      </AnimateView>
+			  	<Animatable.View animation='fadeIn' delay={1000} style={{ height: '100%', justifyContent: 'space-evenly'}}>
+			  		<AlphaRow>{returnGuesser()}</AlphaRow>
+			  		<View>
+				  		<HintHead> Hints </HintHead>
+				  		<Row>
+				  			{hint.map((one,i)=><Image key={i} style={{height: 80, width: 80, borderRadius: 5}} source={require('../../../assets/user2.png')} />)}
+				  		</Row>
+			  		</View>
+			    </Animatable.View>
+	      	</GuesserView>
+	      	<AnimateView> 
+		      	{	alphas.map( (one,i) => <AlphaRow key={i}>
+		      			{one.split('').map(two=><Alpha key={two} text={two} guess={(str) => {
+		      				if(!wait) setGuessed([...guessed, str]) ;
+		      			}} guessed={guessed.includes(two)}/>)}
+		      		</AlphaRow>)
+		      	} 
+	      	</AnimateView>
 	    </MainView>
   	) ;
 }

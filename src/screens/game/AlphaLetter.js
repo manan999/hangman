@@ -15,9 +15,9 @@ const Alpha = ({text, guess, guessed}) => {
 	) ;
 }
 
-const Letter = ({text}) => {
+const Letter = ({text, size = 24}) => {
 	return (
-		<LetterView><LetterText>{text}</LetterText></LetterView>
+		<LetterView><LetterText size={size}>{text}</LetterText></LetterView>
 	) ;
 }
 

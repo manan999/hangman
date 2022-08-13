@@ -1,15 +1,16 @@
 import styled from 'styled-components/native' ;
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;
 
 const MainView = styled.View`
   flex: 1 ;
-  justify-content: space-evenly ;
+  justify-content: center ;
   align-items: center ;
   background-color: ${ ({theme}) => theme.colors.main } ;
-  position: relative
+  position: relative ;
+  padding-bottom: 15px ;
 ` ;
 
 const AlphaRow = styled.View` 
@@ -19,9 +20,9 @@ const AlphaRow = styled.View`
 ` ;
 
 const GuesserView = styled.View`
-  flex: .5 ;
-  margin-bottom: 50px ;
-  justify-content: space-between;
+  flex: 1 ;
+  justify-content: center;
+  align-self: stretch ;
 ` ;
 
 const WordView = styled.View` 
@@ -30,20 +31,15 @@ const WordView = styled.View`
   flex-wrap: wrap ;
 ` ;
 
-const CrossView = styled.View` 
-  flex-direction: row ;  
-  height: 21px ;
-` ;
-
 const CrossCon = styled.View` 
-  margin: auto 5px ;  
-  
+  margin: 12px 5px ;  
 ` ;
 
 const GameText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 22px ;
   font-family: ${ ({theme}) => theme.fonts.third } ;
+  text-align: center ;
 ` ;
 
 const TimerText = styled.Text`
@@ -52,55 +48,32 @@ const TimerText = styled.Text`
   font-family: ${ ({theme}) => theme.fonts.main } ;
 ` ;
 
-const HintView = styled.View`
-  flex-direction: row ;  
-  justify-content: center ;
-  flex-wrap: wrap ;
-` ;
-
 const HintHead = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 18px ;
   text-transform: capitalize ;
+  text-align: center;
   font-family: ${ ({theme}) => theme.fonts.mainBold } ;
-` ;
-
-const HintText = styled.Text`
-  color: ${ ({theme}) => theme.colors.white } ;
-  font-size: 18px ;
-  font-family: ${ ({theme}) => theme.fonts.second } ;
-  text-transform: capitalize ;
+  margin: 25px 0 10px ;
 ` ;
 
 const GameHeader = styled.View`
   flex-direction: row ;  
   justify-content: space-between ;
-  width: 100% ;
-  position: absolute ;
-  top: 0 ;
-  z-index: 10 ;
-  padding : 15px ; 
-` ;
-
-const GameHeaderRight = styled.View`
-  align-items: flex-end ;
-` ;
-
-const GameHeaderLeft = styled.View`
   align-items: center ;
-  margin-top: 10px ;
+  align-self: stretch ;
+  padding: 15px ;
 ` ;
 
-const ScoreView = styled.View`
+const HeaderChild = styled.View`
   align-items: center ;
-  margin-top: 10px ;
 ` ;
 
 const ScoreHead = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 16px ;
   font-family: ${ ({theme}) => theme.fonts.main } ;
-  margin-top: 3px ;
+  margin-bottom: 5px ;
 ` ;
 
 const ScoreText = styled.Text`
@@ -122,10 +95,5 @@ const GreenButton = styled(Button).attrs(({size}) => ({
   margin: 20px 0 0 ;
 ` ;
 
-const IconButton = styled.Pressable`
-  margin-top: 12px ;
-` ;
-
-export {MainView, AlphaRow, WordView, CrossView, CrossCon, GameText, GuesserView, TimerText, 
-        HintHead, HintText, HintView, GameHeader, ScoreView, ScoreHead, ScoreText, GreenButton, 
-        GameHeaderRight, GameHeaderLeft, IconButton} ;
+export {MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, 
+        HintHead, GameHeader, ScoreHead, ScoreText, GreenButton, HeaderChild} ;

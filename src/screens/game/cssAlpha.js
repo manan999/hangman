@@ -17,7 +17,7 @@ const AlphaView = styled.View`
 const AlphaText = styled.Text` 
   color: ${ ({theme}) => theme.colors.main } ;
   font-family: ${ ({theme}) => theme.fonts.main } ;
-  font-size: 26px ;
+  font-size: 24px ;
   text-transform: uppercase ;
 ` ;
 
@@ -26,13 +26,13 @@ const LetterView = styled.View`
   padding: 2px ;
   align-items: center; 
   justify-content: center ;
-  min-width: 30px ;
+  min-width: 26px ;
 ` ;
 
 const LetterText = styled.Text` 
   color: ${ ({theme}) => theme.colors.white } ;
   font-family: ${ ({theme}) => theme.fonts.mainBold } ;
-  font-size: 26px ;
+  font-size: ${ ({size}) => size?size:24 }px ;
   text-transform: uppercase ;
 ` ;
 
