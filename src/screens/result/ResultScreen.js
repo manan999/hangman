@@ -7,7 +7,7 @@ import { CountUp } from 'use-count-up' ;
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
 import { CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
-import { WhiteButton, KufamText, MainScrollView, Row } from '../../../cssApp.js' ;
+import { WhiteButton, KufamText, MainScrollView, Row, GreenView } from '../../../cssApp.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
 import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -62,7 +62,7 @@ const ResultScreen = ({navigation, route}) => {
     const returnGemText = () => {
         if(mode !== 'practice' && user.name)
             if(final)
-                return <AnimateView delay={300}><KufamText> <Gem /> {gems} </KufamText></AnimateView> ;
+                return <AnimateView delay={300}><KufamText> <Gem /> {gems} ( + {Math.ceil(wins/10)} ) </KufamText></AnimateView> ;
             else
                 return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/10)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/10)} duration={2} /> </KufamText> ;
     }
@@ -108,7 +108,7 @@ const ResultScreen = ({navigation, route}) => {
 
     return (
         <MainScrollView contentContainerStyle={{ alignItems: 'center' }}>
-            <KufamText>{topic} {mode} Summary</KufamText>
+            <KufamText style={{textTransform: 'capitalize'}}>{topic} {mode} Summary</KufamText>
             <CountdownCircleTimer duration={countDown.rounds} initialRemainingTime={countDown.wins} colors="#f55442" trailColor="#ffffff" trailStrokeWidth={24}>
               {({ remainingTime }) => <TimerText><CountUp isCounting end={remainingTime} duration={2} /></TimerText>}
             </CountdownCircleTimer>
@@ -116,13 +116,15 @@ const ResultScreen = ({navigation, route}) => {
                 <BoxNumber text="Your Score" num={wins} color={theme.colors.green}/>
                 <BoxNumber text="Hints Used" num={hints} color={theme.colors.mainLight}/>
             </Row>
-            { returnGemText() }
+            <GreenView>{ returnGemText() }</GreenView>
             <ButtonRow>
                 <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode})}>Play Again</WhiteButton>
                 <WhiteButton dark={false} icon="home" mode="contained" onPress={() => navigation.replace('Home')}>Go Home</WhiteButton>
             </ButtonRow>
-            <Avatar.Image {...avatarProps}/>
-            { returnSignIn() }
+            <GreenView>
+                <Avatar.Image {...avatarProps}/>
+                { returnSignIn() }
+            </GreenView>
         </MainScrollView>
     ) ;
 }

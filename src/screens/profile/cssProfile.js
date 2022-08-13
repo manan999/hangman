@@ -23,8 +23,7 @@ const ProfileText = styled(KufamText)`
 ` ;
 
 const DisplayText = styled(KufamText)`
-  margin-top: 0px ;
-  margin-bottom: 0px ;
+  margin: 0 30px ;
   text-align: center ;
   text-transform: ${({tt}) => tt?'capitalize':'none'} ;
 ` ;

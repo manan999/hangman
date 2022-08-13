@@ -10,7 +10,7 @@ const MainView = styled.View`
   align-items: center ;
   background-color: ${ ({theme}) => theme.colors.main } ;
   position: relative ;
-  padding-bottom: 15px ;
+  padding-bottom: 25px ;
 ` ;
 
 const AlphaRow = styled.View` 
@@ -62,7 +62,7 @@ const GameHeader = styled.View`
   justify-content: space-between ;
   align-items: center ;
   align-self: stretch ;
-  padding: 15px ;
+  padding: 20px 15px;
 ` ;
 
 const HeaderChild = styled.View`

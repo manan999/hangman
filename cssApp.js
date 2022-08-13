@@ -32,7 +32,7 @@ const BlackKufam = styled.Text`
 
 const Row = styled.View`
   flex-direction: row ; 
-  justify-content: space-evenly ;
+  justify-content: ${ ({jc}) => jc?jc:'space-evenly' } ;
   align-items: center ;
   align-self: stretch ;
 ` ;
@@ -56,6 +56,7 @@ const Shrink = styled.View`
 const GreenView = styled.View`
   background-color: ${ ({theme}) => theme.colors.quarterBlack } ;
   align-self: stretch ;
+  align-items: center ;
   margin-bottom: 15px ;
   padding: 10px 0 ;
 ` ;

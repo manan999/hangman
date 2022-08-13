@@ -355,10 +355,22 @@ const ProfileScreen = ({navigation, route}) => {
         if(userData.totalScore)
             return ( 
                 <GreenView>
-                    <DisplayText size={20}>Total Score  {userData.totalScore}</DisplayText>
-                    <DisplayText size={20}>Average Score  {userData.practiceAvgScore}</DisplayText>
-                    <DisplayText size={20}>Total Hints Used  {userData.totalHints}</DisplayText>
-                    <DisplayText size={20}>Average Hints Used  {userData.practiceAvgHints}</DisplayText>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Total Score </DisplayText>
+                        <DisplayText size={20}> {userData.totalScore}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Average Score </DisplayText>
+                        <DisplayText size={20}> {userData.practiceAvgScore}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Total Hints Used </DisplayText>
+                        <DisplayText size={20}> {userData.totalHints}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Average Hints Used </DisplayText>
+                        <DisplayText size={20}> {userData.practiceAvgHints}</DisplayText>
+                    </Row>
                     <DisplayText size={20}>Topics</DisplayText>
                     <View>
                         {Object.keys(userData.totalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.totalTopics[one]}%</DisplayText>)}
@@ -373,10 +385,22 @@ const ProfileScreen = ({navigation, route}) => {
         if(userData.challTotalScore)
             return ( 
                 <GreenView>
-                    <DisplayText size={20}>Total Score  {userData.challTotalScore}</DisplayText>
-                    <DisplayText size={20}>Average Score  {userData.challAvgScore}</DisplayText>
-                    <DisplayText size={20}>Total Hints Used  {userData.challTotalHints}</DisplayText>
-                    <DisplayText size={20}>Average Hints Used  {userData.challAvgHints}</DisplayText>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Total Score </DisplayText>
+                        <DisplayText size={20}> {userData.challTotalScore}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Average Score </DisplayText>
+                        <DisplayText size={20}> {userData.challAvgScore}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Total Hints Used </DisplayText>
+                        <DisplayText size={20}> {userData.challTotalHints}</DisplayText>
+                    </Row>
+                    <Row jc="space-between">
+                        <DisplayText size={20}>Average Hints Used </DisplayText>
+                        <DisplayText size={20}> {userData.challAvgHints}</DisplayText>
+                    </Row>
                     <DisplayText size={20}>Topics</DisplayText>
                     <View>
                         {Object.keys(userData.challTotalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.challTotalTopics[one]}%</DisplayText>)}
