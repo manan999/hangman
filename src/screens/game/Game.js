@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react' ;
+import { useState, useEffect, useRef, useContext, Fragment } from 'react' ;
 import {  Vibration, Dimensions, ToastAndroid, Image, Pressable, View } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import valid from 'validator' ;
 
 import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
+import HintImage from './hintImage/HintImage.js' ;
 import { MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild } from './cssGameScreen.js' ;
 import { Row } from '../../../cssApp.js' ; 
 import { Alpha, Letter } from './AlphaLetter.js' ;
@@ -18,7 +19,7 @@ import red from '../../../assets/red.json' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
-const Game = ({movie, round, next, hint, config, mode}) => {
+const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	const [guessed, setGuessed] = useState(config.initGuess) ;
 	const [details, setDetails] = useState({}) ;
 	const [wrong, setWrong] = useState(0) ;
@@ -203,7 +204,7 @@ const Game = ({movie, round, next, hint, config, mode}) => {
 			  		<View>
 				  		<HintHead> Hints </HintHead>
 				  		<Row>
-				  			{hint.map((one,i)=><Image key={i} style={{height: 80, width: 80, borderRadius: 5}} source={require('../../../assets/user2.png')} />)}
+				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={one.toLowerCase()} /></Fragment>)}
 				  		</Row>
 			  		</View>
 			    </Animatable.View>

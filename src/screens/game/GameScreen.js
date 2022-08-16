@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react' ;
+import { useState, useEffect, useCallback, useContext } from 'react' ;
 import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper' ;
 import { BackHandler } from 'react-native' ;
@@ -8,6 +8,7 @@ import { BlackKufam } from '../../../cssApp.js' ;
 import Game from './Game.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
 import {topicData} from './topicData.js' ;
+import { UserContext } from '../../context/UserContext.js' ;
 
 const initGame = {
 	wins: 0,
@@ -22,6 +23,7 @@ const GameScreen = ({navigation, route}) => {
 	const [gameData, setGameData] = useState(initGame) ;
 	const [popOpen, setPopOpen] = useState(false) ;
 
+    const {topics} = useContext(UserContext) ;
 	const {mode, topic} = route.params ;
 
 	useFocusEffect(
@@ -38,7 +40,7 @@ const GameScreen = ({navigation, route}) => {
 
 	useEffect( ()=> {
 		if(currentRound % 10 === 8 || data.length === 0) {
-			fetch(`${topicData[topic].url}?stage=${currentRound}`)
+			fetch(`${topics[topic].url}?stage=${currentRound}`)
 			.then(res => {
 				if(res.ok)
 					return res.json() ;
@@ -80,12 +82,12 @@ const GameScreen = ({navigation, route}) => {
 		if(mode === 'practice')
 			return {initGuess : ['a','e','i','o','u']} ;
 		else 
-			return topicData[topic].timeLogic(currentRound) ;
+			return topicData[topics[topic].timeLogic](currentRound) ;
 	}
 
 	if(data.length > 0) {
 		const gameProps = {
-			movie, next, mode,
+			movie, next, mode, topic,
 			hint: data[currentRound].hints,
 			config: {
 				score: gameData.wins,

@@ -6,6 +6,7 @@ const UserContext = createContext() ;
 const UserContextProvider = ({children}) => {
     const [user, setUser] = useState({}) ; 
     const [userToken, setUserToken] = useState('') ;
+    const [topics, setTopics] = useState({}) ;
 
     useEffect( () => {
         AsyncStorage.getItem('@abUser')
@@ -20,6 +21,17 @@ const UserContextProvider = ({children}) => {
         })
         .catch( err => console.log(err)) ;
     }, [])
+
+    useEffect( () => {
+        fetch('https://web.myarthhardware.com/topicList')
+        .then(res => {
+            if(res.ok)
+                return res.json() ;
+            throw Error(res.statusText) ;
+        })
+        .then( resp => setTopics(resp) ) 
+        .catch( err  => console.log(err) ) ;
+    },[])
 
     const loadUser = (user) => {
         if(user.user) {
@@ -60,7 +72,7 @@ const UserContextProvider = ({children}) => {
     }
     
     return (
-        <UserContext.Provider value={ { user, userToken, loadUser, gems: user.name?user.gems:0, addGems } }>
+        <UserContext.Provider value={ { user, userToken, loadUser, gems: user.name?user.gems:0, addGems, topics } }>
             {children}
         </UserContext.Provider>
     ) ;

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react' ;
+import { useState, useCallback, useContext } from 'react' ;
 import { useFocusEffect } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { View, BackHandler } from 'react-native' ;
@@ -8,16 +8,12 @@ import { MainView, KufamText, BlackKufam} from '../../../cssApp.js' ;
 import { GreenButton } from '../game/cssGameScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { TopicButton } from './cssTopic.js' ;
-
-const topicArr = [
-    { name: 'Movies', icon: 'movie-open' },
-    { name: 'Pokemon', icon: 'pokeball' },
-    { name: 'World Places', icon: 'earth' },
-] ;
+import { UserContext } from '../../context/UserContext.js' ;
 
 const TopicScreen = ({navigation, route}) => {
     const [popOpen, setPopOpen] = useState(false) ;
     const {mode} = route.params ;
+    const {topics} = useContext(UserContext) ;
 
     useFocusEffect(
         useCallback(() => {
@@ -38,7 +34,7 @@ const TopicScreen = ({navigation, route}) => {
             </Animatable.View>
             <View>
             { 
-                topicArr.map(one => <TopicButton key={one.name} dark={false} color={theme.colors.white} icon={one.icon} mode="contained" onPress={() => navigation.replace('Game', {mode, topic: one.name})}>{one.name}</TopicButton>) 
+                Object.keys(topics).map(one => <TopicButton key={one} dark={false} color={theme.colors.white} icon={topics[one].icon} mode="contained" onPress={() => navigation.replace('Game', {mode, topic: one})}>{one}</TopicButton>) 
             }
             </View>
             <Popup visible={popOpen} onClose={() => setPopOpen(false)}>

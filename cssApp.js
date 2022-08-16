@@ -26,8 +26,9 @@ const KufamText = styled.Text`
 const BlackKufam = styled.Text`
   color: ${ ({theme}) => theme.colors.black } ;
   font-size: ${ ({size}) => size?size:24 }px ;
-  font-family: ${ ({theme}) => theme.fonts.third } ;
+  font-family: ${ ({theme, main}) => main?theme.fonts.main:theme.fonts.third } ;
   text-align: center ;
+  text-transform: ${ ({cap}) => cap?'capitalize':'none' } ;
 ` ;
 
 const Row = styled.View`

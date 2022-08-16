@@ -9,22 +9,23 @@ import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
+    const {user, userToken, topics} = useContext(UserContext) ;
+    
     const [filterBy, setFilterBy] = useState(route.params.filter?route.params.filter:'all') ;
     const [filterOpen, setFilterOpen] = useState(false) ;
     const [filterItems, setFilterItems] = useState([{label: 'Show For : All', value: 'all'}, {label: 'Show For : Only Me', value: 'me'} ]) ;
 
     const [topic, setTopic] = useState(route.params.topic?route.params.topic:'Movies') ;
     const [topicOpen, setTopicOpen] = useState(false) ;
-    const [topicItems, setTopicItems] = useState([{label: 'Topic : Movies', value: 'Movies'}, {label: 'Topic : Pokemon', value: 'Pokemon'} ]) ;
+    const [topicItems, setTopicItems] = useState([...Object.keys(topics).map(one => {
+        return {value: one, label: topics[one].label}
+    })]) ;
 
     const [gameMode, setGameMode] = useState(route.params.mode?route.params.mode:'practice') ;
     const [modeOpen, setModeOpen] = useState(false) ;
     const [modeItems, setModeItems] = useState([{label: 'Mode : Practice', value: 'practice'}, {label: 'Mode : Challenge', value: 'challenge'} ]) ;
     
     const [data, setData] = useState([]) ;
-    const {user, userToken} = useContext(UserContext) ;
-
-    
 
     useEffect( () => {
         setData([]) ;
@@ -45,9 +46,14 @@ const HighScoreScreen = ({navigation, route}) => {
 
 
     const formatDate = (dt) => {
+        const month = {
+            'Jan' : '01',   'Feb' : '02',   'Mar' : '03',   'Apr' : '04',   'May' : '05',   'Jun' : '06',
+            'Jul' : '07',   'Aug' : '08',   'Sep' : '09',   'Oct' : '10',   'Nov' : '11',   'Dec' : '12'
+        }
+
         const date = new Date(dt).toLocaleString("en-IN", {timeZone: "Asia/Kolkata"}) ;
         const [ day, m, d, t, y ] = date.split(' ').filter(o=>o.length>0) ;
-        return `${d} ${m} ${y}`;
+        return `${d>9?d:'0'+d}-${month[m]}-${y.slice(2)}`;
     }
 
     const returnRows = () => {
