@@ -121,8 +121,11 @@ const HomeScreen = ({navigation}) => {
             </CircleButton>
             { returnUserButton() }
             { returnHSButton() }
-            <CircleButton onButtonPress={()=>navigation.navigate('Settings')} size={45}>
+            {/*<CircleButton onButtonPress={()=>navigation.navigate('Settings')} size={45}>
                 <FontAwesome name="gear" size={25} color={theme.colors.main} />
+            </CircleButton>*/}
+            <CircleButton onButtonPress={()=>navigation.navigate('Shop')} size={45}>
+                <FontAwesome name="shopping-cart" size={25} color={theme.colors.main} />
             </CircleButton>
         </Row>
       </MainView>

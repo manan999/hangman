@@ -18,6 +18,7 @@ import HighScoreScreen from './src/screens/highscore/HighScoreScreen.js' ;
 import ProfileScreen from './src/screens/profile/ProfileScreen.js' ;
 import TutorialScreen from './src/screens/tutorial/TutorialScreen.js' ;
 import SettingsScreen from './src/screens/settings/SettingsScreen.js' ;
+import ShopScreen from './src/screens/shop/ShopScreen.js' ;
 import TopicScreen from './src/screens/topic/TopicScreen.js' ;
 import SafeArea from './src/comps/safearea/SafeArea.js' ;
 import { theme } from './src/theme.js' ;
@@ -51,6 +52,7 @@ export default function App() {
                     <Stack.Screen name="Game" component={GameScreen} options={{headerShown: false }}/>
                     <Stack.Screen name="Result" component={ResultScreen} options={{headerShown: false }}/>
                     <Stack.Screen name="Settings" component={SettingsScreen} options={{headerShown: false }}/>
+                    <Stack.Screen name="Shop" component={ShopScreen} options={{headerShown: false }}/>
                     <Stack.Screen name="HighScore" component={HighScoreScreen} options={{headerShown: false }}/>
                     <Stack.Screen name="About" component={AboutScreen} options={{headerShown: false }}/>
                     <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown: false }}/>
