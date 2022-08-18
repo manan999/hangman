@@ -36,6 +36,7 @@ const Row = styled.View`
   justify-content: ${ ({jc}) => jc?jc:'space-evenly' } ;
   align-items: center ;
   align-self: stretch ;
+  margin-bottom: ${ ({mb}) => mb?mb:0 }px ;
 ` ;
 
 const MainView = styled.View`

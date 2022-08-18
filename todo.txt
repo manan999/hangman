@@ -1,4 +1,3 @@
 1 music daalna hai
-2 tutorial me animations daalkar improve karna hai
 
--- level system
+-- progression (maybe level system)

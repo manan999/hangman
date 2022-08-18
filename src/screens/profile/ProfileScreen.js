@@ -438,7 +438,7 @@ const ProfileScreen = ({navigation, route}) => {
                     { userDataCheck() }
                     <DisplayText>Challenge Mode Statistics </DisplayText>
                     { userDataCheck2() }
-                    <Row>
+                    <Row mb={20}>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
                         <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
                     </Row>

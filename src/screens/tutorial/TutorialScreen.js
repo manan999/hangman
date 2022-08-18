@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react' ;
-import {View} from 'react-native' ;
+import { useState, useEffect, useRef } from 'react' ;
+import {View, Button} from 'react-native' ;
 import AsyncStorage from '@react-native-async-storage/async-storage' ;
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 import {theme} from '../../theme.js' ;
 import {MainView, DemoImage, DemoText, WhiteButton} from './cssTutorial.js' ;
-import {Row} from '../../../cssApp.js' ;
+import {KufamText, Row} from '../../../cssApp.js' ;
 import t1 from '../../../assets/tutorial/t1.webp' ;
 import t2 from '../../../assets/tutorial/t2.webp' ;
 import t3 from '../../../assets/tutorial/t3.webp' ;
@@ -45,34 +46,48 @@ const tutorialData = [{
 ] ;
 
 const TutorialScreen = ({navigation}) => {
-    const [page, setPage] = useState(0) ;
-    const [lang, setLang] = useState(null) ;
+    const video = useRef(null);
+    const [status, setStatus] = useState({});
+    // const [page, setPage] = useState(0) ;
+    // const [lang, setLang] = useState(null) ;
 
-    useEffect( () => {
-        AsyncStorage.getItem('@abLanguage')
-        .then( data => {
-            if(data)
-                setLang(data) ;
-            else
-                setLang('english') ;
-        })
-        .catch( err => console.log(err)) ;
-    }, [])
+    useEffect(() => {
+        if(status.didJustFinish) 
+            navigation.goBack() ;
+    }, [status])
 
-    const returnBackButton = () => {
-        if(page > 0)
-            return <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setPage(page-1)}> Back </WhiteButton>
-    }
+    // useEffect( () => {
+    //     AsyncStorage.getItem('@abLanguage')
+    //     .then( data => {
+    //         if(data)
+    //             setLang(data) ;
+    //         else
+    //             setLang('english') ;
+    //     })
+    //     .catch( err => console.log(err)) ;
+    // }, [])
 
-    const returnNextButton = () => {
-        return <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>(page<6)?setPage(page+1):navigation.replace('Home')}> Next </WhiteButton>
-    }
+    // const returnBackButton = () => {
+    //     if(page > 0)
+    //         return <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setPage(page-1)}> Back </WhiteButton>
+    // }
+
+    // const returnNextButton = () => {
+    //     return <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>(page<6)?setPage(page+1):navigation.replace('Home')}> Next </WhiteButton>
+    // }
+
+    // return (
+    //     <MainView>
+    //         <DemoImage source={tutorialData[page].img} resizeMode="contain" />
+    //         <DemoText>{tutorialData[page][lang]}</DemoText>
+    //         <Row>{returnBackButton()}{returnNextButton()}</Row>
+    //     </MainView>
+    // ) ;
 
     return (
         <MainView>
-            <DemoImage source={tutorialData[page].img} resizeMode="contain" />
-            <DemoText>{tutorialData[page][lang]}</DemoText>
-            <Row>{returnBackButton()}{returnNextButton()}</Row>
+            <KufamText size={20} style={{marginTop: 0, marginBottom: 0}}> Tutorial (Video) </KufamText>
+            <Video ref={video} style={{ width: 360, height: 640, borderColor: 'black', borderStyle: 'solid', borderTopWidth: 5, borderBottomWidth: 5}} source={require('../../../assets/tutorial.mp4')} resizeMode="contain" onPlaybackStatusUpdate={status => setStatus(() => status)} shouldPlay useNativeControls/>
         </MainView>
     ) ;
 }
