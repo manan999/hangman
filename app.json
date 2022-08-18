@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.myarth.aurbatao"
+      "package": "com.myarth.aurbatao",
+      "versionCode" : 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
