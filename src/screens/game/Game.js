@@ -196,7 +196,7 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	    		</AnimateView>
 			</GameHeader>
 	    	<Animatable.View key={round+1} iterationCount={3} animation="bounce">
-	    		<GameText> Movies : Round {round+1} </GameText>
+	    		<GameText> {topic} : Round {round+1} </GameText>
 	    	</Animatable.View>
 	    	<GuesserView>
 			  	<Animatable.View animation='fadeIn' delay={1000} style={{ height: '100%', justifyContent: 'space-evenly'}}>
@@ -204,7 +204,7 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 			  		<View>
 				  		<HintHead> Hints </HintHead>
 				  		<Row>
-				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={one.toLowerCase()} /></Fragment>)}
+				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={(one+'').toLowerCase()} /></Fragment>)}
 				  		</Row>
 			  		</View>
 			    </Animatable.View>

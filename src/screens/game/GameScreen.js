@@ -39,7 +39,7 @@ const GameScreen = ({navigation, route}) => {
 	);
 
 	useEffect( ()=> {
-		if(currentRound % 10 === 8 || data.length === 0) {
+		if(topics[topic] && (currentRound % 10 === 8 || data.length === 0)) {
 			fetch(`${topics[topic].url}?stage=${currentRound}`)
 			.then(res => {
 				if(res.ok)
@@ -49,7 +49,7 @@ const GameScreen = ({navigation, route}) => {
 			.then( resp => setData([...data, ...resp]) ) 
 			.catch( err  => console.log(err) ) ;
 		}
-	}, [currentRound])
+	}, [currentRound, topics])
 
 	useEffect( () => {
 		if(data.length > 0 ) {

@@ -118,7 +118,7 @@ const ResultScreen = ({navigation, route}) => {
             </Row>
             <GreenView>{ returnGemText() }</GreenView>
             <ButtonRow>
-                <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode})}>Play Again</WhiteButton>
+                <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode, topic})}>Play Again</WhiteButton>
                 <WhiteButton dark={false} icon="home" mode="contained" onPress={() => navigation.replace('Home')}>Go Home</WhiteButton>
             </ButtonRow>
             <GreenView>
