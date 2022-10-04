@@ -27,7 +27,7 @@ const ProfileScreen = ({navigation, route}) => {
     const [errorCount, setErrorCount] = useState(null) ;
     const [userData, setUserData] = useState({}) ;    
 
-    const {user, loadUser, userToken} = useContext(UserContext) ;
+    const {user, loadUser, userToken, fetchUrl} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
 
     const avatarProps = {
@@ -49,8 +49,7 @@ const ProfileScreen = ({navigation, route}) => {
     useEffect(() => {
         if(user.name)
         {
-            fetch('https://web.myarthhardware.com/myarth/users/me' ,{
-            // fetch('http://192.168.0.103:8000/myarth/users/me' ,{
+            fetch(`${fetchUrl}users/me` ,{
                 method : 'get',
                 headers : { 'Content-Type' : 'application/json' , 'Authorization': `Bearer ${userToken}`},
             })
@@ -139,8 +138,7 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, password} = data ;
 
-        fetch('https://web.myarthhardware.com/myarth/login' ,{
-        // fetch('http://192.168.0.103:8000/myarth/login' ,{
+        fetch(`${fetchUrl}login` ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, password}),
@@ -168,8 +166,7 @@ const ProfileScreen = ({navigation, route}) => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
         const {name, email, image, password} = data ;
 
-        fetch('https://web.myarthhardware.com/myarth/users' ,{
-        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+        fetch(`${fetchUrl}users` ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json'},
             body : JSON.stringify({name, email, image, password}),
@@ -199,8 +196,7 @@ const ProfileScreen = ({navigation, route}) => {
 
         // console.log(name, email, image) ;
 
-        fetch('https://web.myarthhardware.com/myarth/users/me' ,{
-        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+        fetch(`${fetchUrl}users/me` ,{
             method : 'PATCH',
             headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
             body : JSON.stringify({name, email, image}),
@@ -227,8 +223,7 @@ const ProfileScreen = ({navigation, route}) => {
     const onLogoutClick = () => {
         ToastAndroid.show("Please Wait...", ToastAndroid.SHORT)
 
-        fetch('https://web.myarthhardware.com/myarth/logout' ,{
-        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+        fetch(`${fetchUrl}logout` ,{
             method : 'post',
             headers : { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${userToken}`},
         })

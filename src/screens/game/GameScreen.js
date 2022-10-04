@@ -23,7 +23,7 @@ const GameScreen = ({navigation, route}) => {
 	const [gameData, setGameData] = useState(initGame) ;
 	const [popOpen, setPopOpen] = useState(false) ;
 
-    const {topics} = useContext(UserContext) ;
+    const {topics, fetchUrl} = useContext(UserContext) ;
 	const {mode, topic} = route.params ;
 
 	useFocusEffect(
@@ -40,7 +40,10 @@ const GameScreen = ({navigation, route}) => {
 
 	useEffect( ()=> {
 		if(topics[topic] && (currentRound % 10 === 8 || data.length === 0)) {
-			fetch(`${topics[topic].url}?stage=${currentRound}`)
+			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
+			console.log(URL) ;
+
+			fetch()
 			.then(res => {
 				if(res.ok)
 					return res.json() ;

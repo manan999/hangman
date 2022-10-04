@@ -9,7 +9,7 @@ import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
-    const {user, userToken, topics} = useContext(UserContext) ;
+    const {user, userToken, topics, fetchUrl} = useContext(UserContext) ;
     
     const [filterBy, setFilterBy] = useState(route.params.filter?route.params.filter:'all') ;
     const [filterOpen, setFilterOpen] = useState(false) ;
@@ -29,8 +29,7 @@ const HighScoreScreen = ({navigation, route}) => {
 
     useEffect( () => {
         setData([]) ;
-        fetch(`https://web.myarthhardware.com/scores`, {
-        // fetch('http://192.168.1.14:8000/scores' ,{
+        fetch(`${fetchUrl}scores`, {
             method : 'post',
             headers : { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${userToken}`},
             body : JSON.stringify({filter: filterBy, topic, mode: gameMode}),

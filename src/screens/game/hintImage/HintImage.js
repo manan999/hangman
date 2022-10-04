@@ -11,10 +11,10 @@ const HintImage = ({topic='', name=''}) => {
 	return (
 		<>	
 			<TouchableOpacity onPress={() => setPopOpen(true)}>	
-				<Image style={{height: 80, width: 80, borderRadius: 5}} source={{ uri }} onError={() => setUri('https://raw.githubusercontent.com/manan999/images/master/marvel/cs2.webp')}/>
+				<Image style={{height: 80, width: 80, borderRadius: 5}} resizeMode="contain" source={{ uri }} onError={() => setUri('https://raw.githubusercontent.com/manan999/images/master/marvel/cs2.webp')}/>
 			</TouchableOpacity>
 			<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
-  				<Image style={{height: 200, width: 200, borderRadius: 5, marginBottom: 15}} source={{ uri }} onError={() => setUri('https://raw.githubusercontent.com/manan999/images/master/marvel/cs2.webp')}/>
+  				<Image style={{height: 200, width: 200, borderRadius: 5, marginBottom: 15}}  resizeMode="contain" source={{ uri }} onError={() => setUri('https://raw.githubusercontent.com/manan999/images/master/marvel/cs2.webp')}/>
   				<BlackKufam size={20} cap main> {name} </BlackKufam>
   			</Popup> 
 		</>

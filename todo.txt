@@ -1,3 +1,9 @@
 1 music daalna hai
 
 -- progression (maybe level system)
+
+1. country topic add karna hai
+2. image based question system create karna hai
+3. new topics add karne hai
+4. ek second ke liye ruke answer right ya wrong hone par
+5. images transfer karni hai to api.myarth (server)

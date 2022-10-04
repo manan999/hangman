@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import {MainScrollView, KufamText, Row} from '../../../cssApp.js' ;
 import {HomeImage } from '../home/cssHomeScreen.js' ;
 
-
 import {theme} from '../../theme.js' ;
 
 const LogoView = styled.View`

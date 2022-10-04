@@ -166,6 +166,32 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 			return <ScoreHead><Gem size={15}/>&nbsp;{gems}</ScoreHead> ;
 	}
 
+	const returnLayout = () => {
+		if(hint.length > 1)
+			return (
+				<>
+					<AlphaRow>{returnGuesser()}</AlphaRow>
+			  		<View>
+				  		<HintHead> Hints </HintHead>
+				  		<Row>
+				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={(one+'').toLowerCase()} /></Fragment>)}
+				  		</Row>
+			  		</View>
+			  	</>
+			) ;
+		else if (hint.length === 1)  
+			return (
+				<>
+				  	<HintImage topic={topic.toLowerCase()} name={(hint[0]+'').toLowerCase()} />
+					<AlphaRow>{returnGuesser()}</AlphaRow>
+			  	</>
+			) ;
+		else
+			return (
+				<>	<Text> Unable to Load Data </Text>	</>
+			) ;
+	}
+
 	return (
 	    <MainView>
         	<LottieView ref={gameRef} style={{height: windowHeight, position: 'absolute', top: 0}} source={hurray} loop={false} />
@@ -200,13 +226,8 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	    	</Animatable.View>
 	    	<GuesserView>
 			  	<Animatable.View animation='fadeIn' delay={1000} style={{ height: '100%', justifyContent: 'space-evenly'}}>
-			  		<AlphaRow>{returnGuesser()}</AlphaRow>
-			  		<View>
-				  		<HintHead> Hints </HintHead>
-				  		<Row>
-				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={(one+'').toLowerCase()} /></Fragment>)}
-				  		</Row>
-			  		</View>
+			  		{ returnLayout() }
+			  		
 			    </Animatable.View>
 	      	</GuesserView>
 	      	<AnimateView> 

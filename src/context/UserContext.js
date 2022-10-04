@@ -8,6 +8,9 @@ const UserContextProvider = ({children}) => {
     const [userToken, setUserToken] = useState('') ;
     const [topics, setTopics] = useState({}) ;
 
+    // const fetchUrl = 'https://api.myarth.in/' ;
+    const fetchUrl = 'http://192.168.1.2:8000/' ;
+
     useEffect( () => {
         AsyncStorage.getItem('@abUser')
         .then( data => {
@@ -23,7 +26,7 @@ const UserContextProvider = ({children}) => {
     }, [])
 
     useEffect( () => {
-        fetch('https://web.myarthhardware.com/topicList')
+        fetch(`${fetchUrl}topicList`)
         .then(res => {
             if(res.ok)
                 return res.json() ;
@@ -48,8 +51,7 @@ const UserContextProvider = ({children}) => {
     }
 
     const addGems = (num) => {
-        fetch('https://web.myarthhardware.com/myarth/users/addGems' ,{
-        // fetch('http://192.168.0.103:8000/myarth/users' ,{
+        fetch(`${fetchUrl}users/addGems`, {
             method : 'post',
             headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
             body : JSON.stringify({gems: num}),
@@ -68,11 +70,10 @@ const UserContextProvider = ({children}) => {
             console.log(err) ;
             ToastAndroid.show(err, ToastAndroid.SHORT)
         }) ;
-        
     }
     
     return (
-        <UserContext.Provider value={ { user, userToken, loadUser, gems: user.name?user.gems:0, addGems, topics } }>
+        <UserContext.Provider value={ { user, userToken, loadUser, gems: user.name?user.gems:0, addGems, topics, fetchUrl } }>
             {children}
         </UserContext.Provider>
     ) ;

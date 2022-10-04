@@ -18,7 +18,7 @@ const ResultScreen = ({navigation, route}) => {
     const [scores, setScores] = useState([]) ;
     const [final, setFinal] = useState(false) ;
     const {rounds, wins, hints, wrongs, topic, mode} = route.params ;
-    const {user, userToken, gems, addGems} = useContext(UserContext) ;
+    const {user, userToken, gems, addGems, fetchUrl} = useContext(UserContext) ;
 
     const countDown = mode==='practice'?{rounds, wins}:{rounds: rounds*20, wins} ;
 
@@ -44,8 +44,7 @@ const ResultScreen = ({navigation, route}) => {
         if(user.name) {
             // console.log(JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}))
             
-            fetch('https://web.myarthhardware.com/game' ,{
-            // fetch('http://192.168.1.14:8000/game' ,{
+            fetch(`${fetchUrl}game` ,{
                 method : 'post',
                 headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
                 body : JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}),
