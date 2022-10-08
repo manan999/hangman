@@ -41,9 +41,9 @@ const GameScreen = ({navigation, route}) => {
 	useEffect( ()=> {
 		if(topics[topic] && (currentRound % 10 === 8 || data.length === 0)) {
 			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
-			console.log(URL) ;
+			// console.log(URL) ;
 
-			fetch()
+			fetch(URL)
 			.then(res => {
 				if(res.ok)
 					return res.json() ;

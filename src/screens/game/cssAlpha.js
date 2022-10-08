@@ -30,7 +30,7 @@ const LetterView = styled.View`
 ` ;
 
 const LetterText = styled.Text` 
-  color: ${ ({theme}) => theme.colors.white } ;
+  color: ${ ({theme, color}) => color?color:theme.colors.white } ;
   font-family: ${ ({theme}) => theme.fonts.mainBold } ;
   font-size: ${ ({size}) => size?size:24 }px ;
   text-transform: uppercase ;

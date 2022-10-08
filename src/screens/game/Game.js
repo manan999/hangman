@@ -28,6 +28,7 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	const [time, setTime] = useState(config.startTime) ;
 	const [eta, setEta] = useState(config.startTime) ;
 	const [wait, setWait] = useState(true) ;
+	const [color, setColor] = useState(false) ;
     const windowHeight = Dimensions.get('window').height;
 
     const {gems, addGems} = useContext(UserContext) ;
@@ -58,12 +59,21 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	}, [movie])
 
 	useEffect( () => {
+		let timer ;
+
 		if(movie.length>0 && movie.toLowerCase().split('').filter(c=>(c.toLowerCase()>='a'&&c.toLowerCase()<='z')).every(v => guessed.includes(v))) {
-			next('Win', wrong, hintCount) ;
+			setColor('lime')
+			timer = setTimeout( () => {
+				setColor(false) ;
+				next('Win', wrong, hintCount) ;
+			}, 2000)
 		}
+
+	  	return () => clearTimeout(timer);
 	}, [correct])
 
 	useEffect( () => {
+		let timer ;
 		if(guessed !== config.initGuess) {
 			let l = guessed.slice(-1)[0] ;
 			if(l) {
@@ -81,26 +91,31 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 					}
 					else {
 						Vibration.vibrate(500) ;
-						next('Loss', wrong, hintCount) ;
+						setColor('tomato')
+						timer = setTimeout( () => {
+							setColor(false) ;
+							next('Loss', wrong, hintCount) ;
+						}, 2000)
 					}
 			}
 		}
+	  	return () => clearTimeout(timer);
 	}, [guessed])
 
 	const returnLetter = (str) => {
 		if(str.toLowerCase() >= 'a' && str.toLowerCase() <= 'z')
-			return (guessed.includes(str))?str:'_' ;
+			return (guessed.includes(str) || color)?str:'_' ;
 		else
 			return str ;
 	}
 
 	const returnGuesser = () => {
-		// return 'The Accidental Prime Minister'.toLowerCase().split(' ').map( (one, i) => {
+		// return 'Mahangar Telecom Nigam Limited'.toLowerCase().split(' ').map( (one, i) => {
 		return movie.toLowerCase().split(' ').map( (one, i) => {
 			return (
 				<WordView key={i}>
 					{	one.split('').map((two,i) => {
-							return <Letter key={i} text={returnLetter(two)} size={one.length>10?20:24}/> ;
+							return <Letter key={i} text={returnLetter(two)} size={one.length>10?20:24} color={color?color:''}/> ;
 					    }) 
 					}
 				</WordView>
@@ -154,7 +169,13 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 		if(mode !== 'practice')
 			return (
 				<AnimateView>
-			    	<CountdownCircleTimer isPlaying={/*false*/!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>next('Loss', wrong, hintCount)} size={80} strokeWidth={8}>
+			    	<CountdownCircleTimer isPlaying={/*false*/!wait} duration={time} colors={['#FFFFFF', '#f55442']} colorsTime={[30, 0]} trailColor="#1d2951" onComplete={()=>{
+			    		setColor('tomato')
+						setTimeout( () => {
+							setColor(false) ;
+							next('Loss', wrong, hintCount) ;
+						}, 2000)
+			    	}} size={80} strokeWidth={8}>
 					    {({ remainingTime }) => <Animatable.View animation="rubberBand" iterationCount="infinite" ><TimerText>{remainingTime}</TimerText></Animatable.View>}
 					</CountdownCircleTimer>
 				</AnimateView>
@@ -182,7 +203,9 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 		else if (hint.length === 1)  
 			return (
 				<>
-				  	<HintImage topic={topic.toLowerCase()} name={(hint[0]+'').toLowerCase()} />
+				  	<Row> 
+				  		<HintImage topic={topic.toLowerCase()} name={(hint[0]+'').toLowerCase()} single/>
+				  	</Row>
 					<AlphaRow>{returnGuesser()}</AlphaRow>
 			  	</>
 			) ;
@@ -227,7 +250,6 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	    	<GuesserView>
 			  	<Animatable.View animation='fadeIn' delay={1000} style={{ height: '100%', justifyContent: 'space-evenly'}}>
 			  		{ returnLayout() }
-			  		
 			    </Animatable.View>
 	      	</GuesserView>
 	      	<AnimateView> 
