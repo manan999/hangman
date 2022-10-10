@@ -8,8 +8,8 @@ const UserContextProvider = ({children}) => {
     const [userToken, setUserToken] = useState('') ;
     const [topics, setTopics] = useState({}) ;
 
-    // const fetchUrl = 'https://api.myarth.in/' ;
-    const fetchUrl = 'http://192.168.0.103:8000/' ;
+    const fetchUrl = 'https://api.myarth.in/' ;
+    // const fetchUrl = 'http://192.168.0.103:8000/' ;
 
     useEffect( () => {
         AsyncStorage.getItem('@abUser')
