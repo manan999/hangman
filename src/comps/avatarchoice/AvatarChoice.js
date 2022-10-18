@@ -22,7 +22,7 @@ const AvatarChoice = ({url, setUrl}) => {
 
 	const returnImages = () => {
 		return [...Array(32).keys()].map( one => {
-			const str = `https://raw.githubusercontent.com/manan999/images/master/hangman/avatar/${one+1}.webp` ;
+			const str = `https://api.myarth.in/static/hangman/avatar/${one+1}.webp` ;
 
 			const avatarProps = {
 				style : { backgroundColor: theme.colors.white},

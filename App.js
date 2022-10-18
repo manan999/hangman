@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
+import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 
 import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
 import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;
@@ -30,7 +31,21 @@ export default function App() {
   let [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
   let [montLoaded] = useMont({ Montserrat_400Regular});
 
-  useEffect( () => console.log('app loaded on '+ new Date()), [])
+  useEffect( () => {
+    console.log('app loaded on '+ new Date())
+    mobileAds()
+    .setRequestConfiguration({
+      maxAdContentRating: MaxAdContentRating.PG,
+      tagForChildDirectedTreatment: true,
+      tagForUnderAgeOfConsent: true,
+      // An array of test device IDs to allow.
+      testDeviceIdentifiers: ['EMULATOR'],
+    })
+    .initialize()
+    .then( initData => {
+      console.log(initData) ;
+    });
+  }, [])
 
   const Stack = createNativeStackNavigator() ;
   

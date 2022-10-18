@@ -13,8 +13,11 @@
         "gradleCommand": ":app:assembleRelease"
       }
     },
-    "preview3": {
-      "developmentClient": true
+    "development": {
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {}
   },

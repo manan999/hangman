@@ -26,11 +26,19 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.myarth.aurbatao",
-      "versionCode" : 5
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "extra": {
+      "eas": {
+        "projectId": "9ef1bcab-e856-48c5-ab65-2adf9732a2b7"
+      }
+    }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7668722490423187~3277091688",
   }
 }
