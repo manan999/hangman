@@ -1,3 +1,13 @@
+//  PUT YOUR OWN ID IN APP.json, filhal testing wali ID dali hui hai
+
+
+    // "android_app_id": "ca-app-pub-7668722490423187~3277091688",
+
+// Testing ID
+
+
+    // "android_app_id": "ca-app-pub-3940256099942544~5224354917"
+
 import { useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text } from 'react-native';
@@ -33,18 +43,18 @@ export default function App() {
 
   useEffect( () => {
     console.log('app loaded on '+ new Date())
-    mobileAds()
-    .setRequestConfiguration({
-      maxAdContentRating: MaxAdContentRating.PG,
-      tagForChildDirectedTreatment: true,
-      tagForUnderAgeOfConsent: true,
-      // An array of test device IDs to allow.
-      testDeviceIdentifiers: ['EMULATOR'],
-    })
-    .initialize()
-    .then( initData => {
-      console.log(initData) ;
-    });
+    // mobileAds()
+    // .setRequestConfiguration({
+    //   maxAdContentRating: MaxAdContentRating.PG,
+    //   tagForChildDirectedTreatment: true,
+    //   tagForUnderAgeOfConsent: true,
+    //   // An array of test device IDs to allow.
+    //   testDeviceIdentifiers: ['EMULATOR'],
+    // })
+    // .initialize()
+    // .then( initData => {
+    //   console.log(initData) ;
+    // });
   }, [])
 
   const Stack = createNativeStackNavigator() ;
