@@ -26,6 +26,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.myarth.aurbatao",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 6
     },
     "web": {
@@ -36,10 +37,14 @@
       "eas": {
         "projectId": "9ef1bcab-e856-48c5-ab65-2adf9732a2b7"
       }
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/crashlytics"
+    ]
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-7668722490423187~3277091688"
+    "android_app_id": "ca-app-pub-7668722490423187~3277091688",
+    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
   }
 }
-

@@ -1,13 +1,3 @@
-//  PUT YOUR OWN ID IN APP.json, filhal testing wali ID dali hui hai
-
-
-    // "android_app_id": "ca-app-pub-7668722490423187~3277091688",
-
-// Testing ID
-
-
-    // "android_app_id": "ca-app-pub-3940256099942544~5224354917"
-
 import { useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text } from 'react-native';
@@ -15,7 +5,7 @@ import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
-import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
+// import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 
 import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
 import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;

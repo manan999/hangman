@@ -4,15 +4,15 @@ import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-nat
 
 import {MainView, KufamText} from '../../../cssApp.js' ;
 
-// const adUnitId = TestIds.REWARDED ;
-// const adUnitId = 'ca-app-pub-7668722490423187~3277091688' ;
-const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
-
 const ShopScreen = ({navigation, route}) => {
+    // const adUnitId = TestIds.REWARDED ;
+    const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
+    
     const [loaded, setLoaded] = useState(false);
 
     const rewarded = RewardedAd.createForAdRequest(adUnitId, {
       requestNonPersonalizedAdsOnly: true,
+      keywords: ['fashion', 'clothing'],
     });
 
     useEffect(() => {
