@@ -2,7 +2,7 @@
   "expo": {
     "name": "aurbatao",
     "slug": "aurbatao",
-    "version": "1.3.2 (beta)",
+    "version": "1.4.0 (beta)",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       },
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 6
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
