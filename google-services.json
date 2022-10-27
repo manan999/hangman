@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948831034978",
+    "project_id": "aurbatao-theguessinggame",
+    "storage_bucket": "aurbatao-theguessinggame.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948831034978:android:64e7c417ccd7cc9f91fb3b",
+        "android_client_info": {
+          "package_name": "com.myarth.aurbatao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948831034978-gskjs4smps671uvtnuida2cqcmeitkuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWV5vpBmOZJSI01M_JfsQQshtbFC_XL2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948831034978-gskjs4smps671uvtnuida2cqcmeitkuc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
