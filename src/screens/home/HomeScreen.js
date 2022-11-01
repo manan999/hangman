@@ -3,7 +3,7 @@ import { View, Dimensions, ToastAndroid, BackHandler } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
-import {Audio} from 'expo-av' ;
+import { Audio } from 'expo-av' ;
 import { useFocusEffect } from '@react-navigation/native';
 
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;

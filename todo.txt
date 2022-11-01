@@ -4,3 +4,9 @@
 
 1. new topics add karne hai
 2. backend se version verify karwana hai
+
+0. progressbar lagana hai rewards par
+0.1 home screen pe popups lagane hai
+1. game khatam hone pe revive ka ad dikhe
+2. interstitial ad on result screen
+3. back se match khatam karne pe result screen pe jaye

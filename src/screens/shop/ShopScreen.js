@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react' ;
+import { useState, useEffect, useContext } from 'react' ;
 import { Button } from 'react-native' ;
 import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
+import { Avatar } from 'react-native-paper';
 import crashlytics from '@react-native-firebase/crashlytics';
 
-import {MainView, KufamText} from '../../../cssApp.js' ;
+import { MainScrollView, KufamText, WhiteButton, Row } from '../../../cssApp.js' ;
+import { GemChest, ChestCon } from './cssShop.js' ;
+import { Gem, Key } from '../../comps/icons.js' ;
+import { theme } from '../../theme.js' ;
+import { UserContext } from '../../context/UserContext.js' ;
 
 const adUnitId = TestIds.REWARDED ;
 // const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
@@ -13,12 +18,19 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
   keywords: ['fashion', 'clothing'],
 });
 
+
 const ShopScreen = ({navigation, route}) => {
-    
-    const [loaded, setLoaded] = useState(false);
+    const {user, gems, addGems} = useContext(UserContext) ;
+    const [loaded, setLoaded] = useState(false) ;
+    const [reward, setReward] = useState('gem') ;
 
     useEffect(() => {
-        // console.log('trying to load ad') ;
+        if(rewarded._loaded) 
+            setLoaded(true) ;
+    }, [])
+
+    useEffect(() => {
+        console.log('trying to load ad') ;
 
         const unsubscribeError = rewarded.addAdEventListener(AdEventType.ERROR, error => {
             console.log('ad error ', error) ;
@@ -42,9 +54,13 @@ const ShopScreen = ({navigation, route}) => {
 
         const unsubscribeEarned = rewarded.addAdEventListener(
             RewardedAdEventType.EARNED_REWARD,
-            reward => {
-                console.log('User earned reward of ', reward);
-                crashlytics().log('User earned reward of ', reward) ;
+            rew => {
+                console.log('User earned reward of ', rew);
+
+                if(rew.amount)
+                    addGems(25) ;
+
+                crashlytics().log('User earned reward of ', rew) ;
             },
         );
 
@@ -59,19 +75,41 @@ const ShopScreen = ({navigation, route}) => {
         };
     }, []);
 
-    const adButton = () => {
+    const adButton = (rewardType) => {
         if(!loaded)
-            return null ;
+            return <KufamText size={14}>Ad Not Available</KufamText> ;
         else 
-            return <Button title="Show Rewarded Ad" onPress={() => { rewarded.show() }}/>
+            return <WhiteButton color={theme.colors.white} mode="contained" onPress={() => { 
+                setReward(rewardType) ;
+                rewarded.show(); 
+            }} size={14}> Watch Video </WhiteButton> ;
+    }
+
+    const avatarProps = {
+        style : { backgroundColor: theme.colors.white},
+        size : 80,
+        source : {uri: user.image},
     }
 
     return (
-        <MainView>
+        <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
             <KufamText>SHOP</KufamText>
-            {adButton()}
-            <KufamText size={18}>To be available in next update</KufamText>
-        </MainView>
+            <Row>
+                <Avatar.Image {...avatarProps} /> 
+                <KufamText size={20} > <Gem size={16}/> {gems} </KufamText> 
+                <KufamText size={20} > <Key size={16}/> 0 </KufamText> 
+            </Row>
+            <ChestCon>
+                <KufamText size={18}>Watch Videos to earn <Gem size={16}/> 25 </KufamText>
+                <GemChest source={require('../../../assets/gems.webp')} />
+                {adButton('gem')}
+            </ChestCon>
+            {/*<ChestCon>
+                <KufamText size={18}>Watch Videos to earn <Key size={16}/> 1 </KufamText>
+                <GemChest source={require('../../../assets/gems.webp')} />
+                {adButton('key')}
+            </ChestCon>*/}
+        </MainScrollView>
     ) ;
 }
 

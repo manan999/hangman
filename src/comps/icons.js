@@ -8,7 +8,11 @@ const Cross = ({color}) => {
 }
 
 const Gem = ({size=18}) => {
-	return <SvgUri width={`${size}px`} height={`${size}px`} uri="https://www.svgrepo.com/download/247990/diamond.svg" /> ;
+	return <SvgUri width={`${size}px`} height={`${size}px`} uri="https://www.svgrepo.com/download/54960/diamond.svg" /> ;
 }
 
-export { Cross, Gem } ;
+const Key = ({size=18}) => {
+	return <SvgUri width={`${size}px`} height={`${size}px`} uri="https://www.svgrepo.com/download/69696/key.svg" /> ;
+}
+
+export { Cross, Gem, Key } ;
