@@ -6,14 +6,18 @@ import LottieView from 'lottie-react-native';
 import { Audio } from 'expo-av' ;
 import { useFocusEffect } from '@react-navigation/native';
 
+import Popup from '../../comps/popup/Popup.js' ;
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;
-import { Row } from '../../../cssApp.js' ;
-import { MainView, SubText, HomeButton, HomeImage } from './cssHomeScreen.js' ;
-import { theme } from '../../theme.js' ;
+import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import sky from '../../../assets/sky.json' ;
+import { Row } from '../../../cssApp.js' ;
+import { MainView, SubText, HomeButton, HomeImage, FloatLeft } from './cssHomeScreen.js' ;
+import { GreenButton } from '../game/cssGameScreen.js' ;
+import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
 const HomeScreen = ({navigation}) => {
+    const [popOpen, setPopOpen] = useState(false) ;
     const [sound, setSound] = useState() ;
     const {user, addGems} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
@@ -128,6 +132,17 @@ const HomeScreen = ({navigation}) => {
                 <FontAwesome name="shopping-cart" size={25} color={theme.colors.main} />
             </CircleButton>
         </Row>
+        <FloatLeft>
+            <AnimateView anim="wobble" delay={0} iterationCount="infinite">
+                <CircleButton onButtonPress={()=>setPopOpen(true)} size={45} bgColor="rgba(0, 0, 0, 0)">
+                    <FontAwesome5 name="user-plus" size={25} color={theme.colors.green} />
+                </CircleButton>
+            </AnimateView>
+        </FloatLeft>
+        <Popup visible={popOpen} onClose={() => setPopOpen(false)}>
+            <SubText size={20}> Cancel Topic Selection ? </SubText>
+            <GreenButton dark={false} icon="account-plus" mode="contained" onPress={() => navigation.replace('Profile')}> Sign Up </GreenButton>
+        </Popup>
       </MainView>
     ) ;
 }

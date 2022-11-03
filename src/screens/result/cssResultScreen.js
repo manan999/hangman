@@ -5,13 +5,6 @@ import { DataTable } from 'react-native-paper';
 import { KufamText, Row } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 
-const MainView = styled.View`
-  flex: 1 ;
-  justify-content: center ;
-  align-items: center ;
-  background-color: ${ ({theme}) => theme.colors.main } ;
-` ;
-
 const CapitalKufam = styled(KufamText)`
   text-transform: capitalize ;
 ` ;
@@ -25,4 +18,4 @@ const ScoreTable = styled(DataTable)`
   font-family: ${ ({theme}) => theme.fonts.main } ;
 ` ;
 
-export {MainView, CapitalKufam, ButtonRow, ScoreTable} ;
+export {CapitalKufam, ButtonRow, ScoreTable} ;

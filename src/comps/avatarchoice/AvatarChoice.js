@@ -14,14 +14,14 @@ const scrollStyle = {
 	justifyContent: 'space-between',
 } ;
 
-const AvatarChoice = ({url, setUrl}) => {
+const AvatarChoice = ({url, setUrl, data = []}) => {
 	const [dialog, setDialog] = useState(false) ;
 
 	const showDialog = () => setDialog(true) ;
 	const hideDialog = () => setDialog(false) ;
 
 	const returnImages = () => {
-		return [...Array(32).keys()].map( one => {
+		return [16, 17, 18, 19, ...data].map( one => {
 			const str = `https://api.myarth.in/static/hangman/avatar/${one+1}.webp` ;
 
 			const avatarProps = {

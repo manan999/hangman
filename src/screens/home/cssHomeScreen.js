@@ -48,4 +48,11 @@ const HomeImage = styled.Image`
   height: 180px ; 
 ` ;
 
-export {MainView, SubText, HomeButton, HomeImage} ;
+const FloatLeft = styled.View` 
+  position: absolute ;
+  height: 100% ;
+  left: 10px ;
+  justify-content: center ; 
+ ` ;
+
+export {MainView, SubText, HomeButton, HomeImage, FloatLeft} ;

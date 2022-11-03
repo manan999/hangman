@@ -100,9 +100,11 @@ const ShopScreen = ({navigation, route}) => {
                 <KufamText size={20} > <Key size={16}/> 0 </KufamText> 
             </Row>
             <ChestCon>
-                <KufamText size={18}>Watch Videos to earn <Gem size={16}/> 25 </KufamText>
+                <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> 25 </KufamText>
                 <GemChest source={require('../../../assets/gems.webp')} />
                 {adButton('gem')}
+                <KufamText size={18}>Watching Ads will increase your reward 
+                </KufamText>
             </ChestCon>
             {/*<ChestCon>
                 <KufamText size={18}>Watch Videos to earn <Key size={16}/> 1 </KufamText>

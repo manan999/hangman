@@ -15,7 +15,7 @@ import sky from '../../../assets/sky.json' ;
 
 const initObj = {
     login: { name: '', password: '' },
-    register: { name: '', email : '', password: '', repass: '', image: `https://raw.githubusercontent.com/manan999/images/master/hangman/avatar/1.webp` }, 
+    register: { name: '', email : '', password: '', repass: '', image: `https://api.myarth.in/static/hangman/avatar/17.webp` }, 
 };
 
 const ProfileScreen = ({navigation, route}) => {

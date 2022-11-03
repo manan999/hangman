@@ -6,6 +6,7 @@ import { BackHandler } from 'react-native' ;
 import { CountUp } from 'use-count-up' ;
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
+import Img from '../../comps/img/Img.js' ;
 import { CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
 import { WhiteButton, KufamText, MainScrollView, Row, GreenView } from '../../../cssApp.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
@@ -64,13 +65,10 @@ const ResultScreen = ({navigation, route}) => {
                 return <AnimateView delay={300}><KufamText> <Gem /> {gems} ( + {Math.ceil(wins/10)} ) </KufamText></AnimateView> ;
             else
                 return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/10)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/10)} duration={2} /> </KufamText> ;
+        else
+            return <KufamText size={18} > Play Challenge Mode to earn <Gem size={14}/> </KufamText> ;
     }
 
-    const avatarProps = {
-        style : { backgroundColor: theme.colors.white},
-        size : 100,
-        source : user.name?{uri: user.image}:require('../../../assets/user.png'),
-    }
 
     const returnRows = () => {
         let arr = scores.map((score, i) => {
@@ -86,9 +84,16 @@ const ResultScreen = ({navigation, route}) => {
     }
 
     const returnSignIn = () => {
+        const avatarProps = {
+            style : { backgroundColor: theme.colors.white},
+            size : 100,
+            source : user.name?{uri: user.image}:require('../../../assets/user.png'),
+        }
+
         if(user.name)
             return (
                 <>
+                    <Avatar.Image {...avatarProps}/>
                     <CapitalKufam size={20}>Your High Scores</CapitalKufam>
                     <ScoreTable>{ returnRows() }</ScoreTable>
                     <ButtonRow>
@@ -98,10 +103,10 @@ const ResultScreen = ({navigation, route}) => {
         ) ;
         else
             return (
-                <Row>
-                    <WhiteButton dark={false} mode="contained" onPress={() => navigation.replace('Profile')}>Sign In</WhiteButton>
-                    <KufamText size={20}>to save your scores</KufamText>
-                </Row>
+                <>
+                    <Img src={require('../../../assets/sign-up.png')} />
+                    <WhiteButton dark={false} mode="contained" onPress={() => navigation.replace('Profile')}>Sign Up</WhiteButton>
+                </>
             ) ;
     }
 
@@ -116,14 +121,11 @@ const ResultScreen = ({navigation, route}) => {
                 <BoxNumber text="Hints Used" num={hints} color={theme.colors.mainLight}/>
             </Row>
             <GreenView>{ returnGemText() }</GreenView>
+            { returnSignIn() }
             <ButtonRow>
                 <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode, topic})}>Play Again</WhiteButton>
                 <WhiteButton dark={false} icon="home" mode="contained" onPress={() => navigation.replace('Home')}>Go Home</WhiteButton>
             </ButtonRow>
-            <GreenView>
-                <Avatar.Image {...avatarProps}/>
-                { returnSignIn() }
-            </GreenView>
         </MainScrollView>
     ) ;
 }
