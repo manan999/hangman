@@ -17,7 +17,7 @@ const WhiteView = styled.View`
 	justify-content: center ;
 	background-color: ${({theme}) => theme.colors.white} ;
 	margin: 20px ;
-	padding: 35px ;
+	padding: ${({thin}) => thin?`35px 10px`:'35px'} ;
 	border-radius: 20px ;
 	elevation: 5 ;
 	position: relative ;
@@ -29,11 +29,11 @@ const CrossView = styled.View`
 	right: 5px  ;
 ` ;
 
-const Popup = ({visible, onClose, children}) => {
+const Popup = ({visible, onClose, children, thin=false}) => {
 	return (
 		<Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
 	        <CenterView>
-	        	<WhiteView>
+	        	<WhiteView thin={thin}>
 		            {children}
 		            <CrossView>
 			            <CircleButton size={35} onButtonPress={onClose} bgColor={theme.colors.white}>

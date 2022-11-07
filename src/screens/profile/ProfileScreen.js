@@ -19,7 +19,7 @@ const initObj = {
 };
 
 const ProfileScreen = ({navigation, route}) => {
-    const [mode, setMode] = useState('login') ;
+    const [mode, setMode] = useState(route.params?route.params.mode:'login') ;
     const [data, setData] = useState(initObj.login) ;
     const [logo, setLogo] = useState(true) ;
     const [hidePass, setHidePass] = useState({password: true, repass: true}) ;
@@ -339,6 +339,10 @@ const ProfileScreen = ({navigation, route}) => {
                         { returnAvatarChoice() }
                         { returnForm() }
                         <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Confirm </WhiteButton></Shrink>
+                        <Row>
+                            <ProfileText size={14}> Already have an Account? </ProfileText>
+                            <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
+                        </Row>
                     </ProfileView>
                 </>
             ) ;

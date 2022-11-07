@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react' ;
-import { Button } from 'react-native' ;
 import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 import { Avatar } from 'react-native-paper';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -103,8 +102,7 @@ const ShopScreen = ({navigation, route}) => {
                 <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> 25 </KufamText>
                 <GemChest source={require('../../../assets/gems.webp')} />
                 {adButton('gem')}
-                <KufamText size={18}>Watching Ads will increase your reward 
-                </KufamText>
+                <KufamText size={18}>Watching Ads will increase your reward</KufamText>
             </ChestCon>
             {/*<ChestCon>
                 <KufamText size={18}>Watch Videos to earn <Key size={16}/> 1 </KufamText>

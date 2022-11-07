@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState, useCallback } from 'react' ;
-import { View, Dimensions, ToastAndroid, BackHandler } from 'react-native' ;
+import { View, Dimensions, BackHandler } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
-import { Audio } from 'expo-av' ;
+// import { Audio } from 'expo-av' ;
 import { useFocusEffect } from '@react-navigation/native';
 
 import Popup from '../../comps/popup/Popup.js' ;
@@ -12,12 +12,23 @@ import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import sky from '../../../assets/sky.json' ;
 import { Row } from '../../../cssApp.js' ;
 import { MainView, SubText, HomeButton, HomeImage, FloatLeft } from './cssHomeScreen.js' ;
-import { GreenButton } from '../game/cssGameScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
+import { SignUpPop } from './homePopups.js' ;
+
+const Bubble = ({name, onPress}) => {
+    return ( 
+         <AnimateView anim="wobble" delay={0} iterationCount="infinite">
+            <CircleButton onButtonPress={onPress} size={45} bgColor={theme.colors.halfBlack}>
+                <FontAwesome5 name={name} size={20} color={theme.colors.white} />
+            </CircleButton>
+        </AnimateView>
+    ) ;
+}
 
 const HomeScreen = ({navigation}) => {
     const [popOpen, setPopOpen] = useState(false) ;
+    const [popContent, setPopContent] = useState('signup') ;
     const [sound, setSound] = useState() ;
     const {user, addGems} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
@@ -39,6 +50,7 @@ const HomeScreen = ({navigation}) => {
         if(user.name)
             addGems(0) ;
         // playSound() ;
+
     }, [])
 
 
@@ -65,17 +77,14 @@ const HomeScreen = ({navigation}) => {
     //     }
     // }
 
-    const returnHSButton = () => {
-        return (
-            <CircleButton onButtonPress={()=>{
-                if(user.name)
-                    navigation.navigate('HighScore', {}) ;
-                else
-                    ToastAndroid.show("Login to see High Scores", ToastAndroid.SHORT)
-            }} size={45}>
-                <MaterialCommunityIcons name="podium" size={25} color={theme.colors.main} />
-            </CircleButton>
-        ) ;
+    const FloatLeftContent = () => {
+        if(user.name)
+            return <Bubble name="gem" onPress={()=>navigation.navigate('Shop')} /> ;
+        else
+            return <Bubble name="user-plus" onPress={()=>{
+                setPopContent('signup') ;
+                setPopOpen(true) ;
+            }} /> ;
     }
 
     const returnUserButton = () => {
@@ -98,6 +107,24 @@ const HomeScreen = ({navigation}) => {
     const returnGreeting = () => {
         if(user.name)
             return <SubText mt={25} bold> Welcome, {user.name.slice(0, 1).toUpperCase()}{user.name.slice(1)} </SubText>
+    }
+
+    const navigateIfUser = (to) => {
+        if(user.name)
+            navigation.navigate(to, {}) ;
+        else {
+            setPopContent('signup') ;
+            setPopOpen(true) ;
+        }
+    }
+
+    const onSignUpPress = () => {
+        setPopOpen(false) ;
+        navigation.navigate('Profile', {mode: 'register'}) ;
+    }
+
+    const popContents = {
+        signup: <SignUpPop onSignUpPress={onSignUpPress} />,
     }
 
     return (
@@ -124,48 +151,20 @@ const HomeScreen = ({navigation}) => {
                 <FontAwesome5 name="info" size={25} color={theme.colors.main} />
             </CircleButton>
             { returnUserButton() }
-            { returnHSButton() }
+            <CircleButton onButtonPress={()=>navigateIfUser('HighScore')} size={45}>
+                <MaterialCommunityIcons name="podium" size={25} color={theme.colors.main} />
+            </CircleButton>
+            <CircleButton onButtonPress={()=>navigateIfUser('Shop')} size={45}>
+                <FontAwesome name="shopping-cart" size={25} color={theme.colors.main} />
+            </CircleButton>
             {/*<CircleButton onButtonPress={()=>navigation.navigate('Settings')} size={45}>
                 <FontAwesome name="gear" size={25} color={theme.colors.main} />
             </CircleButton>*/}
-            <CircleButton onButtonPress={()=>navigation.navigate('Shop')} size={45}>
-                <FontAwesome name="shopping-cart" size={25} color={theme.colors.main} />
-            </CircleButton>
         </Row>
-        <FloatLeft>
-            <AnimateView anim="wobble" delay={0} iterationCount="infinite">
-                <CircleButton onButtonPress={()=>setPopOpen(true)} size={45} bgColor="rgba(0, 0, 0, 0)">
-                    <FontAwesome5 name="user-plus" size={25} color={theme.colors.green} />
-                </CircleButton>
-            </AnimateView>
-        </FloatLeft>
-        <Popup visible={popOpen} onClose={() => setPopOpen(false)}>
-            <SubText size={20}> Cancel Topic Selection ? </SubText>
-            <GreenButton dark={false} icon="account-plus" mode="contained" onPress={() => navigation.replace('Profile')}> Sign Up </GreenButton>
-        </Popup>
+        <FloatLeft>{FloatLeftContent()}</FloatLeft>
+        <Popup visible={popOpen} onClose={() => setPopOpen(false)} thin>{popContents[popContent]}</Popup>
       </MainView>
     ) ;
 }
 
 export default HomeScreen ;
-    // useEffect( async () => {
-
-    //     // const song = new Audio.Sound();
-    //     // await song.loadAsync(require('../../../assets/one_2.mp3'));
-    //     // await song.playAsync();   
-
-        // await song.setAudioModeAsync({
-        //     staysActiveInBackground: false,
-        //     interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        //     shouldDuckAndroid: true,
-        //     playThroughEarpieceAndroid: true,
-        //     allowsRecordingIOS: true,
-        //     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        //     playsInSilentModeIOS: true,
-        //   });
-
-    //     // return (async () => {
-    //     //   let abc = await song.unloadAsync() ;
-    //     //   console.log(abc) ;
-    //     // }) 
-    // }, [])

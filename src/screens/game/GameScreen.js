@@ -62,23 +62,17 @@ const GameScreen = ({navigation, route}) => {
 
 	const next = (str, num = 0, hintCount) => {
 		const {wins, hints, wrongs } = gameData ;
-		if(mode === 'practice') {
-			if(str === 'Win') { 
+		if(str === 'Win') {
+			if(mode === 'practice') 
 				setGameData({wins: wins+1, wrongs: wrongs+num, hints: (hints-1)+hintCount}) ;
-				setCurrentRound(currentRound+1) ;
-			}
-			else 
-				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode: 'practice' }) ; 
-		}
-		else {
-			if(str === 'Win') {
+			else {
 				hintCount -= 1 ;
 				setGameData({wins: wins+(20-(2*num)-(3*hintCount)), wrongs: wrongs+num, hints: hints+hintCount}) ;
-				setCurrentRound(currentRound+1) ;
-			}		
-			else
-				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode: 'challenge' })
-		} 
+			}
+			setCurrentRound(currentRound+1) ;
+		}
+		else 		
+			navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
 	}
 
 	const returnTimeGuess = () => {
@@ -97,11 +91,14 @@ const GameScreen = ({navigation, route}) => {
 				...returnTimeGuess()
 			}
 		}
+
+		const {wins, hints, wrongs } = gameData ;
+		
 	  	return (
 	  		<>
 	  			<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
 	  				<BlackKufam size={20}> Exit this Game ? </BlackKufam>
-	  				<GreenButton dark={false} icon="check" mode="contained" onPress={() => navigation.replace('Home')}> Yes </GreenButton>
+	  				<GreenButton dark={false} icon="check" mode="contained" onPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode })}> Yes </GreenButton>
 	  			</Popup>
 	  			<Game key={currentRound} round={currentRound} {...gameProps}/> 
 	  		</>

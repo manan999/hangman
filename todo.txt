@@ -1,11 +1,10 @@
--- progression (maybe level system)
+-- progression level system/badges/titles
 -- new topics add karne hai
 
-1. progressbar lagana hai rewards par
-2. home screen pe popups lagane hai
+1. settings update banana hai backend par
+2. gems ka amount increase ho, ad dekhne par
+2. backend se version verify karwana hai
 3. game khatam hone pe revive ka ad dikhe
 4. interstitial ad on result screen
-5. back se match khatam karne pe result screen pe jaye
-6. revenuecat lagana hai
-7. backend se version verify karwana hai
-8. music daalna hai
+5. revenuecat lagana hai
+6. music daalna hai
