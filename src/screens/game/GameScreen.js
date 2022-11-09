@@ -9,11 +9,13 @@ import Game from './Game.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
 import {topicData} from './topicData.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
+import { BackPop, RevivePop } from './gamePopups.js' ;
 
 const initGame = {
 	wins: 0,
 	hints: 0,
 	wrongs: 0,
+	revive: false,
 }
 
 const GameScreen = ({navigation, route}) => {
@@ -22,6 +24,7 @@ const GameScreen = ({navigation, route}) => {
 	const [movie, setMovie] = useState('') ;
 	const [gameData, setGameData] = useState(initGame) ;
 	const [popOpen, setPopOpen] = useState(false) ;
+	const [popContent, setPopContent] = useState('back') ;
 
     const {topics, fetchUrl} = useContext(UserContext) ;
 	const {mode, topic} = route.params ;
@@ -29,8 +32,15 @@ const GameScreen = ({navigation, route}) => {
 	useFocusEffect(
 	    useCallback(() => {
 	    	const onBackPress = () => {
-	        	setPopOpen(true) ;
-	          	return true;
+	    		if(popOpen && popContent === 'revive') {
+	    			navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
+	    			return true ;
+	    		}
+	    		else {
+	    			setPopContent('back') ;
+		        	setPopOpen(true) ;
+		          	return true;
+	    		}
 	      	};
 
 	      	BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -39,7 +49,7 @@ const GameScreen = ({navigation, route}) => {
 	);
 
 	useEffect( ()=> {
-		if(topics[topic] && (currentRound % 10 === 8 || data.length === 0)) {
+		if(topics[topic] && (currentRound % 10 >= 8 || data.length === 0)) {
 			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
 			// console.log(URL) ;
 
@@ -64,15 +74,21 @@ const GameScreen = ({navigation, route}) => {
 		const {wins, hints, wrongs } = gameData ;
 		if(str === 'Win') {
 			if(mode === 'practice') 
-				setGameData({wins: wins+1, wrongs: wrongs+num, hints: (hints-1)+hintCount}) ;
+				setGameData({...gameData, wins: wins+1, wrongs: wrongs+num, hints: (hints-1)+hintCount}) ;
 			else {
 				hintCount -= 1 ;
-				setGameData({wins: wins+(20-(2*num)-(3*hintCount)), wrongs: wrongs+num, hints: hints+hintCount}) ;
+				setGameData({...gameData, wins: wins+(20-(2*num)-(3*hintCount)), wrongs: wrongs+num, hints: hints+hintCount}) ;
 			}
 			setCurrentRound(currentRound+1) ;
 		}
-		else 		
-			navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
+		else {
+			if(gameData.revive)
+				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
+			else {
+				setPopContent('revive') ;
+				setPopOpen(true) ;
+			}
+		}		
 	}
 
 	const returnTimeGuess = () => {
@@ -83,23 +99,32 @@ const GameScreen = ({navigation, route}) => {
 	}
 
 	if(data.length > 0) {
+		const {wins, hints, wrongs, revive } = gameData ;
+
 		const gameProps = {
 			movie, next, mode, topic,
 			hint: data[currentRound].hints,
 			config: {
-				score: gameData.wins,
+				score: wins,
+				revive,
 				...returnTimeGuess()
 			}
 		}
 
-		const {wins, hints, wrongs } = gameData ;
+		const popContents = {
+	        back: <BackPop onPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode })} />,
+	        revive: <RevivePop onYesPress={() => {
+	        	setGameData({...gameData, revive: true}) ;
+	        	setPopOpen(false) ;
+	        }} onNoPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) }/>,
+	    }
 		
 	  	return (
 	  		<>
-	  			<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
-	  				<BlackKufam size={20}> Exit this Game ? </BlackKufam>
-	  				<GreenButton dark={false} icon="check" mode="contained" onPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode })}> Yes </GreenButton>
-	  			</Popup>
+	  			<Popup visible={popOpen} close={popContent==='back'} onClose={() => {
+	  				if(popContent==='back')
+	  					setPopOpen(false) ;
+	  			}}>{popContents[popContent]}</Popup>
 	  			<Game key={currentRound} round={currentRound} {...gameProps}/> 
 	  		</>
 	  	) ;

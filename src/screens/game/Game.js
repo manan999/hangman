@@ -56,7 +56,7 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 		setWait(true) ;
 		setHintCount(1) ;
 		setGuessed(config.initGuess) ;
-	}, [movie])
+	}, [config.revive, movie])
 
 	useEffect( () => {
 		let timer ;

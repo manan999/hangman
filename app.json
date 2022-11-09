@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "aurbatao",
+    "description": "Aur Batao: The Guessing Game, is a word guessing game made for an Indian audience.",
     "slug": "aurbatao",
     "version": "1.4.0 (beta)",
     "orientation": "portrait",

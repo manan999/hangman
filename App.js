@@ -33,18 +33,6 @@ export default function App() {
 
   useEffect( () => {
     console.log('app loaded on '+ new Date())
-    // mobileAds()
-    // .setRequestConfiguration({
-    //   maxAdContentRating: MaxAdContentRating.PG,
-    //   tagForChildDirectedTreatment: true,
-    //   tagForUnderAgeOfConsent: true,
-    //   // An array of test device IDs to allow.
-    //   testDeviceIdentifiers: ['EMULATOR'],
-    // })
-    // .initialize()
-    // .then( initData => {
-    //   console.log(initData) ;
-    // });
   }, [])
 
   const Stack = createNativeStackNavigator() ;

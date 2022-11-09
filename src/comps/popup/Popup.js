@@ -29,18 +29,16 @@ const CrossView = styled.View`
 	right: 5px  ;
 ` ;
 
-const Popup = ({visible, onClose, children, thin=false}) => {
+const Popup = ({visible, onClose, children, thin=false, close=true}) => {
+	const Cross = () => {
+		if(close)
+			return <CircleButton size={35} onButtonPress={onClose} bgColor={theme.colors.white}><Entypo name="circle-with-cross" size={35} color={theme.colors.darkRed} /></CircleButton> ;
+	}
+
 	return (
 		<Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
 	        <CenterView>
-	        	<WhiteView thin={thin}>
-		            {children}
-		            <CrossView>
-			            <CircleButton size={35} onButtonPress={onClose} bgColor={theme.colors.white}>
-			            	<Entypo name="circle-with-cross" size={35} color={theme.colors.darkRed} />
-			            </CircleButton>
-			        </CrossView>
-		        </WhiteView>
+	        	<WhiteView thin={thin}>{children}<CrossView>{Cross()}</CrossView></WhiteView>
 	        </CenterView>
 	    </Modal>
 	) ;

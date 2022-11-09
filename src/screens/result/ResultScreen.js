@@ -62,9 +62,9 @@ const ResultScreen = ({navigation, route}) => {
     const returnGemText = () => {
         if(mode !== 'practice' && user.name)
             if(final)
-                return <AnimateView delay={300}><KufamText> <Gem /> {gems} ( + {Math.ceil(wins/10)} ) </KufamText></AnimateView> ;
+                return <AnimateView delay={300}><KufamText> <Gem /> {gems} ( + {Math.ceil(wins/20)} ) </KufamText></AnimateView> ;
             else
-                return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/20)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/10)} duration={2} /> </KufamText> ;
+                return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/20)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/20)} duration={2} /> </KufamText> ;
         else
             return <KufamText size={18} > Play Challenge Mode to earn <Gem size={14}/> </KufamText> ;
     }

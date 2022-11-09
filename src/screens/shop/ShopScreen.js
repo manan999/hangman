@@ -17,19 +17,18 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
   keywords: ['fashion', 'clothing'],
 });
 
-
 const ShopScreen = ({navigation, route}) => {
-    const {user, gems, addGems} = useContext(UserContext) ;
+    const {user, gems, addGems, updateSettings} = useContext(UserContext) ;
+    const {settings} = user ;
+    const {rewardVideos, todayVideos} = settings ;
+
     const [loaded, setLoaded] = useState(false) ;
     const [reward, setReward] = useState('gem') ;
-
-    useEffect(() => {
-        if(rewarded._loaded) 
-            setLoaded(true) ;
-    }, [])
+    // const [time, setTime] = useState(null) ;
 
     useEffect(() => {
         console.log('trying to load ad') ;
+        // console.log(settings, 'settings') ;
 
         const unsubscribeError = rewarded.addAdEventListener(AdEventType.ERROR, error => {
             console.log('ad error ', error) ;
@@ -51,19 +50,21 @@ const ShopScreen = ({navigation, route}) => {
             rewarded.load();
         });
 
-        const unsubscribeEarned = rewarded.addAdEventListener(
-            RewardedAdEventType.EARNED_REWARD,
-            rew => {
-                console.log('User earned reward of ', rew);
+        const unsubscribeEarned = rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, rew => {
+            console.log(`User earned reward of ${rew.amount} ${rew.type}`);
 
-                if(rew.amount)
-                    addGems(25) ;
+            if(rew.amount) {
+                addGems(25) ;
+                // setTime(time => new Date()) ;
+            }
 
-                crashlytics().log('User earned reward of ', rew) ;
-            },
-        );
+            crashlytics().log('User earned reward of ', rew) ;
+        });
 
         rewarded.load();
+
+        if(rewarded._loaded) 
+            setLoaded(true) ;
 
         // Unsubscribe from events on unmount
         return () => {
@@ -73,6 +74,36 @@ const ShopScreen = ({navigation, route}) => {
           unsubscribeError() ;
         };
     }, []);
+
+    // useEffect( () => {
+    //     if(time) {
+    //         console.log(time, 'time useeffect') ;
+    //         if(rewardVideos) {
+    //             let d1 = time.toISOString().split('T')[0] ;
+    //             let d2 = rewardVideos.slice(-1)[0].time.slice(0, 10) ;
+
+    //             let tv = todayVideos>10?50:20+(3*todayVideos)
+
+    //             if(d1 === d2) {
+    //                 let rewardObj = { reward: tv, time }
+    //                 console.log({...settings, todayVideos:todayVideos+1, rewardVideos:[...rewardVideos,rewardObj]}) ;
+    //                 updateSettings({...settings, todayVideos:todayVideos+1, rewardVideos:[...rewardVideos,rewardObj]});
+    //                 addGems(tv) ;
+    //             }
+    //             else {
+    //                 console.log({d1, d2, tv, num : '2', settings}) ;
+    //                 let rewardObj = { reward: 20, time }
+    //                 updateSettings({...settings, todayVideos: 1, rewardVideos: [...rewardVideos, rewardObj] }) ;
+    //                 addGems(20) ;
+    //             }
+    //         }
+    //         else {
+    //                 console.log({num : '3', settings}) ;
+    //             updateSettings({...settings, todayVideos: 1, rewardVideos: [{ reward: 20, time }] }) ;
+    //             addGems(20) ;
+    //         }
+    //     }
+    // }, [time])
 
     const adButton = (rewardType) => {
         if(!loaded)
@@ -90,16 +121,18 @@ const ShopScreen = ({navigation, route}) => {
         source : {uri: user.image},
     }
 
+    // let str = todayVideos?(todayVideos>10?50:20+(3*todayVideos)):20
+
     return (
         <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
             <KufamText>SHOP</KufamText>
             <Row>
                 <Avatar.Image {...avatarProps} /> 
-                <KufamText size={20} > <Gem size={16}/> {gems} </KufamText> 
-                <KufamText size={20} > <Key size={16}/> 0 </KufamText> 
+                <KufamText size={20}> <Gem size={16}/> {gems} </KufamText> 
+                <KufamText size={20}> <Key size={16}/> 0 </KufamText> 
             </Row>
             <ChestCon>
-                <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> 25 </KufamText>
+                <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> {25} </KufamText>
                 <GemChest source={require('../../../assets/gems.webp')} />
                 {adButton('gem')}
                 <KufamText size={18}>Watching Ads will increase your reward</KufamText>

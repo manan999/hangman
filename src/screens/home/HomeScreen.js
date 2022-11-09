@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 // import { Audio } from 'expo-av' ;
 import { useFocusEffect } from '@react-navigation/native';
+import * as Application from 'expo-application';
 
 import Popup from '../../comps/popup/Popup.js' ;
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;
@@ -14,7 +15,7 @@ import { Row } from '../../../cssApp.js' ;
 import { MainView, SubText, HomeButton, HomeImage, FloatLeft } from './cssHomeScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
-import { SignUpPop } from './homePopups.js' ;
+import { SignUpPop, UpdatePop } from './homePopups.js' ;
 
 const Bubble = ({name, onPress}) => {
     return ( 
@@ -30,7 +31,7 @@ const HomeScreen = ({navigation}) => {
     const [popOpen, setPopOpen] = useState(false) ;
     const [popContent, setPopContent] = useState('signup') ;
     const [sound, setSound] = useState() ;
-    const {user, addGems} = useContext(UserContext) ;
+    const {user, addGems, gameData} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
     
     // useFocusEffect(
@@ -50,9 +51,15 @@ const HomeScreen = ({navigation}) => {
         if(user.name)
             addGems(0) ;
         // playSound() ;
-
     }, [])
 
+    useEffect( () => {
+        if(Application.nativeBuildVersion < gameData.versionCode) {
+            setPopContent('update') ;
+            setPopOpen(true) ;
+        }
+
+    }, [gameData])
 
     // useEffect(() => {
     //     return sound? () => {
@@ -125,6 +132,7 @@ const HomeScreen = ({navigation}) => {
 
     const popContents = {
         signup: <SignUpPop onSignUpPress={onSignUpPress} />,
+        update: <UpdatePop />,
     }
 
     return (

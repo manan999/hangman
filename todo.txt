@@ -1,10 +1,10 @@
 -- progression level system/badges/titles
 -- new topics add karne hai
 
-1. settings update banana hai backend par
-2. gems ka amount increase ho, ad dekhne par
-2. backend se version verify karwana hai
+-- gems increase on video view
+
 3. game khatam hone pe revive ka ad dikhe
 4. interstitial ad on result screen
+4. shop me avatar purchasing
 5. revenuecat lagana hai
 6. music daalna hai
