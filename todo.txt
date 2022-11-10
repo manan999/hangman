@@ -3,8 +3,6 @@
 
 -- gems increase on video view
 
-3. game khatam hone pe revive ka ad dikhe
 4. interstitial ad on result screen
-4. shop me avatar purchasing
 5. revenuecat lagana hai
 6. music daalna hai

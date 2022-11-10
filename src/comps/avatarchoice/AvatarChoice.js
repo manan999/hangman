@@ -21,8 +21,8 @@ const AvatarChoice = ({url, setUrl, data = []}) => {
 	const hideDialog = () => setDialog(false) ;
 
 	const returnImages = () => {
-		return [16, 17, 18, 19, ...data].map( one => {
-			const str = `https://api.myarth.in/static/hangman/avatar/${one+1}.webp` ;
+		return data.map( one => {
+			const str = `https://api.myarth.in/static/hangman/avatar/${one}.webp` ;
 
 			const avatarProps = {
 				style : { backgroundColor: theme.colors.white},

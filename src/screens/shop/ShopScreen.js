@@ -3,14 +3,15 @@ import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-nat
 import { Avatar } from 'react-native-paper';
 import crashlytics from '@react-native-firebase/crashlytics';
 
+import AvatarPackCard from './AvatarPackCard.js' ;
 import { MainScrollView, KufamText, WhiteButton, Row } from '../../../cssApp.js' ;
-import { GemChest, ChestCon } from './cssShop.js' ;
+import { GemChest, ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
 import { Gem, Key } from '../../comps/icons.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
-const adUnitId = TestIds.REWARDED ;
-// const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
+// const adUnitId = TestIds.REWARDED ;
+const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
 
 const rewarded = RewardedAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: true,
@@ -18,7 +19,8 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
 });
 
 const ShopScreen = ({navigation, route}) => {
-    const {user, gems, addGems, updateSettings} = useContext(UserContext) ;
+    const {user, gems, addGems, updateSettings, gameData} = useContext(UserContext) ;
+    const {avatarPacks} = gameData ;
     const {settings} = user ;
     const {rewardVideos, todayVideos} = settings ;
 
@@ -131,6 +133,7 @@ const ShopScreen = ({navigation, route}) => {
                 <KufamText size={20}> <Gem size={16}/> {gems} </KufamText> 
                 <KufamText size={20}> <Key size={16}/> 0 </KufamText> 
             </Row>
+            <ShopText size={22}>Gems</ShopText>
             <ChestCon>
                 <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> {25} </KufamText>
                 <GemChest source={require('../../../assets/gems.webp')} />
@@ -142,6 +145,10 @@ const ShopScreen = ({navigation, route}) => {
                 <GemChest source={require('../../../assets/gems.webp')} />
                 {adButton('key')}
             </ChestCon>*/}
+            <ShopText size={22}>Avatar Packs</ShopText>
+            <AvatarPackView>
+                {avatarPacks.map(ap => <AvatarPackCard key={ap.name} {...ap} />)}
+            </AvatarPackView>
         </MainScrollView>
     ) ;
 }

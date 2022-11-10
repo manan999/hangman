@@ -295,8 +295,9 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const returnAvatarChoice = () => {
+        let arrData = user.settings?[17, 18, 19, 20, ...user.settings.avatars]:[17, 18, 19, 20] ;
         if(logo || mode === 'edit')
-            return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})}/> ;
+            return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})} data={arrData}/> ;
     }
 
     const returnSignInText = () => {
@@ -432,6 +433,7 @@ const ProfileScreen = ({navigation, route}) => {
                         <DisplayText size={20} tt>{user.name} </DisplayText>
                         <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
                         <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
+                        <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit Profile </WhiteButton>
                     </ProfileTop>
                     <DisplayText>Practice Mode Statistics </DisplayText>
                     { userDataCheck() }
