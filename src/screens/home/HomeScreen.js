@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useCallback } from 'react' ;
-import { View, Dimensions, BackHandler } from 'react-native' ;
+import { View, Dimensions, BackHandler, Linking } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
@@ -150,7 +150,7 @@ const HomeScreen = ({navigation}) => {
             <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
                 Practice
             </HomeButton>
-            <HomeButton dark={true} color={theme.colors.darkGreen} icon="notebook" mode="contained" onPress={() => navigation.navigate('Tutorial')}>
+            <HomeButton dark={true} color={theme.colors.darkGreen} icon="notebook" mode="contained" onPress={()=> Linking.openURL('https://www.youtube.com/watch?v=BENuLeGwIrw')}>
                 How To Play
             </HomeButton>
         </View>

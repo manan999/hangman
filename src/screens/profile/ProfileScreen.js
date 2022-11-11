@@ -373,7 +373,7 @@ const ProfileScreen = ({navigation, route}) => {
                     </Row>
                     <DisplayText size={20}>Topics</DisplayText>
                     <View>
-                        {Object.keys(userData.totalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.totalTopics[one]}%</DisplayText>)}
+                        {Object.keys(userData.totalTopics).map((one,i)=><Row jc="space-between" key={i}><DisplayText size={15}>{one}</DisplayText><DisplayText size={15}>{userData.totalTopics[one]}%</DisplayText></Row>)}
                     </View>
                 </GreenView>
             ) ;
@@ -403,7 +403,7 @@ const ProfileScreen = ({navigation, route}) => {
                     </Row>
                     <DisplayText size={20}>Topics</DisplayText>
                     <View>
-                        {Object.keys(userData.challTotalTopics).map((one,i)=><DisplayText key={i} size={15}>{one}&emsp;{userData.challTotalTopics[one]}%</DisplayText>)}
+                        {Object.keys(userData.challTotalTopics).map((one,i)=><Row jc="space-between" key={i}><DisplayText size={15}>{one}</DisplayText><DisplayText size={15}>{userData.challTotalTopics[one]}%</DisplayText></Row>)}
                     </View>
                 </GreenView>
             ) ;
