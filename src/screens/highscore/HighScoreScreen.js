@@ -11,17 +11,13 @@ import { theme } from '../../theme.js' ;
 const HighScoreScreen = ({navigation, route}) => {
     const {user, userToken, topics, fetchUrl} = useContext(UserContext) ;
     
-    const [filterBy, setFilterBy] = useState(route.params.filter?route.params.filter:'all') ;
-    const [filterOpen, setFilterOpen] = useState(false) ;
-    const [filterItems, setFilterItems] = useState([{label: 'Show For : All', value: 'all'}, {label: 'Show For : Only Me', value: 'me'} ]) ;
-
     const [topic, setTopic] = useState(route.params.topic?route.params.topic:'Movies') ;
     const [topicOpen, setTopicOpen] = useState(false) ;
     const [topicItems, setTopicItems] = useState([...Object.keys(topics).map(one => {
         return {value: one, label: topics[one].label}
     })]) ;
 
-    const [gameMode, setGameMode] = useState(route.params.mode?route.params.mode:'practice') ;
+    const [gameMode, setGameMode] = useState(route.params.mode?route.params.mode:'challenge') ;
     const [modeOpen, setModeOpen] = useState(false) ;
     const [modeItems, setModeItems] = useState([{label: 'Mode : Practice', value: 'practice'}, {label: 'Mode : Challenge', value: 'challenge'} ]) ;
     
@@ -32,7 +28,7 @@ const HighScoreScreen = ({navigation, route}) => {
         fetch(`${fetchUrl}scores`, {
             method : 'post',
             headers : { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${userToken}`},
-            body : JSON.stringify({filter: filterBy, topic, mode: gameMode}),
+            body : JSON.stringify({filter: 'all', topic, mode: gameMode}),
         })
         .then(res => {
             if(res.ok)
@@ -41,7 +37,7 @@ const HighScoreScreen = ({navigation, route}) => {
         })
         .then( data => setData(data.filter(one => one)) ) 
         .catch( err  => console.log(err) ) ;
-    }, [filterBy, topic, gameMode])
+    }, [topic, gameMode])
 
 
     const formatDate = (dt) => {
@@ -84,7 +80,6 @@ const HighScoreScreen = ({navigation, route}) => {
         <MainView contentContainerStyle={{ alignItems: 'center' }}>
             <KufamText>High Scores</KufamText>
             <DDView>
-                <DropDownPicker style={{ marginBottom: 5}} open={filterOpen} value={filterBy} items={filterItems} setOpen={setFilterOpen} setValue={setFilterBy} setItems={setFilterItems} zIndex={3000} zIndexReverse={1000}/>
                 <DropDownPicker style={{ marginTop: 5, marginBottom: 5}} open={modeOpen} value={gameMode} items={modeItems} setOpen={setModeOpen} setValue={setGameMode} setItems={setModeItems} zIndex={2000} zIndexReverse={2000}/>
                 <DropDownPicker style={{ marginTop: 5, marginBottom: 5}} open={topicOpen} value={topic} items={topicItems} setOpen={setTopicOpen} setValue={setTopic} setItems={setTopicItems} zIndex={1000} zIndexReverse={3000}/>
             </DDView>

@@ -3,6 +3,9 @@
 
 -- gems increase on video view
 
-4. interstitial ad on result screen
+1. interstitial ad on result screen
+2. personal profile page pe khud ke best 10 scores lagane hai
+3. forgot password handle
+4. change password handle
 5. revenuecat lagana hai
 6. music daalna hai

@@ -1,16 +1,16 @@
 import { View, Text, Dimensions, Linking} from 'react-native' ;
 import LottieView from 'lottie-react-native';
 
+import Img from '../../comps/img/Img.js' ;
+import Img2 from '../../comps/img/Img2.js' ;
 import {HomeImage } from '../home/cssHomeScreen.js' ;
+import {AboutView, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
 import {Row, MainView, WhiteButton} from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 import sky from '../../../assets/sky.json' ;
 
-import {AboutView, LogoImage, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
-
 const AboutScreen = ({navigation, route}) => {
     const windowHeight = Dimensions.get('window').height;
-    const windowWidth = Dimensions.get('window').width;
 
     return (
         <MainView>
@@ -22,7 +22,7 @@ const AboutScreen = ({navigation, route}) => {
                 <AboutText size={18} > 
                     "Aur Batao : The Guessing Game" is a word-guessing game where you have to guess the word based on given alphabets and clues. The title is a phrase commonly used in Hindi language traditionally meaning tell me more. But a modern meaning of the phrase is similar to "Whats Up?".
                 </AboutText>
-                <LogoImage source={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-white.png"}} />
+                <Img2 max={0.9} src={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-white.png"}} />
                 <AboutText size={18} > 
                    Myarth is an indie developer team based in New Delhi. We believe in making techonlogy for the future and we specialise in creating mobile apps and websites. We also build customised apps for organisations. You can find us at Our website 
                 </AboutText>
@@ -32,7 +32,7 @@ const AboutScreen = ({navigation, route}) => {
                 </AboutText>
                 <AboutText size={11} >Credits :</AboutText>
                 <AboutRow>
-                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://lottiefiles.com/jkkim0124')} size={9}>Backgorund Image </WhiteButton>
+                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://lottiefiles.com/jkkim0124')} size={9}>Background Image </WhiteButton>
                     <WhiteButton color={theme.colors.white} mode="contained" onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')} size={9}> Avatar Images </WhiteButton>
                 </AboutRow>
             </AboutView>

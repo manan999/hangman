@@ -28,8 +28,9 @@ const GuesserView = styled.View`
 const WordView = styled.View` 
   flex-direction: row ;
   margin: 0 10px ;
-  flex-wrap: wrap ;
+  flex-wrap: ${ ({wrap}) => wrap?wrap:'wrap' } ;
 ` ;
+  // flex-wrap: wrap ;
 
 const CrossCon = styled.View` 
   margin: 12px 5px ;  

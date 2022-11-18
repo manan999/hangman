@@ -7,7 +7,7 @@ import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
 import { Row, WhiteButton, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
 import { SubText, HomeImage } from '../home/cssHomeScreen.js' ;
 import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText, ProfileTop } from './cssProfile.js' ;
-import { invalidEmail, invalidPass, invalidName, isBlank } from '../../comps/valid.js' ;
+import { invalidEmail, invalidPass, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { Gem } from '../../comps/icons.js' ;
@@ -270,7 +270,7 @@ const ProfileScreen = ({navigation, route}) => {
 
     const onRegisterPress = () => {
         const {name, email, password, repass} = data;
-        const errorArr = [invalidName(name), invalidEmail(email), invalidPass(password, repass)].filter(one => one) ;
+        const errorArr = [isBlank(name, 'Username'), invalidEmail(email), invalidPass(password, repass)].filter(one => one) ;
 
         setError(errorArr) ;
         setErrorCount(errorArr.length) ;
@@ -278,7 +278,7 @@ const ProfileScreen = ({navigation, route}) => {
 
      const onEditPress = () => {
         const {name, email} = data;
-        const errorArr = [invalidName(name), invalidEmail(email)].filter(one => one) ;
+        const errorArr = [isBlank(name, 'Username'), invalidEmail(email)].filter(one => one) ;
 
         setError(errorArr) ;
         setErrorCount(errorArr.length) ;
@@ -319,11 +319,11 @@ const ProfileScreen = ({navigation, route}) => {
                         <ProfileText size={20}> Sign In </ProfileText>
                         { returnForm() }
                         <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onLoginPress}> Login </WhiteButton></Shrink>
-                        <MarginRow>
+                        {/*<MarginRow>
                             <TouchableOpacity onPress={() => ToastAndroid.show("Coming Soon !", ToastAndroid.SHORT)}>
                                 <ProfileText size={14}> Forgot Password? </ProfileText>
                             </TouchableOpacity>
-                        </MarginRow>
+                        </MarginRow>*/}
                         <Row>
                             <ProfileText size={14}> Don't have an Account? </ProfileText>
                             <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('register')} size={13}> Sign Up </WhiteButton>

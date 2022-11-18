@@ -26,7 +26,8 @@ const AvatarImage = styled.Image`
 	resize-mode: contain ;
 	width: 130px ;
 	height: 130px ;
-	margin: 20px 0 ;
+	border-radius: 25px ;
+	margin: 0 0 20px 0 ;
  ` ;
 
 const scrollStyle = {

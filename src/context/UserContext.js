@@ -10,7 +10,7 @@ const UserContextProvider = ({children}) => {
     const [gameData, setGameData] = useState({}) ;
 
     const fetchUrl = 'https://api.myarth.in/' ;
-    // const fetchUrl = 'http://192.168.0.104:8000/' ;
+    // const fetchUrl = 'http://192.168.0.105:8000/' ;
 
     useEffect( () => {
         AsyncStorage.getItem('@abUser')

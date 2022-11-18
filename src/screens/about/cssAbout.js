@@ -14,11 +14,6 @@ const AboutView = styled(MainScrollView)`
 	background-color: ${ ({theme}) => theme.colors.halfMain } ;
 ` ;
 
-const LogoImage = styled(HomeImage)`
-  max-width: 340px ;
-  height: 60px ; 
-` ;
-
 const AboutText = styled(KufamText)`
   text-align: justify ;
   margin: 15px 0 3px ;
@@ -28,4 +23,4 @@ const AboutRow = styled(Row)`
   margin-bottom: 15px ;
 ` ;
 
-export {AboutView, LogoImage, LogoView, AboutText, AboutRow} ;
+export {AboutView, LogoView, AboutText, AboutRow} ;

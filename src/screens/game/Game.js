@@ -10,7 +10,7 @@ import { Cross } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import HintImage from './hintImage/HintImage.js' ;
 import { MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild } from './cssGameScreen.js' ;
-import { Row } from '../../../cssApp.js' ; 
+import { KufamText, Row } from '../../../cssApp.js' ; 
 import { Alpha, Letter } from './AlphaLetter.js' ;
 import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -110,10 +110,10 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 	}
 
 	const returnGuesser = () => {
-		// return 'Mahangar Telecom Nigam Limited'.toLowerCase().split(' ').map( (one, i) => {
+		// return 'saand ki aankh'.toLowerCase().split(' ').map( (one, i) => {
 		return movie.toLowerCase().split(' ').map( (one, i) => {
 			return (
-				<WordView key={i}>
+				<WordView key={i} wrap={one.length>10?'wrap':'nowrap'}>
 					{	one.split('').map((two,i) => {
 							return <Letter key={i} text={returnLetter(two)} size={one.length>10?20:24} color={color?color:''}/> ;
 					    }) 
@@ -193,7 +193,7 @@ const Game = ({movie, round, next, hint, config, mode, topic}) => {
 				<>
 					<AlphaRow>{returnGuesser()}</AlphaRow>
 			  		<View>
-				  		<HintHead> Hints </HintHead>
+				  			<HintHead> Hints <KufamText size={14}>(Touch to Enlarge)</KufamText> </HintHead>
 				  		<Row>
 				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={(one+'').toLowerCase()} /></Fragment>)}
 				  		</Row>
