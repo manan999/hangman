@@ -27,7 +27,7 @@ const Bubble = ({name, onPress}) => {
     ) ;
 }
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
     const [popOpen, setPopOpen] = useState(false) ;
     const [popContent, setPopContent] = useState('signup') ;
     const [sound, setSound] = useState() ;
@@ -50,6 +50,10 @@ const HomeScreen = ({navigation}) => {
     useEffect( () => {
         if(user.name)
             addGems(0) ;
+        else {
+            if(route.params && route.params.popOpen)
+                setPopOpen(route.params.popOpen)
+        }
         // playSound() ;
     }, [])
 

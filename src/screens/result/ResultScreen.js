@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState, useCallback } from 'react' ;
+import { InterstitialAd, TestIds, AdEventType } from 'react-native-google-mobile-ads';
 import { useFocusEffect } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { Avatar, DataTable } from 'react-native-paper';
-import { BackHandler } from 'react-native' ;
+import { BackHandler, ToastAndroid } from 'react-native' ;
 import { CountUp } from 'use-count-up' ;
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
 import Img from '../../comps/img/Img.js' ;
@@ -15,7 +17,16 @@ import { UserContext } from '../../context/UserContext.js' ;
 import { theme } from '../../theme.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 
+const adUnitId = 'ca-app-pub-7668722490423187/3467857782' ;
+// const adUnitId = TestIds.INTERSTITIAL ;
+
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: ['fashion', 'clothing'],
+});
+
 const ResultScreen = ({navigation, route}) => {
+    const [loaded, setLoaded] = useState(false);
     const [scores, setScores] = useState([]) ;
     const [final, setFinal] = useState(false) ;
     const {rounds, wins, hints, wrongs, topic, mode} = route.params ;
@@ -32,7 +43,7 @@ const ResultScreen = ({navigation, route}) => {
     useFocusEffect(
         useCallback(() => {
             const onBackPress = () => {
-                navigation.replace('Home') ;
+                showAd(() => navigation.replace('Home', {popOpen: true})) ;
                 return true;
             };
 
@@ -57,7 +68,50 @@ const ResultScreen = ({navigation, route}) => {
             })
             .catch( err  => console.log(err) ) ;
         }
+
+        console.log('trying to load ad') ;
+
+        const unsubscribeError = interstitial.addAdEventListener(AdEventType.ERROR, error => {
+            console.log('ad error ', error) ;
+            crashlytics().log('ad error ', error) ;
+        });
+
+        const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+            setLoaded(true);
+            console.log('ad loaded ', adUnitId) ;
+            crashlytics().log('ad loaded ', adUnitId) ;
+        });
+
+        const unsubscribeClose = interstitial.addAdEventListener(AdEventType.CLOSED, error => {
+            console.log('ad closed') ;
+            crashlytics().log('ad closed') ;
+            setLoaded(false);
+       
+            //reload ad 
+            interstitial.load();
+        });
+
+        interstitial.load();
+
+        if(interstitial._loaded) 
+            setLoaded(true) ;
+
+        // Unsubscribe from events on unmount
+        return () => {
+          unsubscribeLoaded() ;
+          unsubscribeClose() ;
+          unsubscribeError() ;
+        };
     }, [])
+
+    const showAd = fn => {
+        if(!loaded) 
+            ToastAndroid.show("Please Wait, Ad is loading...", ToastAndroid.SHORT)
+        else {
+            interstitial.show() ;
+            fn() ;
+        }
+    }
 
     const returnGemText = () => {
         if(mode !== 'practice' && user.name)
@@ -97,7 +151,7 @@ const ResultScreen = ({navigation, route}) => {
                     <CapitalKufam size={20}>Your High Scores</CapitalKufam>
                     <ScoreTable>{ returnRows() }</ScoreTable>
                     <ButtonRow>
-                        <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => navigation.navigate('HighScore', {topic, mode, filter: 'me'})}>See More</WhiteButton>
+                        <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => showAd(() => navigation.navigate('HighScore', {topic, mode, filter: 'me'}))}>See More</WhiteButton>
                     </ButtonRow>
                 </>
         ) ;
@@ -105,7 +159,7 @@ const ResultScreen = ({navigation, route}) => {
             return (
                 <>
                     <Img src={require('../../../assets/sign-up.png')} />
-                    <WhiteButton dark={false} mode="contained" onPress={() => navigation.replace('Profile')}>Sign Up</WhiteButton>
+                    <WhiteButton dark={false} mode="contained" onPress={() => showAd(() => navigation.replace('Profile'))}>Sign Up</WhiteButton>
                 </>
             ) ;
     }
@@ -123,8 +177,8 @@ const ResultScreen = ({navigation, route}) => {
             <GreenView>{ returnGemText() }</GreenView>
             { returnSignIn() }
             <ButtonRow>
-                <WhiteButton dark={false} icon="reload" mode="contained" onPress={() => navigation.replace('Game', {mode, topic})}>Play Again</WhiteButton>
-                <WhiteButton dark={false} icon="home" mode="contained" onPress={() => navigation.replace('Home')}>Go Home</WhiteButton>
+                <WhiteButton dark={false} icon="reload" mode="contained" onPress={()=>showAd(()=>navigation.replace('Game', {mode, topic}))}>Play Again</WhiteButton>
+                <WhiteButton dark={false} icon="home" mode="contained" onPress={()=>showAd(()=>navigation.replace('Home', {popOpen: true}))}>Go Home</WhiteButton>
             </ButtonRow>
         </MainScrollView>
     ) ;

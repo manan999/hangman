@@ -49,7 +49,7 @@ const GameScreen = ({navigation, route}) => {
 	);
 
 	useEffect( ()=> {
-		if(topics[topic] && (currentRound % 10 >= 8 || data.length === 0)) {
+		if(topics[topic] && (currentRound % 50 >= 48 || data.length === 0)) {
 			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
 			// console.log(URL) ;
 

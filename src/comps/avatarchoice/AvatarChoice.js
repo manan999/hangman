@@ -1,11 +1,13 @@
 import { useState } from 'react' ;
-import { TouchableOpacity, View, ScrollView } from 'react-native' ;
+import { TouchableOpacity, View, ScrollView, Dimensions } from 'react-native' ;
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Dialog, Portal, Avatar } from 'react-native-paper';
 
 import CircleButton from '../circlebutton/CircleButton.js' ;
 import { AvatarView, AvatarButtonView } from './cssAvatar.js' ;
 import { theme } from '../../theme.js' ;
+
+const wwd = Dimensions.get('window').width;
 
 const scrollStyle = {
 	paddingHorizontal: 12, 
@@ -26,7 +28,7 @@ const AvatarChoice = ({url, setUrl, data = []}) => {
 
 			const avatarProps = {
 				style : { backgroundColor: theme.colors.white},
-				size : 120,
+				size : wwd*0.3,
 				source : {uri: str},
 			}
 
