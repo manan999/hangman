@@ -43,7 +43,7 @@ const ResultScreen = ({navigation, route}) => {
     useFocusEffect(
         useCallback(() => {
             const onBackPress = () => {
-                showAd(() => navigation.replace('Home', {popOpen: true})) ;
+                ToastAndroid.show("On this screen, Back Button is disabled", ToastAndroid.SHORT) ;
                 return true;
             };
 
