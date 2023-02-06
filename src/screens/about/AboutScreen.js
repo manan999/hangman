@@ -3,7 +3,6 @@ import LottieView from 'lottie-react-native';
 
 import Img from '../../comps/img/Img.js' ;
 import Img2 from '../../comps/img/Img2.js' ;
-import {HomeImage } from '../home/cssHomeScreen.js' ;
 import {AboutView, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
 import {Row, MainView, WhiteButton} from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
@@ -16,13 +15,13 @@ const AboutScreen = ({navigation, route}) => {
         <MainView>
             <LottieView style={{height: windowHeight, position: 'absolute', top: 0 }} source={sky} autoPlay loop />
             <LogoView>
-                <HomeImage source={require('../../../assets/AurBatao.png')} />
+                <Img src={require('../../../assets/AurBatao.png')} max={0.95} />
             </LogoView>
             <AboutView contentContainerStyle={{ alignItems: 'center' }}>
                 <AboutText size={18} > 
                     "Aur Batao : The Guessing Game" is a word-guessing game where you have to guess the word based on given alphabets and clues. The title is a phrase commonly used in Hindi language traditionally meaning tell me more. But a modern meaning of the phrase is similar to "Whats Up?".
                 </AboutText>
-                <Img2 max={0.9} src={{uri: "https://raw.githubusercontent.com/manan999/images/master/Logo/logo-white.png"}} />
+                <Img2 max={0.9} src={{uri: "https://api.myarth.in/static/images/Logo/logo-white.png"}} />
                 <AboutText size={18} > 
                    Myarth is an indie developer team based in New Delhi. We believe in making techonlogy for the future and we specialise in creating mobile apps and websites. We also build customised apps for organisations. You can find us at Our website 
                 </AboutText>

@@ -9,7 +9,7 @@ const HintImage = ({topic='', name='', single}) => {
 	const [size, setSize] = useState({}) ;
 	const [popOpen, setPopOpen] = useState(false) ;
 
-	let comingSoon = 'https://raw.githubusercontent.com/manan999/images/master/marvel/cs2.webp' ;
+	let comingSoon = 'https://api.myarth.in/static/images/marvel/cs2.webp' ;
 
 	useEffect(() => {
 		Image.getSize(uri, (w, h) => {

@@ -3,6 +3,7 @@ import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-nat
 import { Avatar } from 'react-native-paper';
 import crashlytics from '@react-native-firebase/crashlytics';
 
+import Img from '../../comps/img/Img.js' ;
 import AvatarPackCard from './AvatarPackCard.js' ;
 import { MainScrollView, KufamText, WhiteButton, Row } from '../../../cssApp.js' ;
 import { GemChest, ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
@@ -136,9 +137,9 @@ const ShopScreen = ({navigation, route}) => {
             <ShopText size={22}>Gems</ShopText>
             <ChestCon>
                 <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> {25} </KufamText>
-                <GemChest source={require('../../../assets/gems.webp')} />
+                <Img src={require('../../../assets/gems.webp')} max={0.7} />
                 {adButton('gem')}
-                <KufamText size={18}>Watching Ads will increase your reward</KufamText>
+                <KufamText size={18}>Watching Ads will increase your <Gem size={16}/> gems</KufamText>
             </ChestCon>
             {/*<ChestCon>
                 <KufamText size={18}>Watch Videos to earn <Key size={16}/> 1 </KufamText>

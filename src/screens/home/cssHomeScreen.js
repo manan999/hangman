@@ -19,17 +19,6 @@ const SubText = styled.Text`
 ` ;
   // font-weight: ${ ({bold}) => bold?'bold':'normal' } ;
 
-// export const SearchBarCon = styled.View`
-//   background-color: ${ ({theme}) => theme.colors.ui.mainBg} ;
-//   padding: ${ ({theme}) => theme.space[2]} ; 
-//   flex-direction: row ;
-//   overflow: hidden ;
-// ` ;
-
-// export const SearchBar = styled(Searchbar)`
-//     flex: 1 ;
-//  ` ;
-
 const HomeButton = styled(Button).attrs({
     labelStyle : {
       fontSize: 16,
@@ -43,10 +32,20 @@ const HomeButton = styled(Button).attrs({
   justify-content: center ;
  ` ;
 
-const HomeImage = styled.Image`
-  width: 360px ;
-  height: 180px ; 
-` ;
+const LevelButton = styled(Button).attrs({
+    labelStyle : {
+      fontSize: 18,
+      fontFamily: theme.fonts.main,
+      color: theme.colors.main,
+    },
+    uppercase: false
+  })`
+  margin: 10px 0 ;
+  min-width: 153px ;
+  flex-direction: row ;
+  justify-content: center ;
+  border-radius: 99px ;
+ ` ;
 
 const FloatLeft = styled.View` 
   position: absolute ;
@@ -55,4 +54,4 @@ const FloatLeft = styled.View`
   justify-content: center ; 
  ` ;
 
-export {MainView, SubText, HomeButton, HomeImage, FloatLeft} ;
+export {MainView, SubText, HomeButton, LevelButton, FloatLeft} ;

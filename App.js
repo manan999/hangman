@@ -1,12 +1,11 @@
-import { useEffect} from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text } from 'react-native';
 import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
-// import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
-
+import { Audio } from 'expo-av';
 import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
 import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;
 import {useFonts as useMont, Montserrat_400Regular} from '@expo-google-fonts/montserrat' ;
@@ -30,9 +29,29 @@ export default function App() {
   let [kufamLoaded] = useKufam({ Kufam_400Regular });
   let [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
   let [montLoaded] = useMont({ Montserrat_400Regular});
+  const [sound, setSound] = useState();
+
+  useEffect(() => {
+        return sound? () => {
+            console.log('Unloading Sound');
+            sound.unloadAsync();
+        } : undefined;
+    }, [sound]);
+
+    const playSound = async () => {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync( require('./assets/one.mp3'), {
+            isLooping: true,
+        } );
+        setSound(sound);
+
+        console.log('Playing Sound');
+        await sound.playAsync();
+    }
 
   useEffect( () => {
-    console.log('app loaded on '+ new Date())
+    console.log('app loaded on '+ new Date()) ;
+    playSound() ;
   }, [])
 
   const Stack = createNativeStackNavigator() ;

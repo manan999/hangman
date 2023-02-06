@@ -3,16 +3,16 @@ import { View, Dimensions, BackHandler, Linking } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
-// import { Audio } from 'expo-av' ;
 import { useFocusEffect } from '@react-navigation/native';
 import * as Application from 'expo-application';
 
+import Img from '../../comps/img/Img.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import sky from '../../../assets/sky.json' ;
 import { Row } from '../../../cssApp.js' ;
-import { MainView, SubText, HomeButton, HomeImage, FloatLeft } from './cssHomeScreen.js' ;
+import { MainView, SubText, HomeButton, LevelButton, FloatLeft } from './cssHomeScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { SignUpPop, UpdatePop } from './homePopups.js' ;
@@ -30,7 +30,6 @@ const Bubble = ({name, onPress}) => {
 const HomeScreen = ({navigation, route}) => {
     const [popOpen, setPopOpen] = useState(false) ;
     const [popContent, setPopContent] = useState('signup') ;
-    const [sound, setSound] = useState() ;
     const {user, addGems, gameData} = useContext(UserContext) ;
     const windowHeight = Dimensions.get('window').height;
     
@@ -54,7 +53,6 @@ const HomeScreen = ({navigation, route}) => {
             if(route.params && route.params.popOpen)
                 setPopOpen(route.params.popOpen)
         }
-        // playSound() ;
     }, [])
 
     useEffect( () => {
@@ -64,29 +62,6 @@ const HomeScreen = ({navigation, route}) => {
         }
 
     }, [gameData])
-
-    // useEffect(() => {
-    //     return sound? () => {
-    //           console.log('Unloading Sound');
-    //           sound.unloadAsync(); }
-    //       : undefined;
-    // }, [sound]);
-
-    // const playSound = async () => {
-    //     try {
-    //     console.log('Loading Sound');
-    //     const { sound } = await Audio.Sound.createAsync(
-    //        require('../../../assets/success.mp3')
-    //     );
-    //     setSound(sound);
-    //     await sound.setIsLoopingAsync(true) ;
-
-    //     console.log('Playing Sound');
-    //     await sound.playAsync(); 
-    //     } catch (e) {
-    //         console.log(e) ;
-    //     }
-    // }
 
     const FloatLeftContent = () => {
         if(user.name)
@@ -143,11 +118,14 @@ const HomeScreen = ({navigation, route}) => {
       <MainView>
         <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
         <View>
-            <HomeImage source={require('../../../assets/AurBatao.png')} />
+            <Img src={require('../../../assets/AurBatao.png')} max={0.95} />
             <SubText> THE GUESSING GAME </SubText>
             { returnGreeting() }
         </View>
         <View>
+            <LevelButton color={theme.colors.white} icon="fire" mode="contained" onPress={() => console.log('played') }>
+                Play
+            </LevelButton>
             <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
                 Challenge
             </HomeButton>
