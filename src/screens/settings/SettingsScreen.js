@@ -1,47 +1,100 @@
-import { useState, useEffect } from 'react' ;
-import { View, Text } from 'react-native' ;
-import DropDownPicker from 'react-native-dropdown-picker' ;
-import AsyncStorage from '@react-native-async-storage/async-storage' ;
+import { useContext } from 'react' ;
+import { Linking, TouchableOpacity } from 'react-native' ;
+import { Switch } from 'react-native-paper';
+import styled from 'styled-components/native' ;
 
-import {MainView, KufamText} from '../../../cssApp.js' ;
-import {SettingsView} from './cssSettings.js' ;
+import { theme } from '../../theme.js' ;
+import { UserContext } from '../../context/UserContext.js' ;
+import { MainScrollView, KufamText, Row } from '../../../cssApp.js' ;
+import { Icon } from '../../comps/icons.js' ;
 
 const SettingsScreen = ({navigation, route}) => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        {label: 'English', value: 'english'},
-        {label: 'Hindi', value: 'hindi'}
-    ]);
+    const {settings, loadSettings} = useContext(UserContext) ;
 
-    useEffect( () => {
-        AsyncStorage.getItem('@abLanguage')
-        .then( data => {
-            if(data)
-                setValue(data) ;
-            else
-                setValue('english') ;
-        })
-        .catch( err => console.log(err)) ;
-    }, [])
-
-    useEffect( () => {
-        if(value) {
-            AsyncStorage.setItem('@abLanguage', value)
-            .then( data => console.log('language changed successfully'))
-            .catch(err => console.log(err)) ;
-        }
-    }, [value] )
+    const toggle = (str) => loadSettings({...settings, [str] : !(settings[str]) });
 
     return (
-        <MainView>
-            <KufamText>Settings</KufamText>
+        <MainScrollView>
+            <Row  jc="center">
+                <Icon type="gear" size={35}/>
+                <KufamText>&emsp;Settings&emsp;</KufamText>
+            </Row>
             <SettingsView>
-                <KufamText size={18}>Tutorial Language:</KufamText>
-                <DropDownPicker open={open} value={value} items={items} setOpen={setOpen} setValue={setValue} setItems={setItems} />
+                <BlackRow jc="space-between" mb={10}>
+                    <KufamText size={20}>Music</KufamText>
+                    <Switch value={settings.music} onValueChange={()=>toggle('music')} />
+                </BlackRow>
+                <BlackRow jc="space-between" mb={10}>
+                    <KufamText size={20}>Sound Effects</KufamText>
+                    <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} />
+                </BlackRow>
             </SettingsView>
-        </MainView>
+            <Row  jc="center">
+                <Icon type="phone" size={35}/>
+                <KufamText>&emsp;Get In Touch&emsp;</KufamText>
+            </Row>
+            <ContactView>
+                <Row>
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://myarth.in')}>
+                        <Icon type="web" size={50} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL("mailto:myarth.tech@gmail.com")}>
+                        <Icon type="email" size={50} />
+                    </TouchableOpacity>
+                </Row>
+            </ContactView>
+            <Row jc="center">
+                <KufamText>&emsp;Follow Us</KufamText>
+            </Row>
+            <ContactView>
+                <WhiteRow>
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://www.facebook.com/myarth.tech')}>
+                        <Icon type="fb" size={40} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL("https://www.youtube.com/@myarthtech8633")}>
+                        <Icon type="yt" size={40} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://www.linkedin.com/company/myarthtech/')}>
+                        <Icon type="li" size={40} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL("https://www.instagram.com/myarthtech/")}>
+                        <Icon type="ig" size={40} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL("https://twitter.com/MyarthTech")}>
+                        <Icon type="tw" size={40} />
+                    </TouchableOpacity>
+                </WhiteRow>
+            </ContactView>
+            <Row jc="center">
+                <Icon type="thanks" size={25}/>
+                <KufamText size={20}>&emsp;Credits&emsp;</KufamText>
+                <KufamText size={14}>(Click to Visit)</KufamText>
+            </Row>
+            <ContactView>
+                <TouchableOpacity onPress={()=> Linking.openURL('https://lottiefiles.com/jkkim0124')}><KufamText size={14}>Background Animation</KufamText></TouchableOpacity>
+                <TouchableOpacity onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')}><KufamText size={14}>Free Avatars</KufamText></TouchableOpacity>
+                <TouchableOpacity onPress={()=> Linking.openURL('https://soundcloud.com/arthurvost')}><KufamText size={14}>Background Music</KufamText></TouchableOpacity>
+            </ContactView>
+        </MainScrollView>
     ) ;
 }
 
 export default SettingsScreen ;
+
+/*CSS*/
+
+const SettingsView = styled.View` ` ;
+
+const ContactView = styled.View` 
+    align-items: center ;
+ ` ;
+
+const WhiteRow = styled(Row)` 
+    padding: 8px 30px ;
+    background-color: ${ ({theme}) => theme.colors.halfWhite }
+ ` ;
+
+const BlackRow = styled(Row)` 
+    padding: 0 30px ;
+    background-color: ${ ({theme}) => theme.colors.halfBlack }
+ ` ;

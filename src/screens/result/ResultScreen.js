@@ -29,7 +29,7 @@ const ResultScreen = ({navigation, route}) => {
     const [loaded, setLoaded] = useState(false);
     const [scores, setScores] = useState([]) ;
     const [final, setFinal] = useState(false) ;
-    const {rounds, wins, hints, wrongs, topic, mode} = route.params ;
+    const {rounds, wins, topic, mode} = route.params ;
     const {user, userToken, gems, addGems, fetchUrl} = useContext(UserContext) ;
 
     const countDown = mode==='practice'?{rounds, wins}:{rounds: rounds*20, wins} ;
@@ -54,12 +54,12 @@ const ResultScreen = ({navigation, route}) => {
     
     useEffect( () => {
         if(user.name) {
-            // console.log(JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}))
+            // console.log(JSON.stringify({topic, mode, score: wins }))
             
             fetch(`${fetchUrl}game` ,{
                 method : 'post',
                 headers : { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${userToken}`},
-                body : JSON.stringify({topic, mode, score: wins, wrongs, hints, misc: {}}),
+                body : JSON.stringify({topic, mode, score: wins }),
             })
             .then(res =>  res.json())
             .then(resp => {
@@ -172,7 +172,6 @@ const ResultScreen = ({navigation, route}) => {
             </CountdownCircleTimer>
             <Row>
                 <BoxNumber text="Your Score" num={wins} color={theme.colors.green}/>
-                <BoxNumber text="Hints Used" num={hints} color={theme.colors.mainLight}/>
             </Row>
             <GreenView>{ returnGemText() }</GreenView>
             { returnSignIn() }

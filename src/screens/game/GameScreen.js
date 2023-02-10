@@ -7,24 +7,37 @@ import { MainView, GreenButton } from './cssGameScreen.js' ;
 import { BlackKufam } from '../../../cssApp.js' ;
 import Game from './Game.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
-import {topicData} from './topicData.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { BackPop, RevivePop } from './gamePopups.js' ;
 
+const timeLogic = (num) => {
+	if(num < 10)
+		return {startTime : 60, initGuess : ['a','e','i','o','u']} ;
+	else if(num < 20)
+		return {startTime : 50, initGuess : ['a','e','i','o']} ;
+	else if(num < 30)
+		return {startTime : 40, initGuess : ['a','e','i']} ;
+	else if(num < 35)
+		return {startTime : 30, initGuess : ['a','e']} ;
+	else if(num < 40)
+		return {startTime : 20, initGuess : ['a']} ;
+	else
+		return {startTime : 15, initGuess : []} ;
+}
+
 const initGame = {
 	wins: 0,
-	hints: 0,
-	wrongs: 0,
 	revive: false,
 }
 
 const GameScreen = ({navigation, route}) => {
-	const [currentRound, setCurrentRound] = useState(0) ;
-	const [data, setData] = useState([]) ;
-	const [movie, setMovie] = useState('') ;
-	const [gameData, setGameData] = useState(initGame) ;
 	const [popOpen, setPopOpen] = useState(false) ;
 	const [popContent, setPopContent] = useState('back') ;
+	
+	const [data, setData] = useState([]) ;
+	const [currentRound, setCurrentRound] = useState(0) ;
+	const [word, setWord] = useState('') ;
+	const [gameData, setGameData] = useState(initGame) ;
 
     const {topics, fetchUrl} = useContext(UserContext) ;
 	const {mode, topic} = route.params ;
@@ -33,7 +46,7 @@ const GameScreen = ({navigation, route}) => {
 	    useCallback(() => {
 	    	const onBackPress = () => {
 	    		if(popOpen && popContent === 'revive') {
-	    			navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
+	    			navigation.replace('Result', {rounds: currentRound+1, wins, topic, mode }) ;
 	    			return true ;
 	    		}
 	    		else {
@@ -51,7 +64,6 @@ const GameScreen = ({navigation, route}) => {
 	useEffect( ()=> {
 		if(topics[topic] && (currentRound % 50 >= 48 || data.length === 0)) {
 			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
-			// console.log(URL) ;
 
 			fetch(URL)
 			.then(res => {
@@ -66,24 +78,24 @@ const GameScreen = ({navigation, route}) => {
 
 	useEffect( () => {
 		if(data.length > 0 ) {
-			setMovie(data[currentRound].name) ;
+			setWord(data[currentRound].name) ;
 		}
 	}, [currentRound, data])
 
 	const next = (str, num = 0, hintCount) => {
-		const {wins, hints, wrongs } = gameData ;
+		const {wins} = gameData ;
 		if(str === 'Win') {
 			if(mode === 'practice') 
-				setGameData({...gameData, wins: wins+1, wrongs: wrongs+num, hints: (hints-1)+hintCount}) ;
+				setGameData({...gameData, wins: wins+1 }) ;
 			else {
 				hintCount -= 1 ;
-				setGameData({...gameData, wins: wins+(20-(2*num)-(3*hintCount)), wrongs: wrongs+num, hints: hints+hintCount}) ;
+				setGameData({...gameData, wins: wins+(20-(2*num)-(3*hintCount)) }) ;
 			}
 			setCurrentRound(currentRound+1) ;
 		}
 		else {
 			if(gameData.revive)
-				navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) ;
+				navigation.replace('Result', {rounds: currentRound+1, wins, topic, mode }) ;
 			else {
 				setPopContent('revive') ;
 				setPopOpen(true) ;
@@ -95,14 +107,14 @@ const GameScreen = ({navigation, route}) => {
 		if(mode === 'practice')
 			return {initGuess : ['a','e','i','o','u']} ;
 		else 
-			return topicData[topics[topic].timeLogic](currentRound) ;
+			return timeLogic(currentRound) ;
 	}
 
 	if(data.length > 0) {
-		const {wins, hints, wrongs, revive } = gameData ;
+		const {wins, revive} = gameData ;
 
 		const gameProps = {
-			movie, next, mode, topic,
+			word, next, mode, topic,
 			hint: data[currentRound].hints,
 			config: {
 				score: wins,
@@ -112,11 +124,11 @@ const GameScreen = ({navigation, route}) => {
 		}
 
 		const popContents = {
-	        back: <BackPop onPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode })} />,
+	        back: <BackPop onPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, topic, mode })} />,
 	        revive: <RevivePop onYesPress={() => {
 	        	setGameData({...gameData, revive: true}) ;
 	        	setPopOpen(false) ;
-	        }} onNoPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, hints, wrongs, topic, mode }) }/>,
+	        }} onNoPress={() => navigation.replace('Result', {rounds: currentRound+1, wins, topic, mode }) }/>,
 	    }
 		
 	  	return (

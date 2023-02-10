@@ -3,7 +3,7 @@
     "name": "aurbatao",
     "description": "Aur Batao: The Guessing Game, is a word guessing game made for an Indian audience.",
     "slug": "aurbatao",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
       },
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 11
+      "versionCode": 12
     },
     "web": {
       "favicon": "./assets/favicon.png"

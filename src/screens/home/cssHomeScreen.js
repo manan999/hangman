@@ -28,8 +28,6 @@ const HomeButton = styled(Button).attrs({
 })`
   margin: 10px 0 ;
   min-width: 153px ;
-  flex-direction: row ;
-  justify-content: center ;
  ` ;
 
 const LevelButton = styled(Button).attrs({
@@ -42,8 +40,6 @@ const LevelButton = styled(Button).attrs({
   })`
   margin: 10px 0 ;
   min-width: 153px ;
-  flex-direction: row ;
-  justify-content: center ;
   border-radius: 99px ;
  ` ;
 
