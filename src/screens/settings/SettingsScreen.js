@@ -1,6 +1,7 @@
 import { useContext } from 'react' ;
 import { Linking, TouchableOpacity } from 'react-native' ;
-import { Switch } from 'react-native-paper';
+// import { Switch } from 'react-native-paper';
+import { Switch } from 'react-native-switch';
 import styled from 'styled-components/native' ;
 
 import { theme } from '../../theme.js' ;
@@ -22,18 +23,30 @@ const SettingsScreen = ({navigation, route}) => {
             <SettingsView>
                 <BlackRow jc="space-between" mb={10}>
                     <KufamText size={20}>Music</KufamText>
-                    <Switch value={settings.music} onValueChange={()=>toggle('music')} />
+                    <Switch value={settings.music} onValueChange={()=>toggle('music')} backgroundActive={'#13542f'}/>
                 </BlackRow>
                 <BlackRow jc="space-between" mb={10}>
                     <KufamText size={20}>Sound Effects</KufamText>
-                    <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} />
+                    <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} backgroundActive={'#13542f'}/>
                 </BlackRow>
             </SettingsView>
-            <Row  jc="center">
-                <Icon type="phone" size={35}/>
-                <KufamText>&emsp;Get In Touch&emsp;</KufamText>
-            </Row>
             <ContactView>
+                <Row  jc="center">
+                    {/*<Icon type="phone" size={35}/>*/}
+                    <KufamText>&emsp;Get In Touch&emsp;</KufamText>
+                </Row>
+                {/*<BlackRow jc="space-between" mb={10}>
+                    <KufamText size={20}>Visit Website</KufamText>
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://myarth.in')}>
+                        <Icon type="web" size={50} />
+                    </TouchableOpacity>
+                </BlackRow>
+                <BlackRow jc="space-between" mb={10}>
+                    <KufamText size={20}>Write to Us</KufamText>
+                    <TouchableOpacity onPress={()=> Linking.openURL("mailto:myarth.tech@gmail.com")}>
+                        <Icon type="email" size={50} />
+                    </TouchableOpacity>
+                </BlackRow>*/}
                 <Row>
                     <TouchableOpacity onPress={()=> Linking.openURL('https://myarth.in')}>
                         <Icon type="web" size={50} />
@@ -43,11 +56,11 @@ const SettingsScreen = ({navigation, route}) => {
                     </TouchableOpacity>
                 </Row>
             </ContactView>
-            <Row jc="center">
-                <KufamText>&emsp;Follow Us</KufamText>
-            </Row>
-            <ContactView>
-                <WhiteRow>
+            <SocialView>
+                <Row jc="center">
+                    <KufamText>&emsp;Follow Us</KufamText>
+                </Row>
+                <Row>
                     <TouchableOpacity onPress={()=> Linking.openURL('https://www.facebook.com/myarth.tech')}>
                         <Icon type="fb" size={40} />
                     </TouchableOpacity>
@@ -63,17 +76,18 @@ const SettingsScreen = ({navigation, route}) => {
                     <TouchableOpacity onPress={()=> Linking.openURL("https://twitter.com/MyarthTech")}>
                         <Icon type="tw" size={40} />
                     </TouchableOpacity>
-                </WhiteRow>
-            </ContactView>
-            <Row jc="center">
-                <Icon type="thanks" size={25}/>
-                <KufamText size={20}>&emsp;Credits&emsp;</KufamText>
-                <KufamText size={14}>(Click to Visit)</KufamText>
-            </Row>
+                </Row>
+            </SocialView>
             <ContactView>
-                <TouchableOpacity onPress={()=> Linking.openURL('https://lottiefiles.com/jkkim0124')}><KufamText size={14}>Background Animation</KufamText></TouchableOpacity>
-                <TouchableOpacity onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')}><KufamText size={14}>Free Avatars</KufamText></TouchableOpacity>
-                <TouchableOpacity onPress={()=> Linking.openURL('https://soundcloud.com/arthurvost')}><KufamText size={14}>Background Music</KufamText></TouchableOpacity>
+                <Row jc="center">
+                    <Icon type="thanks" size={25}/>
+                    <KufamText size={20}>&emsp;Credits&emsp;</KufamText>
+                    <KufamText size={14}>(Click to Visit)</KufamText>
+                </Row>
+                <Row >
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')}><Small size={14}>Free Avatars</Small></TouchableOpacity>
+                    <TouchableOpacity onPress={()=> Linking.openURL('https://soundcloud.com/arthurvost')}><Small size={14}>Background Music</Small></TouchableOpacity>
+                </Row>
             </ContactView>
         </MainScrollView>
     ) ;
@@ -89,6 +103,11 @@ const ContactView = styled.View`
     align-items: center ;
  ` ;
 
+const SocialView = styled.View` 
+    align-items: center ;
+    margin-bottom: 30px ;
+ ` ;
+
 const WhiteRow = styled(Row)` 
     padding: 8px 30px ;
     background-color: ${ ({theme}) => theme.colors.halfWhite }
@@ -97,4 +116,8 @@ const WhiteRow = styled(Row)`
 const BlackRow = styled(Row)` 
     padding: 0 30px ;
     background-color: ${ ({theme}) => theme.colors.halfBlack }
+ ` ;
+
+const Small = styled(KufamText)` 
+    margin: 5px 0 ;
  ` ;

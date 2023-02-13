@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "aurbatao",
-    "description": "Aur Batao: The Guessing Game, is a word guessing game made for an Indian audience.",
+    "description": "",
     "slug": "aurbatao",
     "version": "1.8.0",
     "orientation": "portrait",
@@ -33,7 +33,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
     "extra": {
       "eas": {
         "projectId": "9ef1bcab-e856-48c5-ab65-2adf9732a2b7"
@@ -41,7 +40,15 @@
     },
     "plugins": [
       "@react-native-firebase/app",
-      "@react-native-firebase/crashlytics"
+      "@react-native-firebase/crashlytics",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true
+          }
+        }
+      ]
     ]
   },
   "react-native-google-mobile-ads": {

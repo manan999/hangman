@@ -7,7 +7,7 @@ import Img from '../../comps/img/Img.js' ;
 import AvatarPackCard from './AvatarPackCard.js' ;
 import { MainScrollView, KufamText, WhiteButton, Row } from '../../../cssApp.js' ;
 import { GemChest, ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
-import { Gem, Key } from '../../comps/icons.js' ;
+import { Gem, Icon } from '../../comps/icons.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
@@ -132,7 +132,7 @@ const ShopScreen = ({navigation, route}) => {
             <Row>
                 <Avatar.Image {...avatarProps} /> 
                 <KufamText size={20}> <Gem size={16}/> {gems} </KufamText> 
-                <KufamText size={20}> <Key size={16}/> 0 </KufamText> 
+                <KufamText size={20}> <Icon type="key" size={16}/> 0 </KufamText> 
             </Row>
             <ShopText size={22}>Gems</ShopText>
             <ChestCon>

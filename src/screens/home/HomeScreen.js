@@ -123,9 +123,9 @@ const HomeScreen = ({navigation, route}) => {
             { returnGreeting() }
         </View>
         <View>
-            <LevelButton color={theme.colors.white} icon="fire" mode="contained" onPress={() => console.log('played') }>
+            {/*<LevelButton color={theme.colors.white} icon="fire" mode="contained" onPress={() => console.log('played') }>
                 Play
-            </LevelButton>
+            </LevelButton>*/}
             <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
                 Challenge
             </HomeButton>
