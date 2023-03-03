@@ -93,7 +93,8 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 					if(settings && settings.sfx)
 						correctSound() ;
 					gameRef.current.play() ;
-					Vibration.vibrate(25) ;
+					if(settings && settings.vibrate)
+						Vibration.vibrate(25) ;
 				}
 				else
 					if(wrong < 5) {
@@ -102,10 +103,12 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 							wrongSound() ;
 						gameRef.current.reset() ;
 						heartRef.current.play(0, 30) ;
-						Vibration.vibrate(200) ;
+						if(settings && settings.vibrate)
+							Vibration.vibrate(200) ;
 					}
 					else {
-						Vibration.vibrate(500) ;
+						if(settings && settings.vibrate)
+							Vibration.vibrate(500) ;
 						setColor('tomato')
 						timer = setTimeout( () => {
 							setColor(false) ;

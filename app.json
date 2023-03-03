@@ -3,7 +3,7 @@
     "name": "aurbatao",
     "description": "",
     "slug": "aurbatao",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,8 @@
       },
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 12
+      "versionCode": 14,
+      "permissions": ["com.android.vending.BILLING"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

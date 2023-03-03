@@ -6,6 +6,7 @@ const UserContext = createContext() ;
 const initSettings = {
     music: true,
     sfx: true, 
+    vibrate: true,
 }
 
 const UserContextProvider = ({children}) => {
@@ -76,7 +77,7 @@ const UserContextProvider = ({children}) => {
     const loadSettings = obj => {
         setSettings(obj) ;
         AsyncStorage.setItem('@abSettings', JSON.stringify(obj)) ;
-        console.log(settings) ;
+        // console.log(settings) ;
     }
 
     const addGems = num => {
