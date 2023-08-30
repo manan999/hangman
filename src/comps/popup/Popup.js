@@ -1,4 +1,4 @@
-import { View, Modal } from 'react-native' ;
+import { Modal } from 'react-native' ;
 import styled from 'styled-components/native' ;
 import { Entypo } from '@expo/vector-icons'; 
 
@@ -36,7 +36,7 @@ const Popup = ({visible, onClose, children, thin=false, close=true}) => {
 	}
 
 	return (
-		<Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
+		<Modal animationType="fade" transparent visible={visible} onRequestClose={onClose}>
 	        <CenterView>
 	        	<WhiteView thin={thin}>{children}<CrossView>{Cross()}</CrossView></WhiteView>
 	        </CenterView>

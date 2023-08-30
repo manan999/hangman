@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native';
 import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,7 +8,7 @@ import { Audio } from 'expo-av';
 import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
 import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;
 import {useFonts as useMont, Montserrat_400Regular} from '@expo-google-fonts/montserrat' ;
-import AsyncStorage from '@react-native-async-storage/async-storage' ;
+// import AsyncStorage from '@react-native-async-storage/async-storage' ;
 
 import GameScreen from './src/screens/game/GameScreen.js' ;
 import ResultScreen from './src/screens/result/ResultScreen.js' ;
@@ -84,9 +83,9 @@ const AppRoutes = () => {
 }
 
 export default function App() {
-    let [kufamLoaded] = useKufam({ Kufam_400Regular });
-    let [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
-    let [montLoaded] = useMont({ Montserrat_400Regular});
+    const [kufamLoaded] = useKufam({ Kufam_400Regular });
+    const [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
+    const [montLoaded] = useMont({ Montserrat_400Regular});
 
     const fontsLoaded = [kufamLoaded, montLoaded, lexendLoaded].every(one => one) ;
 

@@ -1,8 +1,6 @@
 import styled from 'styled-components/native' ;
-import { View } from 'react-native';
 
 import {MainView, KufamText, Row } from '../../../cssApp.js' ;
-import {theme} from '../../theme.js' ;
 
 const MainView2 = styled(MainView)` 
   justify-content: space-evenly ;

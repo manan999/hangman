@@ -1,8 +1,6 @@
 import styled from 'styled-components/native' ;
-import { View, Text } from 'react-native';
-import { Button } from 'react-native-paper';
 
-import {theme} from '../../theme.js' ;
+import { Button } from '../../../cssApp.js' ; 
 
 const MainView = styled.View`
   flex: 1 ;
@@ -84,15 +82,7 @@ const ScoreText = styled.Text`
   margin: 0 5px ;
 ` ;
 
-const GreenButton = styled(Button).attrs(({size}) => ({
-    color : theme.colors.darkGreen,
-    labelStyle : {
-      fontSize: size?size:16,
-      fontFamily: theme.fonts.main,
-      color: theme.colors.white
-    },
-    uppercase: false
-}))` 
+const GreenButton = styled(Button)` 
   margin: 20px 0 0 ;
 ` ;
 

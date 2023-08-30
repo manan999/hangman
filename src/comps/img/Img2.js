@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react' ;
 import { Dimensions, Image, TouchableOpacity } from 'react-native' ;
 import styled from 'styled-components/native' ;
 
-import {theme} from '../../theme.js' ;
-
 const wwd = Dimensions.get('window').width;
 
 const Imag = styled.Image`

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react' ;
-import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
+import { RewardedAd, AdEventType, RewardedAdEventType/*, TestIds*/ } from 'react-native-google-mobile-ads';
 import { Avatar } from 'react-native-paper';
-import crashlytics from '@react-native-firebase/crashlytics';
+// import crashlytics from '@react-native-firebase/crashlytics';
 
 import Img from '../../comps/img/Img.js' ;
 import AvatarPackCard from './AvatarPackCard.js' ;
-import { MainScrollView, KufamText, WhiteButton, Row } from '../../../cssApp.js' ;
-import { GemChest, ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
+import { MainScrollView, KufamText, Button, Row } from '../../../cssApp.js' ;
+import { ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
 import { Gem, Icon } from '../../comps/icons.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -20,13 +20,13 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
 });
 
 const ShopScreen = ({navigation, route}) => {
-    const {user, gems, addGems, updateSettings, gameData} = useContext(UserContext) ;
+    const {user, gems, addGems, /*updateSettings,*/ gameData} = useContext(UserContext) ;
     const {avatarPacks} = gameData ;
-    const {settings} = user ;
-    const {rewardVideos, todayVideos} = settings ;
+    // const {settings} = user ;
+    // const {rewardVideos, todayVideos} = settings ;
 
     const [loaded, setLoaded] = useState(false) ;
-    const [reward, setReward] = useState('gem') ;
+    // const [reward, setReward] = useState('gem') ;
     // const [time, setTime] = useState(null) ;
 
     useEffect(() => {
@@ -35,18 +35,18 @@ const ShopScreen = ({navigation, route}) => {
 
         const unsubscribeError = rewarded.addAdEventListener(AdEventType.ERROR, error => {
             console.log('ad error ', error) ;
-            crashlytics().log('ad error ', error) ;
+            // crashlytics().log('ad error ', error) ;
         });
 
         const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
             setLoaded(true);
             console.log('ad loaded ', adUnitId) ;
-            crashlytics().log('ad loaded ', adUnitId) ;
+            // crashlytics().log('ad loaded ', adUnitId) ;
         });
 
         const unsubscribeClose = rewarded.addAdEventListener(AdEventType.CLOSED, error => {
-            console.log('ad closed') ;
-            crashlytics().log('ad closed') ;
+            console.log('ad closed', error) ;
+            // crashlytics().log('ad closed') ;
             setLoaded(false);
        
             //reload ad 
@@ -61,7 +61,7 @@ const ShopScreen = ({navigation, route}) => {
                 // setTime(time => new Date()) ;
             }
 
-            crashlytics().log('User earned reward of ', rew) ;
+            // crashlytics().log('User earned reward of ', rew) ;
         });
 
         rewarded.load();
@@ -112,10 +112,10 @@ const ShopScreen = ({navigation, route}) => {
         if(!loaded)
             return <KufamText size={14}>Ad Not Available</KufamText> ;
         else 
-            return <WhiteButton color={theme.colors.white} mode="contained" onPress={() => { 
-                setReward(rewardType) ;
+            return <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={() => { 
+                // setReward(rewardType) ;
                 rewarded.show(); 
-            }} size={14}> Watch Video </WhiteButton> ;
+            }} size={14}> Watch Video </Button> ;
     }
 
     const avatarProps = {

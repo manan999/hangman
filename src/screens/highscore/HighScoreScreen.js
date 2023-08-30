@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react' ;
-import { View, Text } from 'react-native' ;
 import { Avatar, DataTable, ActivityIndicator } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker' ;
 
@@ -9,7 +8,7 @@ import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
-    const {user, userToken, topics, fetchUrl} = useContext(UserContext) ;
+    const {userToken, topics, fetchUrl} = useContext(UserContext) ;
     
     const [topic, setTopic] = useState(route.params.topic?route.params.topic:'Movies') ;
     const [topicOpen, setTopicOpen] = useState(false) ;
@@ -40,33 +39,29 @@ const HighScoreScreen = ({navigation, route}) => {
     }, [topic, gameMode])
 
 
-    const formatDate = (dt) => {
-        const month = {
-            'Jan' : '01',   'Feb' : '02',   'Mar' : '03',   'Apr' : '04',   'May' : '05',   'Jun' : '06',
-            'Jul' : '07',   'Aug' : '08',   'Sep' : '09',   'Oct' : '10',   'Nov' : '11',   'Dec' : '12'
-        }
-
-        const date = new Date(dt).toLocaleString("en-IN", {timeZone: "Asia/Kolkata"}) ;
-        const [ day, m, d, t, y ] = date.split(' ').filter(o=>o.length>0) ;
-        return `${d>9?d:'0'+d}-${month[m]}-${y.slice(2)}`;
-    }
+    // const formatDate = (dt) => {
+    //     const date = new Date(dt) ;
+    //     const formattedDate = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) +
+    //     ', ' + date.toLocaleDateString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    //     return formattedDate ;
+    // }
 
     const returnRows = () => {
         if(data.length > 0) {
-            let arr = data.map((score, i) => {
+            const arr = data.map((score, i) => {
                 const avatarProps = {
                     style : { backgroundColor: theme.colors.white},
-                    size : 50,
+                    size : 40,
                     source : {uri: score.image},
                 }
 
                 return (
-                    <DataTable.Row key={i}>
+                    <DataTable.Row key={i} style={{borderBottomWidth: 0 }}>
                         <DataTable.Cell style={{flex:1}}><KufamText size={13}>{i+1}</KufamText></DataTable.Cell>
                         <DataTable.Cell style={{flex:1.5}}><Avatar.Image {...avatarProps} /></DataTable.Cell>
-                        <DataTable.Cell style={{flex:3}}><KufamText size={16}>{score.playerName}</KufamText></DataTable.Cell>
+                        <DataTable.Cell style={{flex:3}}><KufamText size={14}>{score.playerName}</KufamText></DataTable.Cell>
                         <DataTable.Cell style={{flex:1}}><KufamText size={16}>{score.score}</KufamText></DataTable.Cell>
-                        <DataTable.Cell style={{flex:2}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>
+                        {/*<DataTable.Cell style={{flex:3, width: '100%'}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>*/}
                     </DataTable.Row>
                 ) ;
             })

@@ -1,10 +1,10 @@
-import { View, Text, Dimensions, Linking} from 'react-native' ;
+import { Dimensions, Linking} from 'react-native' ;
 import LottieView from 'lottie-react-native';
 
 import Img from '../../comps/img/Img.js' ;
 import Img2 from '../../comps/img/Img2.js' ;
-import {AboutView, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
-import {Row, MainView, WhiteButton} from '../../../cssApp.js' ;
+import { AboutView, LogoView, AboutText, AboutRow} from './cssAbout.js' ;
+import { MainView, WhiteButton} from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 import sky from '../../../assets/sky.json' ;
 

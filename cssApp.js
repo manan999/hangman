@@ -1,20 +1,25 @@
 import styled from 'styled-components/native' ;
-import { Button } from 'react-native-paper';
+import { Button as Btn } from 'react-native-paper';
 
 import {theme} from './src/theme.js' ;
 
-const WhiteButton = styled(Button).attrs(({size}) => ({
-    color : theme.colors.white,
+const Button = styled(Btn).attrs(({size, font, color, small, cap, jc}) => ({
     labelStyle : {
       fontSize: size?size:16,
-      fontFamily: theme.fonts.main,
-      color: theme.colors.main
+      fontFamily: font?font:theme.fonts.main,
+      color: color?color:theme.colors.white,
     },
-    style: {
-      justifyContent: "center",
+    contentStyle: {
+      justifyContent: jc?jc:'center',
     },
     uppercase: false
-}))`` ;
+  }))`
+  margin: 10px 0 ;
+  min-width: ${ ({small, mw}) => !small||mw?(mw?mw:153):0}px ;
+  border-radius: ${ ({cap}) => cap?99:4}px ;
+  border: 1px solid ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
+  background-color: ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
+ ` ;
 
 const KufamText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
@@ -63,4 +68,4 @@ const GreenView = styled.View`
   padding: 10px 0 ;
 ` ;
 
-export {WhiteButton, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView, GreenView} ;
+export {Button, KufamText, BlackKufam, Row, MainView, Shrink, MainScrollView, GreenView} ;

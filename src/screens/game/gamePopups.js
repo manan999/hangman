@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react' ;
-import { Linking } from 'react-native' ;
-import { RewardedAd, AdEventType, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
-import crashlytics from '@react-native-firebase/crashlytics';
+import { RewardedAd, AdEventType, RewardedAdEventType/*, TestIds*/ } from 'react-native-google-mobile-ads';
+// import crashlytics from '@react-native-firebase/crashlytics';
 
-// import Img from '../../comps/img/Img.js' ;
-import { BlackKufam, KufamText } from '../../../cssApp.js' ;
+import { BlackKufam } from '../../../cssApp.js' ;
 import { GreenButton } from '../game/cssGameScreen.js' ;
+import { theme } from '../../theme.js' ;
 
 // const adUnitId = TestIds.REWARDED ;
 const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
@@ -19,7 +18,7 @@ const BackPop = ({onPress}) => {
 	return ( 
 		<>
 			<BlackKufam size={20}>Exit this Game ?</BlackKufam>
-			<GreenButton dark={false} icon="check" mode="contained" onPress={onPress}>Yes</GreenButton>
+			<GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="check" mode="contained" onPress={onPress}>Yes</GreenButton>
 	  	</>
 	) ;
 }
@@ -32,18 +31,18 @@ const RevivePop = ({onYesPress, onNoPress}) => {
 
         const unsubscribeError = rewarded.addAdEventListener(AdEventType.ERROR, error => {
             console.log('ad error ', error) ;
-            crashlytics().log('ad error ', error) ;
+            // crashlytics().log('ad error ', error) ;
         });
 
         const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
             setLoaded(true);
             console.log('ad loaded ', adUnitId) ;
-            crashlytics().log('ad loaded ', adUnitId) ;
+            // crashlytics().log('ad loaded ', adUnitId) ;
         });
 
         const unsubscribeClose = rewarded.addAdEventListener(AdEventType.CLOSED, error => {
-            console.log('ad closed') ;
-            crashlytics().log('ad closed') ;
+            console.log('ad closed', error) ;
+            // crashlytics().log('ad closed') ;
             setLoaded(false);
        
             //reload ad 
@@ -57,7 +56,7 @@ const RevivePop = ({onYesPress, onNoPress}) => {
                 onYesPress() ;
             }
 
-            crashlytics().log('User earned reward of ', rew) ;
+            // crashlytics().log('User earned reward of ', rew) ;
         });
 
         rewarded.load();
@@ -76,16 +75,16 @@ const RevivePop = ({onYesPress, onNoPress}) => {
 
     const adButton = (rewardType) => {
         if(!loaded)
-            return <GreenButton dark={false} loading={true} mode="contained"> Ad Loading... </GreenButton> ;
+            return <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} loading mode="contained"> Ad Loading... </GreenButton> ;
         else 
-            return <GreenButton dark={false} icon="video-vintage" mode="contained" onPress={() => rewarded.show()}> Watch Video </GreenButton> ;
+            return <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="video-vintage" mode="contained" onPress={() => rewarded.show()}> Watch Video </GreenButton> ;
     }
 
 	return ( 
 		<>
 			<BlackKufam size={20}> Reset this word, by watching an Ad ? </BlackKufam>
             {adButton()}
-            <GreenButton dark={false} icon="cancel" mode="contained" onPress={onNoPress}> No </GreenButton>
+            <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="cancel" mode="contained" onPress={onNoPress}> No </GreenButton>
         </>
 	) ;
 }

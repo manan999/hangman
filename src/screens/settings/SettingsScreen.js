@@ -4,11 +4,9 @@ import { Switch } from 'react-native-switch';
 import styled from 'styled-components/native' ;
 
 import Img from '../../comps/img/Img.js' ;
-import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { MainScrollView, KufamText, Row } from '../../../cssApp.js' ;
 import { Icon } from '../../comps/icons.js' ;
-import sky from '../../../assets/sky.json' ;
 
 const SettingsScreen = ({navigation, route}) => {
     const {settings, loadSettings} = useContext(UserContext) ;
@@ -24,15 +22,15 @@ const SettingsScreen = ({navigation, route}) => {
                 </Row>
                 <BlackRow jc="space-between" mb={10}>
                     <KufamText size={18}>Music</KufamText>
-                    <Switch value={settings.music} onValueChange={()=>toggle('music')} backgroundActive={'#13542f'}/>
+                    <Switch value={settings.music} onValueChange={()=>toggle('music')} backgroundActive='#13542f' />
                 </BlackRow>
                 <BlackRow jc="space-between" mb={10}>
                     <KufamText size={18}>Sound Effects</KufamText>
-                    <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} backgroundActive={'#13542f'}/>
+                    <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} backgroundActive='#13542f' />
                 </BlackRow>
                 <BlackRow jc="space-between" mb={40}>
                     <KufamText size={18}>Vibration</KufamText>
-                    <Switch value={settings.vibrate} onValueChange={()=>toggle('vibrate')} backgroundActive={'#13542f'}/>
+                    <Switch value={settings.vibrate} onValueChange={()=>toggle('vibrate')} backgroundActive='#13542f' />
                 </BlackRow>
                 <ImgCon onPress={()=> Linking.openURL('https://play.google.com/store/apps/details?id=com.myarth.aurbatao')}>
                     <Img src={require('../../../assets/rate.png')} />

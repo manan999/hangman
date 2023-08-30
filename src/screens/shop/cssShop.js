@@ -1,15 +1,6 @@
 import styled from 'styled-components/native' ;
-import { Image } from 'react-native';
 
 import { KufamText } from '../../../cssApp.js' ;
-import { theme } from '../../theme.js' ;
-
-const GemChest = styled.Image` 
-	resize-mode: contain ;
-	width: 250px ;
-	height: 200px ;
-	margin-bottom: 20px ;
- ` ;
 
 const ChestCon = styled.View` 
 	margin: 0 ;
@@ -29,4 +20,4 @@ const AvatarPackView = styled.View`
 	flex-wrap: wrap ;
  ` ;
 
-export {GemChest, ChestCon, ShopText, AvatarPackView} ;
+export { ChestCon, ShopText, AvatarPackView} ;

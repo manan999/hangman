@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react' ;
 import { Dimensions, Image, TouchableOpacity } from 'react-native' ;
 import styled from 'styled-components/native' ;
 
-import {theme} from '../../theme.js' ;
-
 const wwd = Dimensions.get('window').width;
 
 const Imag = styled.Image`
@@ -17,7 +15,7 @@ const Img = ({src, onPress, max=1}) => {
 	const [wd, setWd] = useState(0) ;
 
 	useEffect( () => {
-		let data = Image.resolveAssetSource(src) ;
+		const data = Image.resolveAssetSource(src) ;
 		setHt(data.height) ;
 		setWd(data.width) ;
 	}, [])

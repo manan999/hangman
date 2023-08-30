@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native' ;
 import styled from 'styled-components/native' ;
 import { CountUp } from 'use-count-up' ;
 

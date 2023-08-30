@@ -1,8 +1,5 @@
 import styled from 'styled-components/native' ;
-import { View } from 'react-native';
 import {MainScrollView, KufamText, Row} from '../../../cssApp.js' ;
-
-import {theme} from '../../theme.js' ;
 
 const LogoView = styled.View`
 	padding: 20px 0 ;

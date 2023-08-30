@@ -1,5 +1,4 @@
 import styled from 'styled-components/native' ;
-import { View, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import {theme} from '../../theme.js' ;
@@ -18,17 +17,6 @@ const SubText = styled.Text`
   margin-top: ${ ({mt}) => mt?mt:15 }px ; ;
 ` ;
   // font-weight: ${ ({bold}) => bold?'bold':'normal' } ;
-
-const HomeButton = styled(Button).attrs({
-    labelStyle : {
-      fontSize: 16,
-      fontFamily: theme.fonts.main,
-    },
-    uppercase: false
-})`
-  margin: 10px 0 ;
-  min-width: 153px ;
- ` ;
 
 const LevelButton = styled(Button).attrs({
     labelStyle : {
@@ -50,4 +38,4 @@ const FloatLeft = styled.View`
   justify-content: center ; 
  ` ;
 
-export {MainView, SubText, HomeButton, LevelButton, FloatLeft} ;
+export {MainView, SubText, LevelButton, FloatLeft} ;

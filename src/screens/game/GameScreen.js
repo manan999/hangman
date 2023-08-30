@@ -3,8 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper' ;
 import { BackHandler } from 'react-native' ;
 
-import { MainView, GreenButton } from './cssGameScreen.js' ;
-import { BlackKufam } from '../../../cssApp.js' ;
+import { MainView } from './cssGameScreen.js' ;
 import Game from './Game.js' ;
 import Popup from '../../comps/popup/Popup.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -46,7 +45,7 @@ const GameScreen = ({navigation, route}) => {
 	    useCallback(() => {
 	    	const onBackPress = () => {
 	    		if(popOpen && popContent === 'revive') {
-	    			navigation.replace('Result', {rounds: currentRound+1, wins, topic, mode }) ;
+	    			navigation.replace('Result', {rounds: currentRound+1, wins: gameData.wins, topic, mode }) ;
 	    			return true ;
 	    		}
 	    		else {
@@ -63,7 +62,7 @@ const GameScreen = ({navigation, route}) => {
 
 	useEffect( ()=> {
 		if(topics[topic] && (currentRound % 50 >= 48 || data.length === 0)) {
-			let URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
+			const URL = `${fetchUrl}${topics[topic].url}?stage=${currentRound}` ;
 
 			fetch(URL)
 			.then(res => {

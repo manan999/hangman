@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from 'react' ;
-import { View, Text, Dimensions, Keyboard, TouchableOpacity, ToastAndroid } from 'react-native' ;
+import { View, Dimensions, Keyboard, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput, Avatar } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
 import Img from '../../comps/img/Img.js' ;
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, WhiteButton, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
+import { Row, Button, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
 import { SubText } from '../home/cssHomeScreen.js' ;
-import { MainView2, ProfileView, ProfileText, MarginRow, DisplayText, ProfileTop } from './cssProfile.js' ;
+import { MainView2, ProfileView, ProfileText, DisplayText, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -57,45 +57,50 @@ const ProfileScreen = ({navigation, route}) => {
             .then(res =>  res.json())
             .then(data => {
                 // console.log(data, 'data') ;
-                let arr = data.filter(one => one.mode === 'practice') ;
-                let practiceTotal = arr.length ;
+                const arr = data.filter(one => one.mode === 'practice') ;
+                const practiceTotal = arr.length ;
                 let userObj = {} ;
                 
                 if(practiceTotal > 0) {
                     let totalScore = 0 ;
                     let totalHints = 0 ;
-                    let totalTopics = {} ;
+                    const totalTopics = {} ;
                     arr.forEach((one,i) => {
                         totalHints += one.hints ;
                         totalScore += one.score ;
-                        totalTopics[one.topic]?(totalTopics[one.topic]++):(totalTopics[one.topic] = 1) 
+                        if(totalTopics[one.topic])
+                            totalTopics[one.topic]++ ;
+                        else
+                            totalTopics[one.topic] = 1 ;
                     })
-                    Object.keys(totalTopics).forEach(one => totalTopics[one] = Math.round(totalTopics[one]*100/practiceTotal))
+                    Object.keys(totalTopics).forEach(one=>{totalTopics[one] = Math.round(totalTopics[one]*100/practiceTotal)})
 
-                    let practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
-                    let practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
+                    const practiceAvgScore = Math.floor(totalScore/practiceTotal) ; 
+                    const practiceAvgHints = Math.floor(totalHints/practiceTotal) ; 
                     userObj = {totalHints, totalScore, practiceAvgScore, practiceAvgHints, totalTopics, ...userObj} ;
                 }
 
-
-                let arr2 = data.filter(one => one.mode === 'challenge') ;
-                let challTotal = arr2.length ;
+                const arr2 = data.filter(one => one.mode === 'challenge') ;
+                const challTotal = arr2.length ;
                 
                 if(challTotal > 0) {
                     let challTotalScore = 0 ;
                     let challTotalHints = 0 ;
-                    let challTotalTopics = {} ;
+                    const challTotalTopics = {} ;
 
                     arr2.forEach((one,i) => {
                         challTotalHints += one.hints ;
                         challTotalScore += one.score ;
-                        challTotalTopics[one.topic]?(challTotalTopics[one.topic]++):(challTotalTopics[one.topic] = 1) 
+                        if(challTotalTopics[one.topic])
+                            challTotalTopics[one.topic]++ ;
+                        else
+                            challTotalTopics[one.topic] = 1 ; 
                     })
 
-                    Object.keys(challTotalTopics).forEach(one => challTotalTopics[one] = Math.round(challTotalTopics[one]*100/challTotal))
+                    Object.keys(challTotalTopics).forEach(one => {challTotalTopics[one] = Math.round(challTotalTopics[one]*100/challTotal)})
 
-                    let challAvgScore = Math.floor(challTotalScore/challTotal) ; 
-                    let challAvgHints = Math.floor(challTotalHints/challTotal) ;
+                    const challAvgScore = Math.floor(challTotalScore/challTotal) ; 
+                    const challAvgHints = Math.floor(challTotalHints/challTotal) ;
                     userObj = {challTotalHints, challTotalScore, challAvgScore, challAvgHints, challTotalTopics, ...userObj} ;
                 }
                 
@@ -252,7 +257,7 @@ const ProfileScreen = ({navigation, route}) => {
             const {main, mainLight} = theme.colors ;
             const {name, type, label} = one ;
             
-            let obj = {
+            const obj = {
                 text : <TextInput key={name} label={label} value={data[name]} activeUnderlineColor={main} onChangeText={text => setData({...data, [name]: text })} selectionColor={mainLight} />,
                 password : <TextInput key={name} label={label} value={data[name]} activeUnderlineColor={main} onChangeText={text => setData({...data, [name]: text })} selectionColor={mainLight} secureTextEntry={hidePass[name]} right={<TextInput.Icon name={hidePass[name]?"eye":"eye-off"} onPress={() => setHidePass({...hidePass, [name]: !hidePass[name]})} />}/>,
             }
@@ -296,20 +301,20 @@ const ProfileScreen = ({navigation, route}) => {
     }
 
     const returnAvatarChoice = () => {
-        let arrData = user.settings?[17, 18, 19, 20, ...user.settings.avatars]:[17, 18, 19, 20] ;
+        const arrData = user.settings?[17, 18, 19, 20, ...user.settings.avatars]:[17, 18, 19, 20] ;
         if(logo || mode === 'edit')
             return <AvatarChoice url={data.image} setUrl={ url => setData({...data, image: url})} data={arrData}/> ;
     }
 
-    const returnSignInText = () => {
-        if(logo)
-            return (
-                <Row>
-                    <ProfileText size={14}> Already have an Account? </ProfileText>
-                    <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
-                </Row>
-            ) ;
-    }
+    // const returnSignInText = () => {
+    //     if(logo)
+    //         return (
+    //             <Row>
+    //                 <ProfileText size={14}> Already have an Account? </ProfileText>
+    //                 <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </Button>
+    //             </Row>
+    //         ) ;
+    // }
 
     const checkMode = () => {
         if(mode === 'login') {
@@ -319,7 +324,7 @@ const ProfileScreen = ({navigation, route}) => {
                     <ProfileView>
                         <ProfileText size={20}> Sign In </ProfileText>
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onLoginPress}> Login </WhiteButton></Shrink>
+                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onLoginPress}> Login </Button></Shrink>
                         {/*<MarginRow>
                             <TouchableOpacity onPress={() => ToastAndroid.show("Coming Soon !", ToastAndroid.SHORT)}>
                                 <ProfileText size={14}> Forgot Password? </ProfileText>
@@ -327,7 +332,7 @@ const ProfileScreen = ({navigation, route}) => {
                         </MarginRow>*/}
                         <Row>
                             <ProfileText size={14}> Don't have an Account? </ProfileText>
-                            <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('register')} size={13}> Sign Up </WhiteButton>
+                            <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('register')} size={13}> Sign Up </Button>
                         </Row>
                     </ProfileView>   
                 </>
@@ -340,10 +345,10 @@ const ProfileScreen = ({navigation, route}) => {
                         <ProfileText size={16}> Sign Up </ProfileText>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onRegisterPress}> Confirm </WhiteButton></Shrink>
+                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onRegisterPress}> Confirm </Button></Shrink>
                         <Row>
                             <ProfileText size={14}> Already have an Account? </ProfileText>
-                            <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </WhiteButton>
+                            <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </Button>
                         </Row>
                     </ProfileView>
                 </>
@@ -420,7 +425,7 @@ const ProfileScreen = ({navigation, route}) => {
                         <ProfileText size={26}> Edit Profile </ProfileText>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><WhiteButton color={theme.colors.white} mode="contained" onPress={onEditPress}> Submit </WhiteButton></Shrink>
+                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onEditPress}> Submit </Button></Shrink>
                     </ProfileView>
                     <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>  
                 </MainView>
@@ -434,15 +439,15 @@ const ProfileScreen = ({navigation, route}) => {
                         <DisplayText size={20} tt>{user.name} </DisplayText>
                         <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
                         <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
-                        <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit Profile </WhiteButton>
+                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit Profile </Button>
                     </ProfileTop>
                     <DisplayText>Practice Mode Statistics </DisplayText>
                     { userDataCheck() }
                     <DisplayText>Challenge Mode Statistics </DisplayText>
                     { userDataCheck2() }
                     <Row mb={20}>
-                        <WhiteButton color={theme.colors.white} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </WhiteButton>
-                        <WhiteButton color={theme.colors.white} mode="contained" onPress={onLogoutClick} size={13}> Logout </WhiteButton>
+                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </Button>
+                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onLogoutClick} size={13}> Logout </Button>
                     </Row>
                 </MainScrollView>
             ) ;

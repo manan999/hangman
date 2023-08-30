@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState, useCallback } from 'react' ;
-import { View, Dimensions, BackHandler, Linking } from 'react-native' ;
+import { useContext, useEffect, useState/*, useCallback*/ } from 'react' ;
+import { View, Dimensions, /*BackHandler,*/ Linking } from 'react-native' ;
 import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
-import { useFocusEffect } from '@react-navigation/native';
+// import { useFocusEffect } from '@react-navigation/native';
 import * as Application from 'expo-application';
 
 import Img from '../../comps/img/Img.js' ;
@@ -11,8 +11,8 @@ import Popup from '../../comps/popup/Popup.js' ;
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import sky from '../../../assets/sky.json' ;
-import { Row } from '../../../cssApp.js' ;
-import { MainView, SubText, HomeButton, LevelButton, FloatLeft } from './cssHomeScreen.js' ;
+import { Row, Button } from '../../../cssApp.js' ;
+import { MainView, SubText, /*LevelButton,*/ FloatLeft } from './cssHomeScreen.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { SignUpPop, UpdatePop } from './homePopups.js' ;
@@ -126,15 +126,15 @@ const HomeScreen = ({navigation, route}) => {
             {/*<LevelButton color={theme.colors.white} icon="fire" mode="contained" onPress={() => console.log('played') }>
                 Play
             </LevelButton>*/}
-            <HomeButton dark={true} color={theme.colors.main} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
+            <Button color={theme.colors.white} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
                 Challenge
-            </HomeButton>
-            <HomeButton dark={true} color={theme.colors.main} icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
+            </Button>
+            <Button color={theme.colors.white} icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
                 Practice
-            </HomeButton>
-            <HomeButton dark={true} color={theme.colors.darkGreen} icon="notebook" mode="contained" onPress={()=> Linking.openURL('https://www.youtube.com/watch?v=BENuLeGwIrw')}>
+            </Button>
+            <Button buttonColor={theme.colors.darkGreen} color={theme.colors.white} icon="notebook" mode="contained" onPress={()=> Linking.openURL('https://www.youtube.com/watch?v=BENuLeGwIrw')}>
                 How To Play
-            </HomeButton>
+            </Button>
         </View>
         <Row>
             { returnUserButton() }

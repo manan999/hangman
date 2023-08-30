@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext, Fragment } from 'react' ;
-import {  Vibration, Dimensions, ToastAndroid, Image, Pressable, View } from 'react-native';
+import {  Vibration, Dimensions, ToastAndroid, Pressable, View, Text } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
@@ -7,13 +7,12 @@ import * as Animatable from 'react-native-animatable';
 import valid from 'validator' ;
 import { Audio } from 'expo-av';
 
-import { Cross } from '../../comps/icons.js' ;
+import { Cross, Gem } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import HintImage from './hintImage/HintImage.js' ;
 import { MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild } from './cssGameScreen.js' ;
 import { KufamText, Row } from '../../../cssApp.js' ; 
 import { Alpha, Letter } from './AlphaLetter.js' ;
-import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import hurray from '../../../assets/hurray.json' ;
 import red from '../../../assets/red.json' ;
@@ -37,8 +36,8 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 
     const windowHeight = Dimensions.get('window').height;
 
-    let gameRef = useRef(null)
-    let heartRef = useRef(null)
+    const gameRef = useRef(null)
+    const heartRef = useRef(null)
 
     useEffect(() => sound?()=>sound.unloadAsync():undefined, [sound]);
 
@@ -62,7 +61,7 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 
 	useEffect( () => {
 		// calculate no. of each letter in the word
-		let obj = {} ;
+		const obj = {} ;
 		word.toLowerCase().split('').forEach(l => {
 			if(obj[l])
 				obj[l] += 1 ; 
@@ -86,7 +85,7 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 
 		let timer ;
 		if(guessed !== config.initGuess) {
-			let l = guessed.slice(-1)[0] ;
+			const l = guessed.slice(-1)[0] ;
 			if(l) {
 				if(details[l]) {
 					setCorrect(correct+details[l]) ;
@@ -158,7 +157,7 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 	}
 
 	const onHintPress = () => {
-		let hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => valid.isAlpha(one) && !guessed.includes(one) ) ;
+		const hints = Object.keys(details).sort((one, two)=>details[one]-details[two]).filter(one => valid.isAlpha(one) && !guessed.includes(one) ) ;
 
 		if(hints.length > 0) {
 			if(mode === 'practice') 

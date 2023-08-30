@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState, useCallback } from 'react' ;
-import { InterstitialAd, TestIds, AdEventType } from 'react-native-google-mobile-ads';
+import { InterstitialAd, /*TestIds,*/ AdEventType } from 'react-native-google-mobile-ads';
 import { useFocusEffect } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { Avatar, DataTable } from 'react-native-paper';
 import { BackHandler, ToastAndroid } from 'react-native' ;
 import { CountUp } from 'use-count-up' ;
-import crashlytics from '@react-native-firebase/crashlytics';
+// import crashlytics from '@react-native-firebase/crashlytics';
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
 import Img from '../../comps/img/Img.js' ;
 import { CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
-import { WhiteButton, KufamText, MainScrollView, Row, GreenView } from '../../../cssApp.js' ;
+import { Button, KufamText, MainScrollView, Row, GreenView } from '../../../cssApp.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
 import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -35,9 +35,10 @@ const ResultScreen = ({navigation, route}) => {
     const countDown = mode==='practice'?{rounds, wins}:{rounds: rounds*20, wins} ;
 
     const formatDate = (dt) => {
-        const date = new Date(dt).toLocaleString("en-IN", {timeZone: "Asia/Kolkata"}) ;
-        const [ day, m, d, t, y ] = date.split(' ').filter(o=>o.length>0) ;
-        return `${t.slice(0,5)}, ${d} ${m} ${y}`;
+        const date = new Date(dt) ;
+        const formattedDate = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) +
+        ', ' + date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+        return formattedDate ;
     }
 
     useFocusEffect(
@@ -73,18 +74,18 @@ const ResultScreen = ({navigation, route}) => {
 
         const unsubscribeError = interstitial.addAdEventListener(AdEventType.ERROR, error => {
             console.log('ad error ', error) ;
-            crashlytics().log('ad error ', error) ;
+            // crashlytics().log('ad error ', error) ;
         });
 
         const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
             setLoaded(true);
             console.log('ad loaded ', adUnitId) ;
-            crashlytics().log('ad loaded ', adUnitId) ;
+            // crashlytics().log('ad loaded ', adUnitId) ;
         });
 
         const unsubscribeClose = interstitial.addAdEventListener(AdEventType.CLOSED, error => {
-            console.log('ad closed') ;
-            crashlytics().log('ad closed') ;
+            console.log('ad closed', error) ;
+            // crashlytics().log('ad closed') ;
             setLoaded(false);
        
             //reload ad 
@@ -125,9 +126,9 @@ const ResultScreen = ({navigation, route}) => {
 
 
     const returnRows = () => {
-        let arr = scores.map((score, i) => {
+        const arr = scores.map((score, i) => {
             return (
-                <DataTable.Row key={i}>
+                <DataTable.Row key={i} style={{borderBottomWidth: 0 }}>
                     <DataTable.Cell style={{flex:2}}><KufamText size={13}>{i+1}</KufamText></DataTable.Cell>
                     <DataTable.Cell style={{flex:2}}><KufamText size={18}>{score.score}</KufamText></DataTable.Cell>
                     <DataTable.Cell style={{flex:3}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>
@@ -151,7 +152,7 @@ const ResultScreen = ({navigation, route}) => {
                     <CapitalKufam size={20}>Your High Scores</CapitalKufam>
                     <ScoreTable>{ returnRows() }</ScoreTable>
                     <ButtonRow>
-                        <WhiteButton dark={false} icon="podium" mode="contained" onPress={() => showAd(() => navigation.navigate('HighScore', {topic, mode, filter: 'me'}))}>See More</WhiteButton>
+                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="podium" mode="contained" onPress={() => showAd(() => navigation.navigate('HighScore', {topic, mode, filter: 'me'}))}>See More</Button>
                     </ButtonRow>
                 </>
         ) ;
@@ -159,7 +160,7 @@ const ResultScreen = ({navigation, route}) => {
             return (
                 <>
                     <Img src={require('../../../assets/sign-up.png')} />
-                    <WhiteButton dark={false} mode="contained" onPress={() => showAd(() => navigation.replace('Profile'))}>Sign Up</WhiteButton>
+                    <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={() => showAd(() => navigation.replace('Profile'))}>Sign Up</Button>
                 </>
             ) ;
     }
@@ -176,8 +177,8 @@ const ResultScreen = ({navigation, route}) => {
             <GreenView>{ returnGemText() }</GreenView>
             { returnSignIn() }
             <ButtonRow>
-                <WhiteButton dark={false} icon="reload" mode="contained" onPress={()=>showAd(()=>navigation.replace('Game', {mode, topic}))}>Play Again</WhiteButton>
-                <WhiteButton dark={false} icon="home" mode="contained" onPress={()=>showAd(()=>navigation.replace('Home', {popOpen: true}))}>Go Home</WhiteButton>
+                <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="reload" mode="contained" onPress={()=>showAd(()=>navigation.replace('Game', {mode, topic}))}>Play Again</Button>
+                <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="home" mode="contained" onPress={()=>showAd(()=>navigation.replace('Home', {popOpen: true}))}>Go Home</Button>
             </ButtonRow>
         </MainScrollView>
     ) ;

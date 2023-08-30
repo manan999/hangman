@@ -1,12 +1,11 @@
 import { useState, useContext } from 'react' ;
-import { Image, View, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native' ;
+import { TouchableOpacity, ScrollView, ToastAndroid } from 'react-native' ;
 import { Avatar } from 'react-native-paper';
 import styled from 'styled-components/native' ;
 
 import Popup from '../../comps/popup/Popup.js' ;
 import { GreenButton } from '../game/cssGameScreen.js' ;
-import { Gem } from '../../comps/icons.js' ;
-import { KufamText, WhiteButton, BlackKufam } from '../../../cssApp.js' ;
+import { KufamText, Button, BlackKufam } from '../../../cssApp.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
@@ -57,9 +56,9 @@ const AvatarPackCard = ({name, image, list, cost}) => {
 	const returnPurchaseBtn = () => {
 		const {avatarPacks} = settings ;
 		if(avatarPacks && avatarPacks.includes(name))
-			return <WhiteButton mode="contained" icon="close" size={14}>Purchased</WhiteButton>
+			return <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" icon="close" size={14}>Purchased</Button>
 		else 
-			return <WhiteButton mode="contained" icon="diamond-stone" onPress={() => setPopOpen(true)} size={14}>{cost>0?cost:'FREE'}</WhiteButton>
+			return <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" icon="diamond-stone" onPress={() => setPopOpen(true)} size={14}>{cost>0?cost:'FREE'}</Button>
 	}
 
 	return (
@@ -74,7 +73,7 @@ const AvatarPackCard = ({name, image, list, cost}) => {
 			<Popup visible={popOpen} onClose={() => setPopOpen(false)} thin>
                 <BlackKufam size={20}> {name} </BlackKufam>
                 <ScrollView contentContainerStyle={scrollStyle}>{returnImages()}</ScrollView>
-                <GreenButton dark={false} icon="diamond-stone" mode="contained" onPress={() => {
+                <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="diamond-stone" mode="contained" onPress={() => {
                 	updateSettings({...settings, avatars: [...settings.avatars, ...list], avatarPacks: settings.avatarPacks?[...settings.avatarPacks, name]:[name]}) ;
                 	setPopOpen(false) ; 
                 	ToastAndroid.show("Avatar Pack Purchased", ToastAndroid.LONG)
