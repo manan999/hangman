@@ -9,3 +9,9 @@
 4. change password handle
 5. revenuecat lagana hai
 6. music daalna hai
+
+-----------------------
+
+31-08-2023 (later than above)
+
+components update kar raha tha homescreen ho gayi thi, homepopups bhi almost ho gaye the bas font abhi abhi poppins lagaya tha, dekhne ke liye ki kaisa lagega... ab try karke font change karna hai, kufam itna acha nahi lagta ab.

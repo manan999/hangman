@@ -1,6 +1,7 @@
 {
   "name": "Aur Batao",
   "version": "1.9.0",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "lint": "eslint .",
@@ -13,6 +14,7 @@
     "@expo-google-fonts/kufam": "^0.2.2",
     "@expo-google-fonts/lexend": "^0.2.2",
     "@expo-google-fonts/montserrat": "^0.2.2",
+    "@expo-google-fonts/poppins": "^0.2.3",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/bottom-tabs": "^6.5.4",
     "@react-navigation/native": "^6.1.3",

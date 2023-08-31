@@ -3,10 +3,10 @@ import { View, Dimensions, Keyboard, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput, Avatar } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
+import { P } from '@comps' ;
 import Img from '../../comps/img/Img.js' ;
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
 import { Row, Button, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
-import { SubText } from '../home/cssHomeScreen.js' ;
 import { MainView2, ProfileView, ProfileText, DisplayText, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
@@ -295,7 +295,7 @@ const ProfileScreen = ({navigation, route}) => {
             return (
                 <View>
                     <Img src={require('../../../assets/AurBatao.png')} max={0.95} />
-                    <SubText> A WORD GUESSING GAME </SubText>
+                    <P size={20} > THE GUESSING GAME </P>
                 </View>
             ) ;
     }

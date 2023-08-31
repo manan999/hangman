@@ -22,6 +22,8 @@ export const theme = {
 		mainThick: "Lexend_700Bold" ,
 		second: "Montserrat_400Regular" ,
 		third: "Kufam_400Regular",
-		monospace: "", 
+		pop : "Poppins_400Regular" ,
+		popBold: "Poppins_500Medium" ,
+		popThick: "Poppins_700Bold" ,
 	}, 
 } ;
