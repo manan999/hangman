@@ -1,7 +1,7 @@
 import styled from 'styled-components/native' ;
 import { CountUp } from 'use-count-up' ;
 
-import {theme} from '../../theme.js' ;
+import { theme } from '@theme' ;
 
 const BoxNumberView = styled.View`
 	padding: 25px 0 15px;

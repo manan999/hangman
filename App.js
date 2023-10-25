@@ -5,23 +5,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
 import { Audio } from 'expo-av';
-import {useFonts as useKufam, Kufam_400Regular} from '@expo-google-fonts/kufam' ;
-import {useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold} from '@expo-google-fonts/lexend' ;
-import {useFonts as useMont, Montserrat_400Regular} from '@expo-google-fonts/montserrat' ;
+import { useFonts as useKufam, Kufam_400Regular } from '@expo-google-fonts/kufam' ;
+import { useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold } from '@expo-google-fonts/lexend' ;
+import { useFonts as usePop, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins' ;
+import { useFonts as useMont, Montserrat_400Regular } from '@expo-google-fonts/montserrat' ;
 // import AsyncStorage from '@react-native-async-storage/async-storage' ;
 
-import GameScreen from './src/screens/game/GameScreen.js' ;
-import ResultScreen from './src/screens/result/ResultScreen.js' ;
-import HomeScreen from './src/screens/home/HomeScreen.js' ;
-import HighScoreScreen from './src/screens/highscore/HighScoreScreen.js' ;
-import ProfileScreen from './src/screens/profile/ProfileScreen.js' ;
-import SettingsScreen from './src/screens/settings/SettingsScreen.js' ;
-import ShopScreen from './src/screens/shop/ShopScreen.js' ;
-import TopicScreen from './src/screens/topic/TopicScreen.js' ;
-import SafeArea from './src/comps/safearea/SafeArea.js' ;
-import { theme } from './src/theme.js' ;
-import { UserContextProvider, UserContext } from './src/context/UserContext.js' ;
-import { MainView } from './cssApp.js' ;
+import { GameScreen, ResultScreen, HomeScreen, HighScoreScreen, ProfileScreen, SettingsScreen, ShopScreen, TopicScreen } from '@screens' ;
+import { SafeArea, MainView } from '@comps' ;
+import { theme } from '@theme' ;
+import { UserContextProvider, UserContext } from '@uc' ;
 
 const AppRoutes = () => {
     const [sound, setSound] = useState();
@@ -47,9 +40,7 @@ const AppRoutes = () => {
         await sound.playAsync();
     }
 
-    useEffect( () => {
-        console.log('app loaded on '+ new Date()) ;
-    }, [])
+    useEffect( () => console.log('app loaded on '+ new Date()), [])
 
     useEffect( () => {
         if(settings && settings.music)
@@ -61,22 +52,20 @@ const AppRoutes = () => {
 
     const Stack = createNativeStackNavigator() ;
   
-    const screenOptions = {
-        animation: 'slide_from_right' ,
-        presentation: 'modal',
-    }
+    const screenOptions = { animation: 'slide_from_right', presentation: 'modal' } ;
+    const options = { headerShown: false } ;
 
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={screenOptions}>
-                <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Game" component={GameScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Result" component={ResultScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Settings" component={SettingsScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Shop" component={ShopScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="HighScore" component={HighScoreScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown: false }}/>
-                <Stack.Screen name="Topic" component={TopicScreen} options={{headerShown: false }}/>
+                <Stack.Screen name="Home" component={HomeScreen} options={options}/>
+                <Stack.Screen name="Game" component={GameScreen} options={options}/>
+                <Stack.Screen name="Result" component={ResultScreen} options={options}/>
+                <Stack.Screen name="Settings" component={SettingsScreen} options={options}/>
+                <Stack.Screen name="Shop" component={ShopScreen} options={options}/>
+                <Stack.Screen name="HighScore" component={HighScoreScreen} options={options}/>
+                <Stack.Screen name="Profile" component={ProfileScreen} options={options}/>
+                <Stack.Screen name="Topic" component={TopicScreen} options={options}/>
             </Stack.Navigator>
         </NavigationContainer>
     ) ;
@@ -86,8 +75,9 @@ export default function App() {
     const [kufamLoaded] = useKufam({ Kufam_400Regular });
     const [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
     const [montLoaded] = useMont({ Montserrat_400Regular});
+    const [popLoaded] = usePop({ Poppins_400Regular, Poppins_500Medium, Poppins_700Bold});
 
-    const fontsLoaded = [kufamLoaded, montLoaded, lexendLoaded].every(one => one) ;
+    const fontsLoaded = [kufamLoaded, montLoaded, lexendLoaded, popLoaded].every(one => one) ;
 
     return (
         <>

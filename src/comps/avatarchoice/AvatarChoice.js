@@ -5,7 +5,7 @@ import { Dialog, Portal, Avatar, ActivityIndicator } from 'react-native-paper';
 import styled from 'styled-components/native' ;
 
 import CircleButton from '../circlebutton/CircleButton.js' ;
-import { theme } from '../../theme.js' ;
+import { theme } from '@theme' ;
 
 const wwd = Dimensions.get('window').width;
 
