@@ -30,7 +30,9 @@
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
       "versionCode": 16,
-      "permissions": ["com.android.vending.BILLING"]
+      "permissions": [
+        "com.android.vending.BILLING"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -48,7 +50,8 @@
             "enableProguardInReleaseBuilds": true
           }
         }
-      ]
+      ],
+      "expo-font"
     ]
   },
   "react-native-google-mobile-ads": {

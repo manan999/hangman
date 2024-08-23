@@ -27,24 +27,6 @@ const Button = styled(Btn).attrs(({size, font, color, small, cap, jc}) => ({
   background-color: ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
  ` ;
 
- const Capsule = styled(Btn).attrs(({size, font, color, small}) => ({
-    labelStyle : {
-      fontSize: size?size:18,
-      fontFamily: font?font:theme.fonts.second,
-      color: color?color:theme.colors.white,
-      paddingTop: small?0:5,
-      paddingBottom: small?0:5,
-      letterSpacing: small?0:1,
-    },
-    uppercase: false
-  }))`
-  margin: 10px 0 ;
-  min-width: ${ ({small, mw}) => !small||mw?(mw?mw:200):0}px ;
-  border-radius: 99px ;
-  border: 1px solid ${ ({theme}) => theme.colors.main } ;
-  background-color: ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
- ` ;
-
 const P = styled.Text`
   color: ${ ({theme, color}) => color&&theme.colors[color]?theme.colors[color]:theme.colors.black } ;
   font-size: ${ ({size}) => size?size:24 }px ;

@@ -15,3 +15,17 @@
 31-08-2023 (later than above)
 
 components update kar raha tha homescreen ho gayi thi, homepopups bhi almost ho gaye the bas font abhi abhi poppins lagaya tha, dekhne ke liye ki kaisa lagega... ab try karke font change karna hai, kufam itna acha nahi lagta ab.
+
+-----------------------
+
+25-10-2023 
+
+Permission etc ki warnings aa rahi thi google play ki taraf se, unko theek karne ke liye libraries update kari hai aur theek chal raha hai app...lekin testing karni hai
+
+merge conflict bhi aaya tha, commit history dekhne se sirf yahi samajh aaya ki popup ka comment laga rakha tha, aur koi bhi commit ho sakta hai usme....check karna padega
+
+-----------------------
+
+23-08-2024 
+
+Ha i know bahut time ho gaya hai, but firse libraries update kar raha hu, 
