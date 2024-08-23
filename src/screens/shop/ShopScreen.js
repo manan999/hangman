@@ -5,11 +5,11 @@ import { Avatar } from 'react-native-paper';
 
 import Img from '../../comps/img/Img.js' ;
 import AvatarPackCard from './AvatarPackCard.js' ;
-import { MainScrollView, KufamText, Button, Row } from '../../../cssApp.js' ;
 import { ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
 import { Gem, Icon } from '../../comps/icons.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
+import { MainScrollView, P, Button, Row } from '@comps' ;
 
 // const adUnitId = TestIds.REWARDED ;
 const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
@@ -110,9 +110,9 @@ const ShopScreen = ({navigation, route}) => {
 
     const adButton = (rewardType) => {
         if(!loaded)
-            return <KufamText size={14}>Ad Not Available</KufamText> ;
+            return <P color="white" size={14}>Ad Not Available</P> ;
         else 
-            return <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={() => { 
+            return <Button buttonColor="white" color="main" mw={100} mode="contained" onPress={() => { 
                 // setReward(rewardType) ;
                 rewarded.show(); 
             }} size={14}> Watch Video </Button> ;
@@ -128,25 +128,25 @@ const ShopScreen = ({navigation, route}) => {
 
     return (
         <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
-            <KufamText>SHOP</KufamText>
+            <P color="white">SHOP</P>
             <Row>
                 <Avatar.Image {...avatarProps} /> 
-                <KufamText size={20}> <Gem size={16}/> {gems} </KufamText> 
-                <KufamText size={20}> <Icon type="key" size={16}/> 0 </KufamText> 
+                <P color="white" size={20}> <Gem size={16}/> {gems} </P> 
+                <P color="white" size={20}> <Icon type="key" size={16}/> 0 </P> 
             </Row>
             <ShopText size={22}>Gems</ShopText>
             <ChestCon>
-                <KufamText size={18}>Watch an Ad to earn <Gem size={16}/> {25} </KufamText>
+                <P color="white" size={18}>Watch an Ad to earn <Gem size={16}/> {25} </P>
                 <Img src={require('../../../assets/gems.webp')} max={0.7} />
                 {adButton('gem')}
-                <KufamText size={18}>Watching Ads will increase your <Gem size={16}/> gems</KufamText>
+                <P color="white" size={18}>Watching Ads will increase your <Gem size={16}/> gems</P>
             </ChestCon>
             {/*<ChestCon>
-                <KufamText size={18}>Watch Videos to earn <Key size={16}/> 1 </KufamText>
+                <P color="white" size={18}>Watch Videos to earn <Key size={16}/> 1 </P>
                 <GemChest source={require('../../../assets/gems.webp')} />
                 {adButton('key')}
             </ChestCon>*/}
-            <ShopText size={22}>Avatar Packs</ShopText>
+            <ShopText color="white" size={22}>Avatar Packs</ShopText>
             <AvatarPackView>
                 {avatarPacks.map(ap => <AvatarPackCard key={ap.name} {...ap} />)}
             </AvatarPackView>

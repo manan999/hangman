@@ -9,13 +9,13 @@ import { CountUp } from 'use-count-up' ;
 
 import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
 import Img from '../../comps/img/Img.js' ;
-import { CapitalKufam, ButtonRow, ScoreTable } from './cssResultScreen.js' ;
-import { Button, KufamText, MainScrollView, Row, GreenView } from '../../../cssApp.js' ;
+import { ButtonRow, ScoreTable } from './cssResultScreen.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
 import { Gem } from '../../comps/icons.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import { theme } from '../../theme.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
+import { P, MainScrollView, Row, GreenView, Button } from '@comps' ;
 
 const adUnitId = 'ca-app-pub-7668722490423187/3467857782' ;
 // const adUnitId = TestIds.INTERSTITIAL ;
@@ -33,6 +33,10 @@ const ResultScreen = ({navigation, route}) => {
     const {user, userToken, gems, addGems, fetchUrl} = useContext(UserContext) ;
 
     const countDown = mode==='practice'?{rounds, wins}:{rounds: rounds*20, wins} ;
+
+    const btnProps = {
+        buttonColor : "white", color : "main", mw : 100, mode : "contained",
+    } ;
 
     const formatDate = (dt) => {
         const date = new Date(dt) ;
@@ -117,11 +121,11 @@ const ResultScreen = ({navigation, route}) => {
     const returnGemText = () => {
         if(mode !== 'practice' && user.name)
             if(final)
-                return <AnimateView delay={300}><KufamText> <Gem /> {gems} ( + {Math.ceil(wins/20)} ) </KufamText></AnimateView> ;
+                return <AnimateView delay={300}><P color="white"> <Gem /> {gems} ( + {Math.ceil(wins/20)} ) </P></AnimateView> ;
             else
-                return <KufamText> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/20)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/20)} duration={2} /> </KufamText> ;
+                return <P color="white"> <Gem /> <CountUp isCounting end={gems} duration={2} onComplete={() => {addGems(Math.ceil(wins/20)); setFinal(true)}}/> + <CountUp isCounting end={Math.ceil(wins/20)} duration={2} /> </P> ;
         else
-            return <KufamText size={18} > Play Challenge Mode to earn <Gem size={14}/> </KufamText> ;
+            return <P color="white" size={18} > Play Challenge Mode to earn <Gem size={14}/> </P> ;
     }
 
 
@@ -129,9 +133,9 @@ const ResultScreen = ({navigation, route}) => {
         const arr = scores.map((score, i) => {
             return (
                 <DataTable.Row key={i} style={{borderBottomWidth: 0 }}>
-                    <DataTable.Cell style={{flex:2}}><KufamText size={13}>{i+1}</KufamText></DataTable.Cell>
-                    <DataTable.Cell style={{flex:2}}><KufamText size={18}>{score.score}</KufamText></DataTable.Cell>
-                    <DataTable.Cell style={{flex:3}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>
+                    <DataTable.Cell style={{flex:2}}><P color="white" size={13}>{i+1}</P></DataTable.Cell>
+                    <DataTable.Cell style={{flex:2}}><P color="white" size={18}>{score.score}</P></DataTable.Cell>
+                    <DataTable.Cell style={{flex:3}}><P color="white" size={14}>{formatDate(score.createdAt)}</P></DataTable.Cell>
                 </DataTable.Row>
             ) ;
         })
@@ -149,10 +153,10 @@ const ResultScreen = ({navigation, route}) => {
             return (
                 <>
                     <Avatar.Image {...avatarProps}/>
-                    <CapitalKufam size={20}>Your High Scores</CapitalKufam>
+                    <P color="white" cap size={20}>Your High Scores</P>
                     <ScoreTable>{ returnRows() }</ScoreTable>
                     <ButtonRow>
-                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="podium" mode="contained" onPress={() => showAd(() => navigation.navigate('HighScore', {topic, mode, filter: 'me'}))}>See More</Button>
+                        <Button {...btnProps} icon="podium" onPress={() => showAd(() => navigation.navigate('HighScore', {topic, mode, filter: 'me'}))}>See More</Button>
                     </ButtonRow>
                 </>
         ) ;
@@ -160,14 +164,14 @@ const ResultScreen = ({navigation, route}) => {
             return (
                 <>
                     <Img src={require('../../../assets/sign-up.png')} />
-                    <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={() => showAd(() => navigation.replace('Profile'))}>Sign Up</Button>
+                    <Button {...btnProps} onPress={() => showAd(() => navigation.replace('Profile'))}>Sign Up</Button>
                 </>
             ) ;
     }
 
     return (
         <MainScrollView contentContainerStyle={{ alignItems: 'center' }}>
-            <KufamText style={{textTransform: 'capitalize'}}>{topic} {mode} Summary</KufamText>
+            <P color="white" cap>{topic} {mode} Summary</P>
             <CountdownCircleTimer duration={countDown.rounds} initialRemainingTime={countDown.wins} colors="#f55442" trailColor="#ffffff" trailStrokeWidth={24}>
               {({ remainingTime }) => <TimerText><CountUp isCounting end={remainingTime} duration={2} /></TimerText>}
             </CountdownCircleTimer>
@@ -177,8 +181,8 @@ const ResultScreen = ({navigation, route}) => {
             <GreenView>{ returnGemText() }</GreenView>
             { returnSignIn() }
             <ButtonRow>
-                <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="reload" mode="contained" onPress={()=>showAd(()=>navigation.replace('Game', {mode, topic}))}>Play Again</Button>
-                <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} icon="home" mode="contained" onPress={()=>showAd(()=>navigation.replace('Home', {popOpen: true}))}>Go Home</Button>
+                <Button {...btnProps} icon="reload" onPress={()=>showAd(()=>navigation.replace('Game', {mode, topic}))}>Play Again</Button>
+                <Button {...btnProps} icon="home" onPress={()=>showAd(()=>navigation.replace('Home', {popOpen: true}))}>Go Home</Button>
             </ButtonRow>
         </MainScrollView>
     ) ;

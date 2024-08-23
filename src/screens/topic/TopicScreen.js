@@ -4,9 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import { View, BackHandler } from 'react-native' ;
 
 import Popup from '../../comps/popup/Popup.js' ;
-import { MainView, KufamText, BlackKufam, Button} from '../../../cssApp.js' ;
-import { GreenButton } from '../game/cssGameScreen.js' ;
-import { theme } from '../../theme.js' ;
+import { MainView, GreenButton, P, Button } from '@comps' ;
 import { UserContext } from '../../context/UserContext.js' ;
 
 const TopicScreen = ({navigation, route}) => {
@@ -27,18 +25,18 @@ const TopicScreen = ({navigation, route}) => {
     );
 
     return (
-        <MainView>
+        <MainView jc="center">
             <Animatable.View iterationCount={4} animation="bounce">
-                <KufamText> Select your Topic </KufamText>
+                <P color="white"> Select your Topic </P>
             </Animatable.View>
             <View>
             { 
-                Object.keys(topics).map(one => <Button key={one} buttonColor={theme.colors.white} color={theme.colors.main} jc="flex-start" size={18} icon={topics[one].icon} mode="contained" onPress={() => navigation.replace('Game', {mode, topic: one})}>{one}</Button>) 
+                Object.keys(topics).map(one => <Button key={one} buttonColor="white" color="main" jc="flex-start" size={18} icon={topics[one].icon} mode="contained" onPress={() => navigation.replace('Game', {mode, topic: one})}>{one}</Button>) 
             }
             </View>
             <Popup visible={popOpen} onClose={() => setPopOpen(false)}>
-                <BlackKufam size={20}> Cancel Topic Selection ? </BlackKufam>
-                <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="check" mode="contained" onPress={() => navigation.replace('Home')}> Yes </GreenButton>
+                <P size={20}> Cancel Topic Selection ? </P>
+                <GreenButton buttonColor="darkGreen" mw={100} icon="check" mode="contained" onPress={() => navigation.replace('Home')}> Yes </GreenButton>
             </Popup>
         </MainView>
     ) ;

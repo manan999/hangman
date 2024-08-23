@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Cross = ({color}) => {
 	const str = color?"red":"grey" ;
-	return <Ionicons name="md-heart" size={24} color={str} />
+	return <Ionicons name="heart" size={24} color={str} />
 }
 
 const Gem = ({size=18}) => {

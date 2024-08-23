@@ -5,8 +5,8 @@ import styled from 'styled-components/native' ;
 
 import Img from '../../comps/img/Img.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
-import { MainScrollView, KufamText, Row } from '../../../cssApp.js' ;
 import { Icon } from '../../comps/icons.js' ;
+import { MainScrollView, P, Row } from '@comps' ;
 
 const SettingsScreen = ({navigation, route}) => {
     const {settings, loadSettings} = useContext(UserContext) ;
@@ -16,20 +16,20 @@ const SettingsScreen = ({navigation, route}) => {
     return (
         <MainScrollView>
             <SettingsView>
-                <Row  jc="center">
-                    <Icon type="gear" size={32}/>
-                    <KufamText>&emsp;Settings&emsp;</KufamText>
+                <Row jc="center" gap={12}>
+                    <Icon type="gear" size={24}/>
+                    <P color="white">Settings</P>
                 </Row>
                 <BlackRow jc="space-between" mb={10}>
-                    <KufamText size={18}>Music</KufamText>
+                    <P color="white" size={18}>Music</P>
                     <Switch value={settings.music} onValueChange={()=>toggle('music')} backgroundActive='#13542f' />
                 </BlackRow>
                 <BlackRow jc="space-between" mb={10}>
-                    <KufamText size={18}>Sound Effects</KufamText>
+                    <P color="white" size={18}>Sound Effects</P>
                     <Switch value={settings.sfx} onValueChange={()=>toggle('sfx')} backgroundActive='#13542f' />
                 </BlackRow>
                 <BlackRow jc="space-between" mb={40}>
-                    <KufamText size={18}>Vibration</KufamText>
+                    <P color="white" size={18}>Vibration</P>
                     <Switch value={settings.vibrate} onValueChange={()=>toggle('vibrate')} backgroundActive='#13542f' />
                 </BlackRow>
                 <ImgCon onPress={()=> Linking.openURL('https://play.google.com/store/apps/details?id=com.myarth.aurbatao')}>
@@ -63,12 +63,12 @@ const SettingsScreen = ({navigation, route}) => {
                 <ContactView>
                     <Row jc="center">
                         <Icon type="thanks" size={20}/>
-                        <KufamText size={16}>&emsp;Credits&emsp;</KufamText>
-                        <KufamText size={12}>(Click to Visit)</KufamText>
+                        <P color="white" size={16}>&emsp;Credits&emsp;</P>
+                        <P color="white" size={12}>(Click to Visit)</P>
                     </Row>
-                    <Row >
-                        <TouchableOpacity onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')}><Small size={12}>Free Avatars</Small></TouchableOpacity>
-                        <TouchableOpacity onPress={()=> Linking.openURL('https://soundcloud.com/arthurvost')}><Small size={12}>Background Music</Small></TouchableOpacity>
+                    <Row>
+                        <TouchableOpacity onPress={()=> Linking.openURL('https://www.freepik.com/vectors/people-set')}><Small color="white" size={12}>Free Avatars</Small></TouchableOpacity>
+                        <TouchableOpacity onPress={()=> Linking.openURL('https://soundcloud.com/arthurvost')}><Small color="white" size={12}>Background Music</Small></TouchableOpacity>
                     </Row>
                 </ContactView>
             </SettingsView>
@@ -99,7 +99,7 @@ const BlackRow = styled(Row)`
     background-color: ${ ({theme}) => theme.colors.halfBlack }
  ` ;
 
-const Small = styled(KufamText)` 
+const Small = styled(P)` 
     margin: 5px 0 ;
  ` ;
 

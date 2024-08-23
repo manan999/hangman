@@ -1,17 +1,15 @@
 import styled from 'styled-components/native' ;
 
-import { KufamText } from '../../../cssApp.js' ;
+import { P } from '@comps' ;
 
 const ChestCon = styled.View` 
 	margin: 0 ;
 	align-items: center ;
  ` ;
 
-const ShopText = styled(KufamText)` 
-	margin: 0 ;
+const ShopText = styled(P)` 
 	background-color: ${ ({theme}) => theme.colors.quarterBlack } ;
 	align-self: stretch ;
-	text-align: center ;
 	padding-top: 10px ;
  ` ;
 

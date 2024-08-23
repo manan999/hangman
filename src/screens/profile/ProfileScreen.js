@@ -3,11 +3,10 @@ import { View, Dimensions, Keyboard, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput, Avatar } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
-import { P } from '@comps' ;
+import { P, MainScrollView, Row, MainView, Button, Shrink, GreenView } from '@comps' ;
 import Img from '../../comps/img/Img.js' ;
 import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
-import { Row, Button, Shrink, MainView, GreenView, MainScrollView } from '../../../cssApp.js' ;
-import { MainView2, ProfileView, ProfileText, DisplayText, ProfileTop } from './cssProfile.js' ;
+import { ProfileView, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, isBlank } from '../../comps/valid.js' ;
 import { theme } from '../../theme.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
@@ -37,6 +36,10 @@ const ProfileScreen = ({navigation, route}) => {
         source : user.name?{uri: user.image}:require('../../../assets/user.png'),
     } ;
     
+    const btnProps = {
+        buttonColor : "white", color : "main", mw : 100, mode : "contained",
+    } ;
+
     useEffect(() => {
         const showKB = Keyboard.addListener("keyboardDidShow", () => setLogo(false));
         const hideKB = Keyboard.addListener("keyboardDidHide", () => setLogo(true));
@@ -310,8 +313,8 @@ const ProfileScreen = ({navigation, route}) => {
     //     if(logo)
     //         return (
     //             <Row>
-    //                 <ProfileText size={14}> Already have an Account? </ProfileText>
-    //                 <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </Button>
+    //                 <P size={14}> Already have an Account? </P>
+    //                 <Button {...btnProps} onPress={()=>setMode('login')} size={13}> Sign In </Button>
     //             </Row>
     //         ) ;
     // }
@@ -322,17 +325,17 @@ const ProfileScreen = ({navigation, route}) => {
                 <>
                     { returnLogo() }
                     <ProfileView>
-                        <ProfileText size={20}> Sign In </ProfileText>
+                        <P color="white" size={20}> Sign In </P>
                         { returnForm() }
-                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onLoginPress}> Login </Button></Shrink>
+                        <Shrink><Button {...btnProps} onPress={onLoginPress}> Login </Button></Shrink>
                         {/*<MarginRow>
                             <TouchableOpacity onPress={() => ToastAndroid.show("Coming Soon !", ToastAndroid.SHORT)}>
-                                <ProfileText size={14}> Forgot Password? </ProfileText>
+                                <P color="white" size={14}> Forgot Password? </P>
                             </TouchableOpacity>
                         </MarginRow>*/}
                         <Row>
-                            <ProfileText size={14}> Don't have an Account? </ProfileText>
-                            <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('register')} size={13}> Sign Up </Button>
+                            <P color="white" size={14}> Don't have an Account? </P>
+                            <Button {...btnProps} onPress={()=>setMode('register')} size={13}> Sign Up </Button>
                         </Row>
                     </ProfileView>   
                 </>
@@ -342,13 +345,13 @@ const ProfileScreen = ({navigation, route}) => {
             return (
                 <>
                     <ProfileView fl={logo?0.9:1}>
-                        <ProfileText size={16}> Sign Up </ProfileText>
+                        <P color="white" size={16}> Sign Up </P>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onRegisterPress}> Confirm </Button></Shrink>
+                        <Shrink><Button {...btnProps} onPress={onRegisterPress}> Confirm </Button></Shrink>
                         <Row>
-                            <ProfileText size={14}> Already have an Account? </ProfileText>
-                            <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('login')} size={13}> Sign In </Button>
+                            <P color="white" size={14}> Already have an Account? </P>
+                            <Button {...btnProps} onPress={()=>setMode('login')} size={13}> Sign In </Button>
                         </Row>
                     </ProfileView>
                 </>
@@ -362,29 +365,29 @@ const ProfileScreen = ({navigation, route}) => {
             return ( 
                 <GreenView>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Total Score </DisplayText>
-                        <DisplayText size={20}> {userData.totalScore}</DisplayText>
+                        <P color="white" size={20}>Total Score </P>
+                        <P color="white" size={20}> {userData.totalScore}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Average Score </DisplayText>
-                        <DisplayText size={20}> {userData.practiceAvgScore}</DisplayText>
+                        <P color="white" size={20}>Average Score </P>
+                        <P color="white" size={20}> {userData.practiceAvgScore}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Total Hints Used </DisplayText>
-                        <DisplayText size={20}> {userData.totalHints}</DisplayText>
+                        <P color="white" size={20}>Total Hints Used </P>
+                        <P color="white" size={20}> {userData.totalHints}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Average Hints Used </DisplayText>
-                        <DisplayText size={20}> {userData.practiceAvgHints}</DisplayText>
+                        <P color="white" size={20}>Average Hints Used </P>
+                        <P color="white" size={20}> {userData.practiceAvgHints}</P>
                     </Row>
-                    <DisplayText size={20}>Topics</DisplayText>
+                    <P color="white" size={20}>Topics</P>
                     <View>
-                        {Object.keys(userData.totalTopics).map((one,i)=><Row jc="space-between" key={i}><DisplayText size={15}>{one}</DisplayText><DisplayText size={15}>{userData.totalTopics[one]}%</DisplayText></Row>)}
+                        {Object.keys(userData.totalTopics).map((one,i)=><Row jc="space-between" key={i}><P color="white" size={15}>{one}</P><P color="white" size={15}>{userData.totalTopics[one]}%</P></Row>)}
                     </View>
                 </GreenView>
             ) ;
         else
-            return <DisplayText size={15}> Play Practice Mode to show analysis here</DisplayText>
+            return <P color="white" size={15}> Play Practice Mode to show analysis here</P>
     }
 
     const userDataCheck2 = () => {
@@ -392,29 +395,29 @@ const ProfileScreen = ({navigation, route}) => {
             return ( 
                 <GreenView>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Total Score </DisplayText>
-                        <DisplayText size={20}> {userData.challTotalScore}</DisplayText>
+                        <P color="white" size={20}>Total Score </P>
+                        <P color="white" size={20}> {userData.challTotalScore}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Average Score </DisplayText>
-                        <DisplayText size={20}> {userData.challAvgScore}</DisplayText>
+                        <P color="white" size={20}>Average Score </P>
+                        <P color="white" size={20}> {userData.challAvgScore}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Total Hints Used </DisplayText>
-                        <DisplayText size={20}> {userData.challTotalHints}</DisplayText>
+                        <P color="white" size={20}>Total Hints Used </P>
+                        <P color="white" size={20}> {userData.challTotalHints}</P>
                     </Row>
                     <Row jc="space-between">
-                        <DisplayText size={20}>Average Hints Used </DisplayText>
-                        <DisplayText size={20}> {userData.challAvgHints}</DisplayText>
+                        <P color="white" size={20}>Average Hints Used </P>
+                        <P color="white" size={20}> {userData.challAvgHints}</P>
                     </Row>
-                    <DisplayText size={20}>Topics</DisplayText>
+                    <P color="white" size={20}>Topics</P>
                     <View>
-                        {Object.keys(userData.challTotalTopics).map((one,i)=><Row jc="space-between" key={i}><DisplayText size={15}>{one}</DisplayText><DisplayText size={15}>{userData.challTotalTopics[one]}%</DisplayText></Row>)}
+                        {Object.keys(userData.challTotalTopics).map((one,i)=><Row jc="space-between" key={i}><P color="white" size={15}>{one}</P><P color="white" size={15}>{userData.challTotalTopics[one]}%</P></Row>)}
                     </View>
                 </GreenView>
             ) ;
         else
-            return <DisplayText size={15}> Play Challenge Mode to show analysis here</DisplayText>
+            return <P color="white" size={15}> Play Challenge Mode to show analysis here</P>
     }
 
     if(user.name)
@@ -422,10 +425,10 @@ const ProfileScreen = ({navigation, route}) => {
             return (
                 <MainView>
                     <ProfileView fl={logo?0.9:1}>
-                        <ProfileText size={26}> Edit Profile </ProfileText>
+                        <P color="white" size={26}> Edit Profile </P>
                         { returnAvatarChoice() }
                         { returnForm() }
-                        <Shrink><Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onEditPress}> Submit </Button></Shrink>
+                        <Shrink><Button {...btnProps} onPress={onEditPress}> Submit </Button></Shrink>
                     </ProfileView>
                     <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>  
                 </MainView>
@@ -433,31 +436,31 @@ const ProfileScreen = ({navigation, route}) => {
         }
         else 
             return (
-                <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
+                <MainScrollView>
                     <ProfileTop>
                         <Avatar.Image {...avatarProps}/>
-                        <DisplayText size={20} tt>{user.name} </DisplayText>
-                        <DisplayText size={15} >{user.email?user.email:'Email Id not mentioned'} </DisplayText>
-                        <DisplayText size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </DisplayText>
-                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit Profile </Button>
+                        <P color="white" size={20} cap>{user.name} </P>
+                        <P color="white" size={15} >{user.email?user.email:'Email Id not mentioned'} </P>
+                        <P color="white" size={16}> <Gem /> &ensp; {user.gems?user.gems:''} </P>
+                        <Button {...btnProps} onPress={()=>setMode('edit')} size={13}> Edit Profile </Button>
                     </ProfileTop>
-                    <DisplayText>Practice Mode Statistics </DisplayText>
+                    <P color="white">Practice Mode Statistics </P>
                     { userDataCheck() }
-                    <DisplayText>Challenge Mode Statistics </DisplayText>
+                    <P color="white">Challenge Mode Statistics </P>
                     { userDataCheck2() }
-                    <Row mb={20}>
-                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={()=>setMode('edit')} size={13}> Edit </Button>
-                        <Button buttonColor={theme.colors.white} color={theme.colors.main} mw={100} mode="contained" onPress={onLogoutClick} size={13}> Logout </Button>
+                    <Row>
+                        <Button {...btnProps} onPress={()=>setMode('edit')} size={13}> Edit </Button>
+                        <Button {...btnProps} onPress={onLogoutClick} size={13}> Logout </Button>
                     </Row>
                 </MainScrollView>
             ) ;
     else
         return (
-            <MainView2>
-                <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
+            <MainView>
+                <LottieView style={{width: windowHeight, height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
                 {checkMode()}
                 <Snackbar visible={error.length>0} onDismiss={() => setError([...error.slice(1)])} action={{label: 'OK', color: theme.colors.red, onPress:() => {}}}>{error[0]}</Snackbar>
-            </MainView2>
+            </MainView>
         ) ;
 }
 

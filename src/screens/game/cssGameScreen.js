@@ -1,7 +1,5 @@
 import styled from 'styled-components/native' ;
 
-import { Button } from '../../../cssApp.js' ; 
-
 const MainView = styled.View`
   flex: 1 ;
   justify-content: center ;
@@ -82,9 +80,5 @@ const ScoreText = styled.Text`
   margin: 0 5px ;
 ` ;
 
-const GreenButton = styled(Button)` 
-  margin: 20px 0 0 ;
-` ;
-
 export {MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, 
-        HintHead, GameHeader, ScoreHead, ScoreText, GreenButton, HeaderChild} ;
+        HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild} ;

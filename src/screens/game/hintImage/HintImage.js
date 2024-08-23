@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react' ;
 import { Image, TouchableOpacity } from 'react-native';
 
 import Popup from '../../../comps/popup/Popup.js' ;
-import { BlackKufam } from '../../../../cssApp.js' ;
+import { P } from '@comps' ;
 
 const HintImage = ({topic='', name='', single}) => {
 	const [uri, setUri] = useState(`https://api.myarth.in/static/hangman/hints/${topic}/${name}.webp`) ;
@@ -27,7 +27,7 @@ const HintImage = ({topic='', name='', single}) => {
 				</TouchableOpacity>
 				<Popup visible={popOpen} onClose={() => setPopOpen(false)}>
 	  				<Image style={{height: size.h20, width: 200, borderRadius: 5, marginBottom: 15, resizeMode: 'contain'}}  source={{ uri }} onError={() => setUri(comingSoon)}/>
-	  				<BlackKufam size={20} cap main> {name} </BlackKufam>
+	  				<P size={20} cap>{name}</P>
 	  			</Popup> 
 			</>
 		);

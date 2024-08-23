@@ -13,13 +13,13 @@ import { theme } from '@theme' ;
 import { UserContext } from '@uc' ;
 import { SignUpPop, UpdatePop } from './homePopups.js' ;
 
-const { white, main, halfBlack, darkGreen } = theme.colors ;
+const { white, main, halfBlack } = theme.colors ;
 
 const Bubble = ({name, onPress}) => {
     return ( 
          <AnimateView anim="wobble" delay={0} iterationCount="infinite">
             <CircleButton onButtonPress={onPress} size={45} bgColor={halfBlack}>
-                <FontAwesome5 name={name} size={20} color={white} />
+                <FontAwesome5 name={name} size={20} color="white" />
             </CircleButton>
         </AnimateView>
     ) ;
@@ -114,23 +114,23 @@ const HomeScreen = ({navigation, route}) => {
 
     return (
       <MainView>
-        <LottieView style={{height: windowHeight, position: 'absolute', top: 0}} source={sky} autoPlay loop />
+        <LottieView style={{width: windowHeight, height: windowHeight, position: 'absolute', top: 0, objectFit: 'cover'}} source={sky} autoPlay loop />
         <HomeTop>
             <Img src={require('../../../assets/AurBatao.png')} max={0.95} />
             <P size={20} > THE GUESSING GAME </P>
             { returnGreeting() }
         </HomeTop>
         <View>
-            {/*<LevelButton color={white} icon="fire" mode="contained" onPress={() => console.log('played') }>
+            {/*<LevelButton color="white" icon="fire" mode="contained" onPress={() => console.log('played') }>
                 Play
             </LevelButton>*/}
-            <Button color={white} icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
+            <Button color="white" icon="fire" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'challenge'})}>
                 Challenge
             </Button>
-            <Button color={white} icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
+            <Button color="white" icon="gamepad" mode="contained" onPress={() => navigation.replace('Topic', {mode: 'practice'})}>
                 Practice
             </Button>
-            <Button buttonColor={darkGreen} color={white} icon="notebook" mode="contained" onPress={()=> Linking.openURL('https://www.youtube.com/watch?v=BENuLeGwIrw')}>
+            <Button buttonColor="darkGreen" color="white" icon="notebook" mode="contained" onPress={()=> Linking.openURL('https://www.youtube.com/watch?v=BENuLeGwIrw')}>
                 How To Play
             </Button>
         </View>

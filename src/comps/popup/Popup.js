@@ -32,7 +32,7 @@ const CrossView = styled.View`
 const Popup = ({visible, onClose, children, thin=false, close=true}) => {
 	const Cross = () => {
 		if(close)
-			return <CircleButton size={35} onButtonPress={onClose} bgColor={theme.colors.white}><Entypo name="circle-with-cross" size={35} color={theme.colors.darkRed} /></CircleButton> ;
+			return <CircleButton size={35} onButtonPress={onClose} bgColor={theme.colors.white}><Entypo name="circle-with-cross" size={35} color={theme.colors.error} /></CircleButton> ;
 	}
 
 	return (

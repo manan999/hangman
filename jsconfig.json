@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@comps" : ["./src/comps/index.js"],
+            "@screens": ["./src/screens/index.js"],
+            "@utils" : ["./src/utils/index.js"],
+            "@images" : ["./src/images.js"],
+            "@icons" : ["./src/icons.js"],
+            "@theme": ["./src/theme.js"],
+            "@data" : ["./src/data/index.js"],
+            "@uc" : ["./src/context/UserContext.js"]
+        }
+    }
+}

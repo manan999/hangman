@@ -1,6 +1,6 @@
 import styled from 'styled-components/native' ;
-import { Platform, StatusBar } from 'react-native';
-import { Button as Btn } from 'react-native-paper';
+import { Platform, StatusBar } from 'react-native' ;
+import { Button as Btn } from 'react-native-paper' ;
 
 import { theme } from '@theme' ;
 
@@ -9,49 +9,53 @@ const SafeArea = styled.SafeAreaView`
   padding-top: ${Platform.OS==="android"?StatusBar.currentHeight:0}px ; 
 ` ;
 
-const Button = styled(Btn).attrs(({size, font, color, small, cap, jc}) => ({
+const Button = styled(Btn).attrs(({size=16, font="main", color="white", jc="center", padding=2, ripple="thodaWhite" }) => ({
     labelStyle : {
-      fontSize: size?size:16,
-      fontFamily: font?font:theme.fonts.main,
-      color: color?color:theme.colors.white,
+      fontSize: size,
+      fontFamily: theme.fonts[font],
+      color: theme.colors[color],
+      paddingTop: padding,
+      paddingBottom: padding,
     },
     contentStyle: {
-      justifyContent: jc?jc:'center',
+      justifyContent: jc,
     },
-    uppercase: false
+    uppercase: false,
+    rippleColor: theme.colors[ripple],
   }))`
-  margin: 10px 0 ;
-  min-width: ${ ({small, mw}) => !small||mw?(mw?mw:153):0}px ;
-  border-radius: ${ ({cap}) => cap?99:4}px ;
-  border: 1px solid ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
-  background-color: ${ ({buttonColor, theme}) => !buttonColor?theme.colors.main:buttonColor } ;
+  margin: ${({margin=8}) => margin}px 0 ;
+  min-width: ${({mw=150})=>mw}px ;
+  border-radius: ${({br=8})=>br}px ;
+  border: 1px solid ${ ({buttonColor="main", borderColor, theme}) => borderColor?theme.colors[borderColor]:theme.colors[buttonColor] } ;
+  background-color: ${ ({buttonColor="main", theme}) => theme.colors[buttonColor] } ;
+
  ` ;
 
 const P = styled.Text`
-  color: ${ ({theme, color}) => color&&theme.colors[color]?theme.colors[color]:theme.colors.black } ;
-  font-size: ${ ({size}) => size?size:24 }px ;
+  color: ${ ({theme, color="main"}) => theme.colors[color] } ;
+  font-size: ${ ({size=24})=>size }px ;
   font-family: ${ ({theme, font}) => font&&theme.fonts[font]?theme.fonts[font]:theme.fonts.main } ;
   text-transform: ${ ({cap}) => cap?'capitalize':'none' } ;
-  text-align: ${ ({align}) => align?align:'center' } ;
+  text-align: ${ ({align='center'}) => align } ;
 ` ;
 
 const Row = styled.View`
   flex-direction: row ; 
   align-self: stretch ;
-  justify-content: ${ ({jc}) => jc?jc:'space-evenly' } ;
-  align-items: ${ ({ai}) => ai?ai:'center' } ;
-  gap: ${ ({gap}) => gap?gap:0 }px ;
+  justify-content: ${ ({jc='space-evenly'})=>jc } ;
+  align-items: ${ ({ai='center'})=>ai } ;
+  gap: ${ ({gap=0})=>gap }px ;
 ` ;
 
 const MainView = styled.View`
   flex: 1 ;
-  justify-content: ${ ({jc}) => jc?jc:'space-evenly' } ;
-  align-items: ${ ({ai}) => ai?ai:'center' } ;
-  background-color: ${ ({theme, color}) => color&&theme.colors[color]?theme.colors[color]:theme.colors.main } ;
+  justify-content: ${ ({jc='space-evenly'})=>jc } ;
+  align-items: ${ ({ai='center'})=>ai } ;
+  background-color: ${ ({theme, color="main"}) => theme.colors[color] } ;
 ` ;
 
 const MainScrollView = styled.ScrollView`
-  background-color: ${ ({theme, color}) => color&&theme.colors[color]?theme.colors[color]:theme.colors.main } ;
+  background-color: ${ ({theme, color="main"}) => theme.colors[color] } ;
   align-self: stretch ;
 ` ;
 

@@ -11,11 +11,11 @@ import { Cross, Gem } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
 import HintImage from './hintImage/HintImage.js' ;
 import { MainView, AlphaRow, WordView, CrossCon, GameText, GuesserView, TimerText, HintHead, GameHeader, ScoreHead, ScoreText, HeaderChild } from './cssGameScreen.js' ;
-import { KufamText, Row } from '../../../cssApp.js' ; 
 import { Alpha, Letter } from './AlphaLetter.js' ;
 import { UserContext } from '../../context/UserContext.js' ;
 import hurray from '../../../assets/hurray.json' ;
 import red from '../../../assets/red.json' ;
+import { P, Row } from '@comps' ;
 
 const alphas = [ 'qwertyuiop', 'asdfghjkl', 'zxcvbnm'] ;
 
@@ -225,7 +225,7 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 				<>
 					<AlphaRow>{returnGuesser()}</AlphaRow>
 			  		<View>
-				  		<HintHead> Hints <KufamText size={14}>(Touch to Enlarge)</KufamText> </HintHead>
+				  		<HintHead> Hints <P color="white" size={14}>(Touch to Enlarge)</P> </HintHead>
 				  		<Row>
 				  			{hint.map((one,i)=><Fragment key={i}><HintImage topic={topic.toLowerCase()} name={(one+'').toLowerCase()} /></Fragment>)}
 				  		</Row>

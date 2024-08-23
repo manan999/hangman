@@ -4,7 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker' ;
 
 import { UserContext } from '../../context/UserContext.js' ;
 import { DDView, ScoreTable } from './cssHighScore.js' ;
-import { MainView, KufamText, MainScrollView } from '../../../cssApp.js' ;
+import { P, MainView, MainScrollView } from '@comps' ;
 import { theme } from '../../theme.js' ;
 
 const HighScoreScreen = ({navigation, route}) => {
@@ -57,11 +57,11 @@ const HighScoreScreen = ({navigation, route}) => {
 
                 return (
                     <DataTable.Row key={i} style={{borderBottomWidth: 0 }}>
-                        <DataTable.Cell style={{flex:1}}><KufamText size={13}>{i+1}</KufamText></DataTable.Cell>
+                        <DataTable.Cell style={{flex:1}}><P color="white" size={13}>{i+1}</P></DataTable.Cell>
                         <DataTable.Cell style={{flex:1.5}}><Avatar.Image {...avatarProps} /></DataTable.Cell>
-                        <DataTable.Cell style={{flex:3}}><KufamText size={14}>{score.playerName}</KufamText></DataTable.Cell>
-                        <DataTable.Cell style={{flex:1}}><KufamText size={16}>{score.score}</KufamText></DataTable.Cell>
-                        {/*<DataTable.Cell style={{flex:3, width: '100%'}}><KufamText size={14}>{formatDate(score.createdAt)}</KufamText></DataTable.Cell>*/}
+                        <DataTable.Cell style={{flex:3}}><P color="white" size={14}>{score.playerName}</P></DataTable.Cell>
+                        <DataTable.Cell style={{flex:1}}><P color="white" size={16}>{score.score}</P></DataTable.Cell>
+                        {/*<DataTable.Cell style={{flex:3, width: '100%'}}><P color="white" size={14}>{formatDate(score.createdAt)}</P></DataTable.Cell>*/}
                     </DataTable.Row>
                 ) ;
             })
@@ -72,8 +72,8 @@ const HighScoreScreen = ({navigation, route}) => {
     }   
 
     return (
-        <MainView contentContainerStyle={{ alignItems: 'center' }}>
-            <KufamText>High Scores</KufamText>
+        <MainView>
+            <P color="white">High Scores</P>
             <DDView>
                 <DropDownPicker style={{ marginTop: 5, marginBottom: 5}} open={modeOpen} value={gameMode} items={modeItems} setOpen={setModeOpen} setValue={setGameMode} setItems={setModeItems} zIndex={2000} zIndexReverse={2000}/>
                 <DropDownPicker style={{ marginTop: 5, marginBottom: 5}} open={topicOpen} value={topic} items={topicItems} setOpen={setTopicOpen} setValue={setTopic} setItems={setTopicItems} zIndex={1000} zIndexReverse={3000}/>

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native' ;
-import {MainScrollView, KufamText, Row} from '../../../cssApp.js' ;
+
+import {MainScrollView, P, Row} from '@comps' ;
 
 const LogoView = styled.View`
 	padding: 20px 0 ;
@@ -10,8 +11,7 @@ const AboutView = styled(MainScrollView)`
 	background-color: ${ ({theme}) => theme.colors.halfMain } ;
 ` ;
 
-const AboutText = styled(KufamText)`
-  text-align: justify ;
+const AboutText = styled(P)`
   margin: 15px 0 3px ;
 ` ;
 

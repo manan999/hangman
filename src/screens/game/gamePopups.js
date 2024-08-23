@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react' ;
 import { RewardedAd, AdEventType, RewardedAdEventType/*, TestIds*/ } from 'react-native-google-mobile-ads';
 // import crashlytics from '@react-native-firebase/crashlytics';
 
-import { BlackKufam } from '../../../cssApp.js' ;
-import { GreenButton } from '../game/cssGameScreen.js' ;
-import { theme } from '../../theme.js' ;
+import { P, GreenButton } from '@comps' ;
 
 // const adUnitId = TestIds.REWARDED ;
 const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
@@ -14,11 +12,13 @@ const rewarded = RewardedAd.createForAdRequest(adUnitId, {
   keywords: ['fashion', 'clothing'],
 });
 
+const btnProps = { buttonColor: 'darkGreen', mw : 100, mode: 'contained' } ;
+
 const BackPop = ({onPress}) => {
 	return ( 
 		<>
-			<BlackKufam size={20}>Exit this Game ?</BlackKufam>
-			<GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="check" mode="contained" onPress={onPress}>Yes</GreenButton>
+			<P size={20}>Exit this Game ?</P>
+			<GreenButton {...btnProps} icon="check" onPress={onPress}>Yes</GreenButton>
 	  	</>
 	) ;
 }
@@ -75,16 +75,16 @@ const RevivePop = ({onYesPress, onNoPress}) => {
 
     const adButton = (rewardType) => {
         if(!loaded)
-            return <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} loading mode="contained"> Ad Loading... </GreenButton> ;
+            return <GreenButton {...btnProps} loading > Ad Loading... </GreenButton> ;
         else 
-            return <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="video-vintage" mode="contained" onPress={() => rewarded.show()}> Watch Video </GreenButton> ;
+            return <GreenButton {...btnProps} icon="video-vintage" onPress={() => rewarded.show()}> Watch Video </GreenButton> ;
     }
 
 	return ( 
 		<>
-			<BlackKufam size={20}> Reset this word, by watching an Ad ? </BlackKufam>
+			<P size={20}> Reset this word, by watching an Ad ? </P>
             {adButton()}
-            <GreenButton buttonColor={theme.colors.darkGreen} color={theme.colors.white} mw={100} icon="cancel" mode="contained" onPress={onNoPress}> No </GreenButton>
+            <GreenButton {...btnProps} icon="cancel" onPress={onNoPress}> No </GreenButton>
         </>
 	) ;
 }

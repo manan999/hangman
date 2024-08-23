@@ -86,7 +86,7 @@ export default function App() {
                     <ThemeProvider theme={theme}>
                         <SafeArea>
                             {   !fontsLoaded?
-                                <MainView white><ActivityIndicator color="#1d2951" size="large" /></MainView>
+                                <MainView color="white"><ActivityIndicator color="#1d2951" size="large" /></MainView>
                                 :<AppRoutes /> 
                             }
                         </SafeArea>
