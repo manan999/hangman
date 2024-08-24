@@ -29,7 +29,7 @@
       },
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 16,
+      "versionCode": 17,
       "permissions": [
         "com.android.vending.BILLING"
       ]
