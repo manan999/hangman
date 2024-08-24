@@ -5,17 +5,14 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { Avatar, DataTable } from 'react-native-paper';
 import { BackHandler, ToastAndroid } from 'react-native' ;
 import { CountUp } from 'use-count-up' ;
+import styled from 'styled-components/native' ;
 // import crashlytics from '@react-native-firebase/crashlytics';
 
-import BoxNumber from '../../comps/boxnumber/BoxNumber.js' ;
-import Img from '../../comps/img/Img.js' ;
-import { ButtonRow, ScoreTable } from './cssResultScreen.js' ;
 import { TimerText } from '../game/cssGameScreen.js' ;
 import { Gem } from '../../comps/icons.js' ;
-import { UserContext } from '../../context/UserContext.js' ;
-import { theme } from '../../theme.js' ;
-import AnimateView from '../../comps/animateview/AnimateView.js' ;
-import { P, MainScrollView, Row, GreenView, Button } from '@comps' ;
+import { UserContext } from '@uc' ;
+import { theme } from '@theme' ;
+import { P, MainScrollView, Row, GreenView, Button, BoxNumber, Img, AnimateView } from '@comps' ;
 
 const adUnitId = 'ca-app-pub-7668722490423187/3467857782' ;
 // const adUnitId = TestIds.INTERSTITIAL ;
@@ -170,8 +167,10 @@ const ResultScreen = ({navigation, route}) => {
     }
 
     return (
-        <MainScrollView contentContainerStyle={{ alignItems: 'center' }}>
-            <P color="white" cap>{topic} {mode} Summary</P>
+        <MainScrollView contentContainerStyle={{ alignItems: 'center', rowGap: 16 }}>
+            <TitleCon>
+                <P color="white" cap>{topic} {mode} Summary</P>
+            </TitleCon>
             <CountdownCircleTimer duration={countDown.rounds} initialRemainingTime={countDown.wins} colors="#f55442" trailColor="#ffffff" trailStrokeWidth={24}>
               {({ remainingTime }) => <TimerText><CountUp isCounting end={remainingTime} duration={2} /></TimerText>}
             </CountdownCircleTimer>
@@ -189,3 +188,16 @@ const ResultScreen = ({navigation, route}) => {
 }
 
 export default ResultScreen ;
+
+const TitleCon = styled.View`
+    padding: 16px 0 ;
+` ;
+
+const ButtonRow = styled(Row)`
+    margin-bottom: 0 ;
+` ; 
+
+const ScoreTable = styled(DataTable)` 
+    color: ${ ({theme}) => theme.colors.white } ;
+    font-family: ${ ({theme}) => theme.fonts.main } ;
+` ;

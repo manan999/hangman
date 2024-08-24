@@ -25,7 +25,7 @@ const TopicScreen = ({navigation, route}) => {
     );
 
     return (
-        <MainView jc="center">
+        <MainView jc="center" rowGap={24}>
             <Animatable.View iterationCount={4} animation="bounce">
                 <P color="white"> Select your Topic </P>
             </Animatable.View>

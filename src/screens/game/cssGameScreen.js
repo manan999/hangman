@@ -35,7 +35,7 @@ const CrossCon = styled.View`
 const GameText = styled.Text`
   color: ${ ({theme}) => theme.colors.white } ;
   font-size: 22px ;
-  font-family: ${ ({theme}) => theme.fonts.third } ;
+  font-family: ${ ({theme}) => theme.fonts.main } ;
   text-align: center ;
 ` ;
 

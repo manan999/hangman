@@ -3,13 +3,11 @@ import { View, Dimensions, Keyboard, ToastAndroid } from 'react-native' ;
 import { Snackbar, TextInput, Avatar } from 'react-native-paper' ;
 import LottieView from 'lottie-react-native';
 
-import { P, MainScrollView, Row, MainView, Button, Shrink, GreenView } from '@comps' ;
-import Img from '../../comps/img/Img.js' ;
-import AvatarChoice from '../../comps/avatarchoice/AvatarChoice.js' ;
+import { P, MainScrollView, Row, MainView, Button, Shrink, GreenView, Img, AvatarChoice } from '@comps' ;
 import { ProfileView, ProfileTop } from './cssProfile.js' ;
 import { invalidEmail, invalidPass, isBlank } from '../../comps/valid.js' ;
-import { theme } from '../../theme.js' ;
-import { UserContext } from '../../context/UserContext.js' ;
+import { theme } from '@theme' ;
+import { UserContext } from '@uc' ;
 import { Gem } from '../../comps/icons.js' ;
 import sky from '../../../assets/sky.json' ;
 
@@ -372,14 +370,14 @@ const ProfileScreen = ({navigation, route}) => {
                         <P color="white" size={20}>Average Score </P>
                         <P color="white" size={20}> {userData.practiceAvgScore}</P>
                     </Row>
-                    <Row jc="space-between">
+                    {/* <Row jc="space-between">
                         <P color="white" size={20}>Total Hints Used </P>
                         <P color="white" size={20}> {userData.totalHints}</P>
                     </Row>
                     <Row jc="space-between">
                         <P color="white" size={20}>Average Hints Used </P>
                         <P color="white" size={20}> {userData.practiceAvgHints}</P>
-                    </Row>
+                    </Row> */}
                     <P color="white" size={20}>Topics</P>
                     <View>
                         {Object.keys(userData.totalTopics).map((one,i)=><Row jc="space-between" key={i}><P color="white" size={15}>{one}</P><P color="white" size={15}>{userData.totalTopics[one]}%</P></Row>)}
@@ -402,14 +400,14 @@ const ProfileScreen = ({navigation, route}) => {
                         <P color="white" size={20}>Average Score </P>
                         <P color="white" size={20}> {userData.challAvgScore}</P>
                     </Row>
-                    <Row jc="space-between">
+                    {/* <Row jc="space-between">
                         <P color="white" size={20}>Total Hints Used </P>
                         <P color="white" size={20}> {userData.challTotalHints}</P>
                     </Row>
                     <Row jc="space-between">
                         <P color="white" size={20}>Average Hints Used </P>
                         <P color="white" size={20}> {userData.challAvgHints}</P>
-                    </Row>
+                    </Row> */}
                     <P color="white" size={20}>Topics</P>
                     <View>
                         {Object.keys(userData.challTotalTopics).map((one,i)=><Row jc="space-between" key={i}><P color="white" size={15}>{one}</P><P color="white" size={15}>{userData.challTotalTopics[one]}%</P></Row>)}
@@ -436,7 +434,7 @@ const ProfileScreen = ({navigation, route}) => {
         }
         else 
             return (
-                <MainScrollView>
+                <MainScrollView contentContainerStyle={{ rowGap: 20 }}>
                     <ProfileTop>
                         <Avatar.Image {...avatarProps}/>
                         <P color="white" size={20} cap>{user.name} </P>

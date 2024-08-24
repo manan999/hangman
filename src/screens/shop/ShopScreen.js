@@ -1,15 +1,14 @@
 import { useState, useEffect, useContext } from 'react' ;
 import { RewardedAd, AdEventType, RewardedAdEventType/*, TestIds*/ } from 'react-native-google-mobile-ads';
 import { Avatar } from 'react-native-paper';
+import styled from 'styled-components/native' ;
 // import crashlytics from '@react-native-firebase/crashlytics';
 
-import Img from '../../comps/img/Img.js' ;
 import AvatarPackCard from './AvatarPackCard.js' ;
-import { ChestCon, ShopText, AvatarPackView } from './cssShop.js' ;
 import { Gem, Icon } from '../../comps/icons.js' ;
-import { theme } from '../../theme.js' ;
-import { UserContext } from '../../context/UserContext.js' ;
-import { MainScrollView, P, Button, Row } from '@comps' ;
+import { theme } from '@theme' ;
+import { UserContext } from '@uc' ;
+import { MainScrollView, P, Button, Row, Img } from '@comps' ;
 
 // const adUnitId = TestIds.REWARDED ;
 const adUnitId = 'ca-app-pub-7668722490423187/3649567094' ;
@@ -127,14 +126,16 @@ const ShopScreen = ({navigation, route}) => {
     // let str = todayVideos?(todayVideos>10?50:20+(3*todayVideos)):20
 
     return (
-        <MainScrollView contentContainerStyle={ {alignItems: 'center'} }>
-            <P color="white">SHOP</P>
+        <MainScrollView contentContainerStyle={{ rowGap : 24 }}>
+            <TitleCon>
+                <P color="white">SHOP</P>
+            </TitleCon>
             <Row>
                 <Avatar.Image {...avatarProps} /> 
                 <P color="white" size={20}> <Gem size={16}/> {gems} </P> 
                 <P color="white" size={20}> <Icon type="key" size={16}/> 0 </P> 
             </Row>
-            <ShopText size={22}>Gems</ShopText>
+            <ShopText color="white" size={22}>Gems</ShopText>
             <ChestCon>
                 <P color="white" size={18}>Watch an Ad to earn <Gem size={16}/> {25} </P>
                 <Img src={require('../../../assets/gems.webp')} max={0.7} />
@@ -155,3 +156,23 @@ const ShopScreen = ({navigation, route}) => {
 }
 
 export default ShopScreen ;
+
+const TitleCon = styled.View`
+    padding-top: 16px ;
+` ;
+
+const ChestCon = styled.View` 
+	align-items: center ;
+	gap: 12px ;
+ ` ;
+
+const ShopText = styled(P)` 
+	background-color: ${ ({theme}) => theme.colors.quarterBlack } ;
+	align-self: stretch ;
+	padding: 10px 0 12px ;
+ ` ;
+
+const AvatarPackView = styled.View` 
+	flex-direction: row ;
+	flex-wrap: wrap ;
+ ` ;

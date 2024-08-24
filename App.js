@@ -5,11 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
 import { Audio } from 'expo-av';
-import { useFonts as useKufam, Kufam_400Regular } from '@expo-google-fonts/kufam' ;
 import { useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold } from '@expo-google-fonts/lexend' ;
 import { useFonts as usePop, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins' ;
-import { useFonts as useMont, Montserrat_400Regular } from '@expo-google-fonts/montserrat' ;
-// import AsyncStorage from '@react-native-async-storage/async-storage' ;
 
 import { GameScreen, ResultScreen, HomeScreen, HighScoreScreen, ProfileScreen, SettingsScreen, ShopScreen, TopicScreen } from '@screens' ;
 import { SafeArea, MainView } from '@comps' ;
@@ -72,12 +69,10 @@ const AppRoutes = () => {
 }
 
 export default function App() {
-    const [kufamLoaded] = useKufam({ Kufam_400Regular });
     const [lexendLoaded] = useLexend({ Lexend_400Regular, Lexend_500Medium, Lexend_700Bold });
-    const [montLoaded] = useMont({ Montserrat_400Regular});
     const [popLoaded] = usePop({ Poppins_400Regular, Poppins_500Medium, Poppins_700Bold});
 
-    const fontsLoaded = [kufamLoaded, montLoaded, lexendLoaded, popLoaded].every(one => one) ;
+    const fontsLoaded = [lexendLoaded, popLoaded].every(one => one) ;
 
     return (
         <>

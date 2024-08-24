@@ -10,10 +10,11 @@ const ProfileView = styled.View`
 ` ;
 
 const ProfileTop = styled.View`
-  padding: 30px 20px ;
+  padding: 30px 20px 0 ;
   margin: 0 ;
   align-items: center ;
   width: 100% ;
+  gap: 8px ;
 ` ;
 
 export { ProfileView, ProfileTop } ;
