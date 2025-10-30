@@ -1,10 +1,10 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components/native' ;
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper' ;
-import { Audio } from 'expo-av';
+import { useAudioPlayer } from 'expo-audio';
 import { useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold } from '@expo-google-fonts/lexend' ;
 import { useFonts as usePop, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins' ;
 
@@ -14,38 +14,30 @@ import { theme } from '@theme' ;
 import { UserContextProvider, UserContext } from '@uc' ;
 
 const AppRoutes = () => {
-    const [sound, setSound] = useState();
+    const player = useAudioPlayer(require('./assets/one.mp3'), { downloadFirst: true });
 
     const {settings} = useContext(UserContext) ;
+    
+    useEffect( () => console.log('app loaded on '+ new Date()), [])
+    
+    useEffect(() => {
+        if (settings && settings.music) {
+            player.loop = true ;
+            player.volume = 0.5 ;
+            player.play();
+        } else {
+            player.pause();
+            // or player.stop(); depends on desired behavior
+        }
+    }, [settings, player]);
 
     useEffect(() => {
-        return sound? () => {
-            // console.log('Unloading Sound');
-            sound.unloadAsync();
-        } : undefined;
-    }, [sound]);
-
-    const playSound = async () => {
-        // console.log('Loading Sound');
-        const { sound } = await Audio.Sound.createAsync( require('./assets/one.mp3'), {
-            isLooping: true,
-            volume: 0.5,
-        } );
-        setSound(sound);
-
-        // console.log('Playing Sound');
-        await sound.playAsync();
-    }
-
-    useEffect( () => console.log('app loaded on '+ new Date()), [])
-
-    useEffect( () => {
-        if(settings && settings.music)
-            playSound() ;
-        else
-            if(sound)
-                sound.unloadAsync() ;
-    }, [settings])
+        // optional: configure audio mode if needed
+        // e.g., on iOS you may need: Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+        return () => {
+            player.remove();
+        };
+    }, [player]);
 
     const Stack = createNativeStackNavigator() ;
   

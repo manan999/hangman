@@ -4,8 +4,8 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
 import { MaterialIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
+import { useAudioPlayer } from 'expo-audio';
 import valid from 'validator' ;
-import { Audio } from 'expo-av';
 
 import { Cross, Gem } from '../../comps/icons.js' ;
 import AnimateView from '../../comps/animateview/AnimateView.js' ;
@@ -30,8 +30,6 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 	const [wait, setWait] = useState(true) ;
 	const [color, setColor] = useState(false) ;
 
-	const [sound, setSound] = useState();
-
     const {gems, addGems, settings} = useContext(UserContext) ;
 
     const windowHeight = Dimensions.get('window').height;
@@ -39,7 +37,8 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
     const gameRef = useRef(null)
     const heartRef = useRef(null)
 
-    useEffect(() => sound?()=>sound.unloadAsync():undefined, [sound]);
+	const playerSuccess = useAudioPlayer(require('../../../assets/success.mp3'));
+	const playerWrong = useAudioPlayer(require('../../../assets/wrong.wav'));
 
 	useEffect(() => {
 		// starts timer after waiting 2 seconds (for each word)
@@ -48,15 +47,13 @@ const Game = ({word, round, next, hint, config, mode, topic}) => {
 	}, [wait]);
 
 	const correctSound = async () => {
-        const { sound } = await Audio.Sound.createAsync( require('../../../assets/success.mp3') );
-        setSound(sound);
-        await sound.playAsync();
+        playerSuccess.seekTo(0);
+        playerSuccess.play();
     }
 
     const wrongSound = async () => {
-        const { sound } = await Audio.Sound.createAsync( require('../../../assets/wrong.wav') );
-        setSound(sound);
-        await sound.playAsync();
+        playerWrong.seekTo(0);
+        playerWrong.play();
     }
 
 	useEffect( () => {

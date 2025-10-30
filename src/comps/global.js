@@ -1,10 +1,11 @@
 import styled from 'styled-components/native' ;
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Platform, StatusBar } from 'react-native' ;
 import { Button as Btn } from 'react-native-paper' ;
 
 import { theme } from '@theme' ;
 
-const SafeArea = styled.SafeAreaView`
+const SafeArea = styled(SafeAreaView)`
   flex: 1 ;
   padding-top: ${Platform.OS==="android"?StatusBar.currentHeight:0}px ; 
 ` ;

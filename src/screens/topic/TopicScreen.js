@@ -15,12 +15,12 @@ const TopicScreen = ({navigation, route}) => {
     useFocusEffect(
         useCallback(() => {
             const onBackPress = () => {
-                setPopOpen(true) ;
+                setPopOpen(true);
                 return true;
             };
 
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () => subscription.remove();
         }, [popOpen, setPopOpen])
     );
 
