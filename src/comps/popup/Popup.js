@@ -1,6 +1,6 @@
 import { Modal } from 'react-native' ;
 import styled from 'styled-components/native' ;
-import { Entypo } from '@expo/vector-icons'; 
+import Entypo from "@react-native-vector-icons/entypo"; 
 
 import { theme } from '../../theme.js' ;
 import CircleButton from '../../comps/circlebutton/CircleButton.js' ;

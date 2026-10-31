@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext, Fragment } from 'react' ;
 import {  Vibration, Dimensions, ToastAndroid, Pressable, View, Text } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer' ;
-import { MaterialIcons } from '@expo/vector-icons';
+import MaterialIcons from "@react-native-vector-icons/material-icons";
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 import { useAudioPlayer } from 'expo-audio';

@@ -4,7 +4,7 @@
     "name": "aurbatao",
     "description": "",
     "slug": "aurbatao",
-    "version": "1.12.0",
+    "version": "1.13.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "updates": {
@@ -24,7 +24,7 @@
       },
       "package": "com.myarth.aurbatao",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 19,
+      "versionCode": 20,
       "permissions": [
         "com.android.vending.BILLING"
       ]
@@ -38,6 +38,12 @@
       }
     },
     "plugins": [
+      "@react-native-vector-icons/entypo",
+      "@react-native-vector-icons/ionicons",
+      "@react-native-vector-icons/material-design-icons",
+      "@react-native-vector-icons/material-icons",
+      "@react-native-vector-icons/fontawesome5",
+      "@react-native-vector-icons/fontawesome",
       [
         "expo-build-properties",
         {

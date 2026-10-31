@@ -1,6 +1,6 @@
 import { useState } from 'react' ;
 import { TouchableOpacity, ScrollView, Dimensions } from 'react-native' ;
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons";
 import { Dialog, Portal, Avatar, ActivityIndicator } from 'react-native-paper';
 import styled from 'styled-components/native' ;
 

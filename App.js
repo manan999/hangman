@@ -8,6 +8,8 @@ import { useAudioPlayer } from 'expo-audio';
 import { useFonts as useLexend, Lexend_400Regular, Lexend_500Medium, Lexend_700Bold } from '@expo-google-fonts/lexend' ;
 import { useFonts as usePop, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins' ;
 
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { GameScreen, ResultScreen, HomeScreen, HighScoreScreen, ProfileScreen, SettingsScreen, ShopScreen, TopicScreen } from '@screens' ;
 import { SafeArea, MainView } from '@comps' ;
 import { theme } from '@theme' ;
@@ -67,7 +69,7 @@ export default function App() {
     const fontsLoaded = [lexendLoaded, popLoaded].every(one => one) ;
 
     return (
-        <>
+        <SafeAreaProvider>
             <UserContextProvider>
                 <PaperProvider>
                     <ThemeProvider theme={theme}>
@@ -80,7 +82,7 @@ export default function App() {
                     </ThemeProvider>
                 </PaperProvider>
             </UserContextProvider>
-            <StatusBar style="auto" />
-        </>
+            <StatusBar style="light" backgroundColor={theme.colors.main} />
+        </SafeAreaProvider>
     ) ;
 }

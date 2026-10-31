@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState/*, useCallback*/ } from 'react' ;
 import { View, Dimensions, /*BackHandler,*/ Linking } from 'react-native' ;
-import { FontAwesome5, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome from "@react-native-vector-icons/fontawesome";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons";
 import { Avatar } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 // import { useFocusEffect } from '@react-navigation/native';
@@ -19,7 +20,7 @@ const Bubble = ({name, onPress}) => {
     return ( 
          <AnimateView anim="wobble" delay={0} iterationCount="infinite">
             <CircleButton onButtonPress={onPress} size={45} bgColor={halfBlack}>
-                <FontAwesome5 name={name} size={20} color="white" />
+                <MaterialCommunityIcons name={name} size={20} color="white" />
             </CircleButton>
         </AnimateView>
     ) ;
@@ -63,9 +64,9 @@ const HomeScreen = ({navigation, route}) => {
 
     const FloatLeftContent = () => {
         if(user.name)
-            return <Bubble name="gem" onPress={()=>navigation.navigate('Shop')} /> ;
+            return <Bubble name="diamond-stone" onPress={()=>navigation.navigate('Shop')} /> ;
         else
-            return <Bubble name="user-plus" onPress={()=>{
+            return <Bubble name="account-plus" onPress={()=>{
                 setPopContent('signup') ;
                 setPopOpen(true) ;
             }} /> ;

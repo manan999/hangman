@@ -1,13 +1,12 @@
 import styled from 'styled-components/native' ;
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Platform, StatusBar } from 'react-native' ;
 import { Button as Btn } from 'react-native-paper' ;
 
 import { theme } from '@theme' ;
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1 ;
-  padding-top: ${Platform.OS==="android"?StatusBar.currentHeight:0}px ; 
+  background-color: ${ ({theme}) => theme.colors.main } ;
 ` ;
 
 const Button = styled(Btn).attrs(({size=16, font="main", color="white", jc="center", padding=2, ripple="thodaWhite" }) => ({
